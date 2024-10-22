@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Coffee_LoverApp: App {
+    @State var menuManager = MenuManager(webservice: Webservice(apiSystem: .dev))
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(menuManager)
         }
     }
 }

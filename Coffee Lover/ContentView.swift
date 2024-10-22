@@ -7,18 +7,51 @@
 
 import SwiftUI
 
+@MainActor
 struct ContentView: View {
+    @Environment(MenuManager.self) private var menu
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+
+            ZStack {
+                VStack {
+                    Spacer()
+
+                    List {
+                        ForEach(menu.choseableProducts, id: \.id) { entry in
+                            MenuEntry(productEntry: entry)
+                        }
+                    }
+                }
+            }
+            .background(
+                Color
+                    .brown
+                    .gradient
+            )
+            .task {
+                await menu.loadMenuEntries()
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack {
+                        Text("Coffee")
+                            .foregroundStyle(.white)
+                            .padding(4)
+                            .fontWeight(.bold)
+                    }
+                }
+            }
+
+
         }
-        .padding()
+
     }
 }
 
 #Preview {
     ContentView()
+        .environment(MenuManager(webservice: Webservice(apiSystem: .dev)))
 }
