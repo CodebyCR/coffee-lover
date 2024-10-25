@@ -21,6 +21,11 @@ struct ContentView: View {
                     List {
                         ForEach(menu.choseableProducts, id: \.id) { entry in
                             MenuEntry(productEntry: entry)
+                                .swipeActions {
+                                    Button("Order"){
+                                        print("Order \(entry.name)...")
+                                    }
+                                }
                         }
                     }
                 }

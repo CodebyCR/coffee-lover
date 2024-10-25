@@ -30,5 +30,6 @@ struct MenuEntry: View {
         }.frame(
             height: 60
         )
+        .padding(.leading, 8)
     }
 }
