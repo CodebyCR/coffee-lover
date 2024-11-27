@@ -24,24 +24,32 @@ public actor Webservice {
         return data
     }
 
-//    @MainActor
-//    public func loadMenuEntries2() async -> AsyncThrowingStream<Data, Error> {
-//        return AsyncThrowingStream { continuation in
-//            do {
-//                try self.download(url, progressHandler: { progress in
-//                    continuation.yield(.downloading(progress))
-//                }, completion: { result in
-//                    switch result {
-//                    case .success(let data):
-//                        continuation.yield(.finished(data))
-//                        continuation.finish()
-//                    case .failure(let error):
-//                        continuation.finish(throwing: error)
-//                    }
-//                })
-//            } catch {
-//                continuation.finish(throwing: error)
-//            }
-//        }
-//    }
+    public func load(by id: String) async throws -> CoffeeModel {
+        let menuJson = apiSystem.baseURL
+            .appendingPathComponent("menu")
+            .appendingPathComponent("id={\(id)}")
+        let (data, _) = try await URLSession.shared.data(from: menuJson)
+
+        guard let coffee = try? JSONDecoder().decode(CoffeeModel.self, from: data) else {
+            throw FetchError.decodingError
+        }
+
+        return coffee
+    }
+
+    public func load(by ids: String...) async -> AsyncThrowingStream<CoffeeModel, Error> {
+        return AsyncThrowingStream<CoffeeModel, Error> { continuation in
+            Task {
+                do {
+                    for id in ids {
+                        let coffeeModel = try await load(by: id)
+                        continuation.yield(coffeeModel)
+                    }
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+            }
+        }
+    }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 public final class MenuManager {
-    private var webservice: Webservice
+    @ObservationIgnored private var webservice: Webservice
     public var choseableProducts: [Product] = []
 
     init(webservice: Webservice) {
@@ -19,20 +19,16 @@ public final class MenuManager {
     @MainActor
     public func loadMenuEntries() async {
         do {
-            let jsonData = try await webservice.loadMenu()
-            let coffees = try JSONDecoder().decode([CoffeeModel].self, from: jsonData)
-            choseableProducts.append(contentsOf: coffees)
+//            let jsonData = try await webservice.loadMenu()
+//            print(jsonData)
+//            let coffees = try JSONDecoder().decode([CoffeeModel].self, from: jsonData)
+//            choseableProducts.append(contentsOf: coffees)
+
+            for try await item in await webservice.load(by: "1", "2", "3") {
+                choseableProducts.append(item)
+            }
         } catch {
             print(error)
         }
     }
-
-//    @MainActor
-//    public func loadMenuEntries2() async {
-//        do {
-//            for await menuEntry in try webservice.loadMenu() {}
-//        } catch {
-//            print(error)
-//        }
-//    }
 }
