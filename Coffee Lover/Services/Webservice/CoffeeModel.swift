@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CoffeeModel: Product, Codable {
+public struct CoffeeModel: Product, Codable, Sendable {
     public let id: UUID
     public let productNumber: UInt16
     public let name: String
