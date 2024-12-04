@@ -27,7 +27,9 @@ public actor Webservice {
     public func load(by id: String) async throws -> CoffeeModel {
         let menuJson = apiSystem.baseURL
             .appendingPathComponent("menu")
-            .appendingPathComponent("id={\(id)}")
+            .appendingPathComponent("id")
+            .appendingPathComponent("\(id)")
+
         let (data, _) = try await URLSession.shared.data(from: menuJson)
 
         guard let coffee = try? JSONDecoder().decode(CoffeeModel.self, from: data) else {

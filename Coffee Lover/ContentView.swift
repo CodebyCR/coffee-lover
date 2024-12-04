@@ -13,7 +13,6 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-
             ZStack {
                 VStack {
                     Spacer()
@@ -22,7 +21,7 @@ struct ContentView: View {
                         ForEach(menu.choseableProducts, id: \.id) { entry in
                             MenuEntry(productEntry: entry)
                                 .swipeActions {
-                                    Button("Order"){
+                                    Button("Order") {
                                         print("Order \(entry.name)...")
                                     }
                                 }
@@ -49,10 +48,7 @@ struct ContentView: View {
                     }
                 }
             }
-
-
         }
-
     }
 }
 
