@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Product {
+public protocol Product: Sendable {
     var id: UUID { get }
     var productNumber: UInt16 { get }
     var name: String { get }
