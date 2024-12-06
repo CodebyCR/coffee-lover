@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol Product: Sendable {
-    var id: UUID { get }
-    var productNumber: UInt16 { get }
+    var id: UInt16 { get }
     var name: String { get }
     var price: Float64 { get }
+//    var date: Date { get }
 }
