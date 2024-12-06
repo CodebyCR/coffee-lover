@@ -13,7 +13,7 @@ struct MenuEntry: View {
     var body: some View {
         HStack {
             HStack {
-                Text("\(productEntry.productNumber)")
+                Text("\(productEntry.id)")
                     .fontWeight(.thin)
                     .italic()
                     .bold()
