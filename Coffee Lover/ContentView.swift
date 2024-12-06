@@ -10,6 +10,7 @@ import SwiftUI
 @MainActor
 struct ContentView: View {
     @Environment(MenuManager.self) private var menu
+//    @State private var choosedProducts: [Product] = []
 
     var body: some View {
         NavigationStack {
@@ -34,9 +35,17 @@ struct ContentView: View {
                     .brown
                     .gradient
             )
-            .task {
+            .task(priority: .background) {
                 await menu.loadMenuEntries()
+
+//                await MainActor.run {
+//                    withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
+//                        // animate menu entries...
+//
+//                    }
+//                }
             }
+
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
