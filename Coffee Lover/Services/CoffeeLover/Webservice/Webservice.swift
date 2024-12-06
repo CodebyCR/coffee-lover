@@ -24,6 +24,19 @@ public actor Webservice {
         return data
     }
 
+    public func getDrinkIds() async throws -> [String] {
+        let indexIdsJson = apiSystem.baseURL
+            .appendingPathComponent("menu")
+            .appendingPathComponent("index_ids")
+        let (data, _) = try await URLSession.shared.data(from: indexIdsJson)
+
+        guard let drinkIds = try? JSONDecoder().decode([String].self, from: data) else {
+            throw FetchError.decodingError
+        }
+
+        return drinkIds
+    }
+
     public func load(by id: String) async throws -> CoffeeModel {
         let menuJson = apiSystem.baseURL
             .appendingPathComponent("menu")
@@ -39,7 +52,7 @@ public actor Webservice {
         return coffee
     }
 
-    public func load(by ids: String...) async -> AsyncThrowingStream<CoffeeModel, Error> {
+    public func load(by ids: [String]) async -> AsyncThrowingStream<CoffeeModel, Error> {
         return AsyncThrowingStream<CoffeeModel, Error> { continuation in
             Task {
                 do {
