@@ -67,4 +67,19 @@ public actor Webservice {
             }
         }
     }
+
+    public func createNewOrder(by orderJSON: Data) async throws {
+        let orderURL = apiSystem.baseURL.appendingPathComponent("order")
+        var request = URLRequest(url: orderURL)
+        request.httpMethod = "POST"
+        request.httpBody = orderJSON
+
+        let (_, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 201
+        else {
+            throw FetchError.invalidResponse
+        }
+    }
 }
