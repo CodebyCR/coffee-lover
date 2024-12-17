@@ -5,7 +5,7 @@
 //  Created by Christoph Rohde on 04.12.24.
 //
 
-public enum PaymentOption: String, CaseIterable, Sendable {
+public enum PaymentOption: String, CaseIterable, Sendable, Codable {
     case applePay = "ApplePay"
     case cash = "Cash"
 
