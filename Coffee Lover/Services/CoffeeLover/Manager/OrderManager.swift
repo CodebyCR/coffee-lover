@@ -19,13 +19,17 @@ public final class OrderManager {
         self.webservice = webservice
     }
 
-    public func takeOrder() {
+    public func takeOrder() async {
         let shoppingItems = shoppingCard.items
-        let totalPrice = shoppingItems.map { $0.price }.reduce(0, +)
         let paymentOption = PaymentOption.applePay
-
-        let newOrder = Order(orderdProducts: shoppingItems, totalPrice: totalPrice, paymentOption: paymentOption)
+        let newOrder = Order(orderdProducts: shoppingItems, paymentOption: paymentOption)
         // POST request with newOrder json
+        let newOrderJSON = try! JSONEncoder().encode(newOrder)
 
+        do {
+            try await webservice.createNewOrder(by: newOrderJSON)
+        } catch {
+            print(error)
+        }
     }
 }
