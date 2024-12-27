@@ -13,16 +13,16 @@ public final class OrderManager {
 
     private(set) var pendingOrders: [Order] = []
     private(set) var completedOrders: [Order] = []
-    private(set) var shoppingCard = ShoppingCard()
+    private(set) var shoppingCard = ProductStore()
 
     init(webservice: Webservice) {
         self.webservice = webservice
     }
 
     public func takeOrder() async {
-        let shoppingItems = shoppingCard.items
         let paymentOption = PaymentOption.applePay
-        let newOrder = Order(orderdProducts: shoppingItems, paymentOption: paymentOption)
+        let userId = UUID()
+        let newOrder = Order(userId: userId, orderdProducts: shoppingCard, paymentOption: paymentOption)
         // POST request with newOrder json
         let newOrderJSON = try! JSONEncoder().encode(newOrder)
 
