@@ -16,4 +16,47 @@ public struct CoffeeModel: Product, Codable, Hashable {
     public static func == (lhs: CoffeeModel, rhs: CoffeeModel) -> Bool {
         lhs.id == rhs.id
     }
+
+    // MARK: - Codable
+    // {"id":1,"name":"Cappuccino","price":3.5,"metadata":{"created_at":"2024-11-28 19:45:04","updated_at":"2024-12-27 17:57:37","tag_ids":[null]}}
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case price
+        case metadata
+
+        enum MetadataKeys: String, CodingKey {
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+            case tagIds = "tag_ids"
+        }
+
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UInt16.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        price = try container.decode(Float64.self, forKey: .price)
+        metadata = try container.decode(Metadata.self, forKey: .metadata)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(price, forKey: .price)
+
+        var metadataContainer = container.nestedContainer(keyedBy: Metadata.CodingKeys.self, forKey: .metadata)
+        try metadataContainer.encode(metadata.createdAt, forKey: .createdAt)
+        try metadataContainer.encode(metadata.updatedAt, forKey: .updatedAt)
+        //try metadataContainer.encode(metadata.tagIds, forKey: .tagIds)
+
+    }
+
+
+
+
+
 }
