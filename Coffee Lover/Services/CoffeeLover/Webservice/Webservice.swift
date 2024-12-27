@@ -8,29 +8,35 @@
 import Foundation
 
 public actor Webservice {
-    private let apiSystem: APISystem
+    private let dataBaseAPI: DatabaseAPI
 
-    public init(apiSystem: consuming APISystem) {
-        self.apiSystem = apiSystem
+    public init(apiSystem: consuming DatabaseAPI) {
+        self.dataBaseAPI = apiSystem
     }
 
     @MainActor
     public func loadMenu() async throws -> Data {
         // TODO: implement as async sequence
 
-        let menuJson = apiSystem.baseURL.appendingPathComponent("menu")
+        let menuJson = dataBaseAPI.baseURL.appendingPathComponent("menu")
         let (data, _) = try await URLSession.shared.data(from: menuJson)
 
         return data
     }
 
     public func getDrinkIds() async throws -> [String] {
-        let indexIdsJson = apiSystem.baseURL
+        let indexIdsJson = dataBaseAPI.baseURL
             .appendingPathComponent("menu")
-            .appendingPathComponent("index_ids")
-        let (data, _) = try await URLSession.shared.data(from: indexIdsJson)
+            .appendingPathComponent("ids")
+        let (data, response) = try await URLSession.shared.data(from: indexIdsJson)
 
         guard let drinkIds = try? JSONDecoder().decode([String].self, from: data) else {
+            print(response)
+            print("""
+            Error in \(#file)
+            \t\(#function) \(#line):\(#column)
+            \tStatus code: \((response as? HTTPURLResponse)?.statusCode ?? 0)
+            """)
             throw FetchError.decodingError
         }
 
@@ -38,14 +44,23 @@ public actor Webservice {
     }
 
     public func load(by id: String) async throws -> CoffeeModel {
-        let menuJson = apiSystem.baseURL
+        let menuJson = dataBaseAPI.baseURL
             .appendingPathComponent("menu")
             .appendingPathComponent("id")
-            .appendingPathComponent("\(id)")
+            .appendingPathComponent(id)
 
-        let (data, _) = try await URLSession.shared.data(from: menuJson)
+        let (data, response) = try await URLSession.shared.data(from: menuJson)
 
         guard let coffee = try? JSONDecoder().decode(CoffeeModel.self, from: data) else {
+            print(response)
+
+            let stacktrace = Thread.callStackSymbols.joined(separator: "\n")
+            print(stacktrace)
+            print("""
+            Error in \(#file)
+            \t\(#function) \(#line):\(#column)
+            \tStatus code: \((response as? HTTPURLResponse)?.statusCode ?? 0)
+            """)
             throw FetchError.decodingError
         }
 
@@ -69,7 +84,7 @@ public actor Webservice {
     }
 
     public func createNewOrder(by orderJSON: Data) async throws {
-        let orderURL = apiSystem.baseURL.appendingPathComponent("order")
+        let orderURL = dataBaseAPI.baseURL.appendingPathComponent("order")
         var request = URLRequest(url: orderURL)
         request.httpMethod = "POST"
         request.httpBody = orderJSON
@@ -79,6 +94,11 @@ public actor Webservice {
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 201
         else {
+            print("""
+            Error in \(#file)
+            \t\(#function) \(#line):\(#column)
+            \tStatus code: \((response as? HTTPURLResponse)?.statusCode ?? 0)
+            """)
             throw FetchError.invalidResponse
         }
     }
