@@ -8,16 +8,19 @@ import Foundation
 
 public struct Order: Identifiable, Sendable, Codable {
     public let id: UUID
+    public let userId: UUID
     public let timestamp: Date
-    public let products: [CoffeeModel]
+    public let products: ProductStore
     public let totalPrice: Float64
     public let paymentOption: PaymentOption
 
-    public init(orderdProducts: [CoffeeModel], paymentOption: PaymentOption) {
+    public init(userId: UUID, orderdProducts: ProductStore, paymentOption: PaymentOption) {
         id = UUID()
+        self.userId = userId
         timestamp = .now
         products = orderdProducts
-        totalPrice = orderdProducts.map { $0.price }.reduce(0, +)
+        totalPrice = orderdProducts.total()
         self.paymentOption = paymentOption
     }
+
 }
