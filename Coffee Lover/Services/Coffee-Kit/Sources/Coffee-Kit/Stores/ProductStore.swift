@@ -12,8 +12,11 @@ public struct ProductStore: Sendable {
         products = [:]
     }
 
-    public mutating func add(_ product: consuming some Product, to category: consuming String) {
-        products[category]?.append(consume product)
+    public mutating func add(_ product: consuming some Product, to category: String) {
+        if products[category] == nil {
+            products[category] = []
+        }
+        products[category]?.append(product)
     }
 
     public func getProducts(for category: String) -> [any Product] {

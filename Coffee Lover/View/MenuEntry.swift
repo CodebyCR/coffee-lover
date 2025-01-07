@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Coffee_Kit
 
 struct MenuEntry: View {
     var productEntry: any Product

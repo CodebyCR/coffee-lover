@@ -18,6 +18,7 @@ public struct CurrencyFormatter {
         guard let formattedAmount = formatter.string(from: NSNumber(value: amount)) else {
             return String(amount)
         }
+        
         return formattedAmount
     }
 }

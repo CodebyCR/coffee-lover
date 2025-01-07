@@ -13,6 +13,11 @@ public struct Metadata: Sendable, Codable, Hashable {
 
     // MARK: - Codable
 
+    public init() {
+        createdAt = Date()
+        updatedAt = Date()
+    }
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 

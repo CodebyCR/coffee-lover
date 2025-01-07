@@ -13,6 +13,17 @@ public struct CakeModel: Product, Codable, Hashable {
     public let price: Float64
     public let metadata: Metadata
 
+    // MARK: - Initializer
+
+    public init() {
+        id = 0
+        name = "Caffee"
+        price = 3.20
+        metadata = Metadata()
+    }
+
+    // MARK: - Equatable
+
     public static func == (lhs: CakeModel, rhs: CakeModel) -> Bool {
         lhs.id == rhs.id
     }

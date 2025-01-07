@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import Coffee_Kit
 
 @main
 struct Coffee_LoverApp: App {
-    @State var menuManager = MenuManager(webservice: Webservice(apiSystem: .dev))
+    
+
+    @State var menuManager = MenuManager(from: Webservice(apiSystem: .dev))
 
     var body: some Scene {
         WindowGroup {

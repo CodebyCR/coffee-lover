@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 public struct CoffeeModel: Product, Codable, Hashable {
     public let id: UInt16
     public let name: String
@@ -16,6 +17,15 @@ public struct CoffeeModel: Product, Codable, Hashable {
     public static func == (lhs: CoffeeModel, rhs: CoffeeModel) -> Bool {
         lhs.id == rhs.id
     }
+
+    // default init
+    public init() {
+        id = 0
+        name = "Caffee"
+        price = 3.20
+        metadata = Metadata()
+    }
+
 
     // MARK: - Codable
     // {"id":1,"name":"Cappuccino","price":3.5,"metadata":{"created_at":"2024-11-28 19:45:04","updated_at":"2024-12-27 17:57:37","tag_ids":[null]}}
