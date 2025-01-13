@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Coffee_Kit
 
 @MainActor
 struct ContentView: View {
@@ -63,5 +64,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environment(MenuManager(webservice: Webservice(apiSystem: .dev)))
+        .environment(MenuManager(from: Webservice(apiSystem: .dev)))
 }

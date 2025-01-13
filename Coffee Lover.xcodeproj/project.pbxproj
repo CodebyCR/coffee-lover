@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8E772C772D3585C500E6D7B5 /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E772C762D3585C500E6D7B5 /* Coffee-Kit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		8E2C69742CC4F86F004B334D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -33,12 +37,7 @@
 		8E0FCCD92D2DA278006BB465 /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Coffee_LoverApp.swift,
-				ContentView.swift,
-				Extension/DictionaryExtension.swift,
 				"Services/Coffee-Kit",
-				Services/CurrencyFormatter.swift,
-				View/MenuEntry.swift,
 			);
 			target = 8E2C69622CC4F86C004B334D /* Coffee Lover */;
 		};
@@ -70,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E772C772D3585C500E6D7B5 /* Coffee-Kit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +130,7 @@
 			);
 			name = "Coffee Lover";
 			packageProductDependencies = (
+				8E772C762D3585C500E6D7B5 /* Coffee-Kit */,
 			);
 			productName = "Coffee Lover";
 			productReference = 8E2C69632CC4F86C004B334D /* Coffee Lover.app */;
@@ -214,6 +215,7 @@
 			mainGroup = 8E2C695A2CC4F86B004B334D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				8E772C752D3585C500E6D7B5 /* XCLocalSwiftPackageReference "Coffee Lover/Services/Coffee-Kit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8E2C69642CC4F86C004B334D /* Products */;
@@ -574,6 +576,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		8E772C752D3585C500E6D7B5 /* XCLocalSwiftPackageReference "Coffee Lover/Services/Coffee-Kit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Coffee Lover/Services/Coffee-Kit";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8E772C762D3585C500E6D7B5 /* Coffee-Kit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Coffee-Kit";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8E2C695B2CC4F86B004B334D /* Project object */;
 }
