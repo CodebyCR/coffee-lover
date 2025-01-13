@@ -29,9 +29,27 @@
 		8E2C697D2CC4F86F004B334D /* Coffee LoverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8E0FCCD92D2DA278006BB465 /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Coffee_LoverApp.swift,
+				ContentView.swift,
+				Extension/DictionaryExtension.swift,
+				"Services/Coffee-Kit",
+				Services/CurrencyFormatter.swift,
+				View/MenuEntry.swift,
+			);
+			target = 8E2C69622CC4F86C004B334D /* Coffee Lover */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8E2C69652CC4F86C004B334D /* Coffee Lover */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8E0FCCD92D2DA278006BB465 /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */,
+			);
 			path = "Coffee Lover";
 			sourceTree = "<group>";
 		};
@@ -195,6 +213,8 @@
 			);
 			mainGroup = 8E2C695A2CC4F86B004B334D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8E2C69642CC4F86C004B334D /* Products */;
 			projectDirPath = "";

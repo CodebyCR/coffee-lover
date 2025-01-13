@@ -7,7 +7,7 @@
 
 import Foundation
 import Testing
-@testable import Coffee_Lover
+@testable import Coffee_Kit
 
 struct Coffee_LoverTests {
 
@@ -28,7 +28,7 @@ struct Coffee_LoverTests {
        """
 
         let data = Data(ressource.utf8)
-        let coffee = try await JSONDecoder().decode(CoffeeModel.self, from: data)
+        let coffee = try JSONDecoder().decode(CoffeeModel.self, from: data)
 
         #expect(coffee.id == 1)
 
