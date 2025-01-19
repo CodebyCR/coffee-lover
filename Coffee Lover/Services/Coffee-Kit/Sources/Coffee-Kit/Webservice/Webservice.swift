@@ -10,8 +10,8 @@ import Foundation
 public actor Webservice {
     private let databaseAPI: DatabaseAPI
 
-    public init(apiSystem: consuming DatabaseAPI) {
-        self.databaseAPI = apiSystem
+    public init(inMode databaseAPI: consuming DatabaseAPI) {
+        self.databaseAPI = databaseAPI
     }
 
     @MainActor

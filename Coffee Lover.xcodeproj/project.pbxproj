@@ -10,6 +10,20 @@
 		8E772C772D3585C500E6D7B5 /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E772C762D3585C500E6D7B5 /* Coffee-Kit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		8EBBEA512D3D5749001C5637 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = folder.rkassets;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# realitytool\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXContainerItemProxy section */
 		8E2C69742CC4F86F004B334D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -33,22 +47,9 @@
 		8E2C697D2CC4F86F004B334D /* Coffee LoverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		8E0FCCD92D2DA278006BB465 /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Services/Coffee-Kit",
-			);
-			target = 8E2C69622CC4F86C004B334D /* Coffee Lover */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8E2C69652CC4F86C004B334D /* Coffee Lover */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				8E0FCCD92D2DA278006BB465 /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */,
-			);
 			path = "Coffee Lover";
 			sourceTree = "<group>";
 		};
@@ -122,6 +123,7 @@
 				8E2C69612CC4F86C004B334D /* Resources */,
 			);
 			buildRules = (
+				8EBBEA512D3D5749001C5637 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);

@@ -13,7 +13,7 @@ struct OrderTests {
 
     @Test func testTakingOrder() async {
         let databaseAPI = DatabaseAPI.dev
-        let webservice = Webservice(apiSystem: databaseAPI)
+        let webservice = Webservice(inMode: databaseAPI)
         let orderManager = OrderManager(webservice: webservice)
 
         var products = orderManager.shoppingCard

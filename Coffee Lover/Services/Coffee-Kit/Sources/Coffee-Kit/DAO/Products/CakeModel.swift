@@ -7,11 +7,15 @@
 
 import Foundation
 
+@DebugDescription
 public struct CakeModel: Product, Codable, Hashable {
     public let id: UInt16
     public let name: String
     public let price: Float64
     public let metadata: Metadata
+    public var debugDescription: String {
+        "CakeModel: id=\(id), name=\(name), price=\(price), metadata=\(metadata)"
+    }
 
     // MARK: - Initializer
 

@@ -12,7 +12,7 @@ import Coffee_Kit
 struct Coffee_LoverApp: App {
     
 
-    @State var menuManager = MenuManager(from: Webservice(apiSystem: .dev))
+    @State var menuManager = MenuManager(from: Webservice(inMode: .dev))
 
     var body: some Scene {
         WindowGroup {

@@ -77,12 +77,12 @@ extension ProductStore: Codable {
     }
 
     public init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        _ = try decoder.container(keyedBy: CodingKeys.self)
         products = [:]
     }
 
     public func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        _ = encoder.container(keyedBy: CodingKeys.self)
     }
 
 }

@@ -13,7 +13,7 @@ public final class MenuManager {
     public var choseableProducts: [any Product] = []
 
     public init(){
-        self.webservice = Webservice(apiSystem: .dev)
+        self.webservice = Webservice(inMode: .dev)
     }
 
     public init(from webservice: Webservice) {

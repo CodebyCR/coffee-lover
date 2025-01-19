@@ -7,12 +7,15 @@
 
 import Foundation
 
-
+@DebugDescription
 public struct CoffeeModel: Product, Codable, Hashable {
     public let id: UInt16
     public let name: String
     public let price: Float64
     public let metadata: Metadata
+    public var debugDescription: String {
+        "CoffeeModel: id=\(id), name=\(name), price=\(price), metadata=\(metadata)"
+    }
 
     public static func == (lhs: CoffeeModel, rhs: CoffeeModel) -> Bool {
         lhs.id == rhs.id

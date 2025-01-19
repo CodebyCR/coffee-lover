@@ -6,10 +6,15 @@
 //
 import Foundation
 
-public struct Metadata: Sendable, Codable, Hashable {
+public struct Metadata: Sendable, Codable, Hashable, CustomDebugStringConvertible {
     let createdAt: Date
     let updatedAt: Date
     //let tagIds: [String]
+    public var debugDescription: String {
+        get {
+            return "Metadata: createdAt=\(createdAt), updatedAt=\(updatedAt)"
+        }
+    }
 
     // MARK: - Codable
 
