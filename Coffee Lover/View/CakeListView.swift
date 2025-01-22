@@ -11,6 +11,7 @@ import Coffee_Kit
 
 struct CakeListView: View {
     @Environment(MenuManager.self) private var menu
+    @State private var cakes: [CakeModel] = []
 
 
     var body: some View {
@@ -20,7 +21,7 @@ struct CakeListView: View {
                     Spacer()
 
                     List {
-                        ForEach(menu.choseableProducts, id: \.id) { entry in
+                        ForEach(cakes, id: \.id) { entry in
                             MenuEntry(productEntry: entry)
                                 .swipeActions {
                                     Button("Order") {
@@ -37,14 +38,16 @@ struct CakeListView: View {
                     .gradient
             )
             .task(priority: .background) {
-                await menu.loadMenuEntries()
+                await MainActor.run {
+                    withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
+                        // animate menu entries...
+                        menu.cakes.forEach { cake in
+                            print("Adding \(cake.name)...")
+                            cakes.append(cake)
+                        }
 
-                //                await MainActor.run {
-                //                    withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
-                //                        // animate menu entries...
-                //
-                //                    }
-                //                }
+                    }
+                }
             }
 
             .navigationBarTitleDisplayMode(.inline)
@@ -64,5 +67,5 @@ struct CakeListView: View {
 
 #Preview {
     CakeListView()
-        .environment(MenuManager(from: Webservice(inMode: .dev)))
+        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
 }

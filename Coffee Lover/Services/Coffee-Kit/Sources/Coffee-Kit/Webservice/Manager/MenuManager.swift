@@ -7,42 +7,42 @@
 
 import Foundation
 
-@Observable
-public final class MenuManager {
-    @ObservationIgnored private var webservice: Webservice
-    public var choseableProducts: [any Product] = []
 
-    public init(){
-        self.webservice = Webservice(inMode: .dev)
+@Observable
+@MainActor
+public final class MenuManager {
+
+    // MARK: - Properties
+    @ObservationIgnored private var webservice: WebserviceProvider
+    public var coffees: [CoffeeModel] = []
+    public var cakes: [CakeModel] = []
+
+
+    // MARK: - Computed Properties
+    public var coffeeSequence: CoffeeService {
+        // print errors and filter out nil values
+
+        return CoffeeService(databaseAPI: webservice.databaseAPI)
+
     }
 
-    public init(from webservice: Webservice) {
+    public var cakeService: CakeService {
+        return CakeService(databaseAPI: webservice.databaseAPI)
+    }
+
+    // MARK: - Initializer
+    public init(){
+        self.webservice = WebserviceProvider(inMode: .dev)
+    }
+
+    public init(from webservice: consuming WebserviceProvider) {
         self.webservice = webservice
     }
 
-    @MainActor
-    public func loadMenuEntries() async {
-        do {
-            let drinkIds = try await webservice.getDrinkIds()
 
-            for try await item in await webservice.load(by: drinkIds) {
-                choseableProducts.append(item)
-            }
-        } catch {
-            print(error)
-        }
-    }
 
-    @MainActor
-    public func loadCakes() async -> AsyncThrowingStream<CoffeeModel, any Error>{
-        guard let cakeIds = try? await webservice.getCakeIds() else {
-            print("Error to fetch drink ids")
-            return AsyncThrowingStream { continuation in
-                continuation.finish(throwing: FetchError.decodingError)
-            }
-        }
 
-        return await webservice.load(by: cakeIds)
-    }
+
+
 
 }

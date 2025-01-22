@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct DatabaseAPI: ~Copyable, Sendable{
+public struct DatabaseAPI {
     public let baseURL: URL
 
     public static var dev: DatabaseAPI {
