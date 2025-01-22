@@ -98,4 +98,23 @@ public actor Webservice {
             throw FetchError.invalidResponse
         }
     }
+
+
+    public func getCakeIds() async throws -> [String] {
+        let indexIdsJson = databaseAPI.baseURL / "cake" / "ids"
+        let (data, response) = try await URLSession.shared.data(from: indexIdsJson)
+
+        guard let cakeIds = try? JSONDecoder().decode([String].self, from: data) else {
+            print(response)
+            print("""
+            Error in \(#file)
+            \t\(#function) \(#line):\(#column)
+            \tStatus code: \((response as? HTTPURLResponse)?.statusCode ?? 0)
+            """)
+            throw FetchError.decodingError
+        }
+
+        return cakeIds
+    }
+
 }
