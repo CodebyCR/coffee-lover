@@ -20,7 +20,7 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             // MARK: - Orders
 
-            Text("Unimplemented Orders")
+            OrderListView()
                 .tabItem {
                     Label("Orders", systemImage: "tray.and.arrow.down.fill")
                 }
@@ -37,7 +37,7 @@ struct ContentView: View {
 
             // MARK: - Cart
 
-            Text("Unimplemented cart")
+            ShoppingCartView()
                 .tabItem {
                     Label("Cart", systemImage: "cart")
                 }
