@@ -53,11 +53,6 @@
 			path = "Coffee Lover";
 			sourceTree = "<group>";
 		};
-		8E2C69762CC4F86F004B334D /* Coffee LoverTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Coffee LoverTests";
-			sourceTree = "<group>";
-		};
 		8E2C69802CC4F86F004B334D /* Coffee LoverUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Coffee LoverUITests";
@@ -95,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				8E2C69652CC4F86C004B334D /* Coffee Lover */,
-				8E2C69762CC4F86F004B334D /* Coffee LoverTests */,
 				8E2C69802CC4F86F004B334D /* Coffee LoverUITests */,
 				8E2C69642CC4F86C004B334D /* Products */,
 			);
@@ -150,9 +144,6 @@
 			);
 			dependencies = (
 				8E2C69752CC4F86F004B334D /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				8E2C69762CC4F86F004B334D /* Coffee LoverTests */,
 			);
 			name = "Coffee LoverTests";
 			packageProductDependencies = (
