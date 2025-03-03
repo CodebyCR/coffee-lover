@@ -5,20 +5,53 @@
 //  Created by Christoph Rohde on 20.10.24.
 //
 
+import Coffee_Kit
 import SwiftUI
 
+enum MainTab {
+    case orders, menu, cart
+}
 
 @MainActor
 struct ContentView: View {
+    @State private var selectedTab: MainTab = .menu
 
-    @State private var currentIndex = 0
-//        @GestureState private var dragOffset: CGFloat = 0
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            // MARK: - Orders
 
-     let list = ["Coffees", "Cakes"]
+            Text("Unimplemented Orders")
+                .tabItem {
+                    Label("Orders", systemImage: "tray.and.arrow.down.fill")
+                }
+                .tag(MainTab.orders)
+                .badge(1)
 
-        var body: some View {
-            NavigationStack {
-                CoffeeListView()
+            // MARK: - Menu
+
+            MenuNaviagtionView()
+                .tabItem {
+                    Label("Menu", systemImage: "list.bullet")
+                }
+                .tag(MainTab.menu)
+
+            // MARK: - Cart
+
+            Text("Unimplemented cart")
+                .tabItem {
+                    Label("Cart", systemImage: "cart")
+                }
+                .tag(MainTab.cart)
+        }
+        .accentColor(.brown)
+    }
+}
+
+#Preview {
+    ContentView()
+        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+}
+
 //                VStack {
 //                    ZStack {
 //                        ForEach(list, id: \.self) { listType in
@@ -75,10 +108,3 @@ struct ContentView: View {
 //                        .padding(.horizontal, 50)
 //                    }
 //                }
-            }
-        }
-}
-
-#Preview {
-    ContentView()
-}

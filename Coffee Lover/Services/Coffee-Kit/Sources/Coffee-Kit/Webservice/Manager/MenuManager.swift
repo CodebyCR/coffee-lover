@@ -7,23 +7,21 @@
 
 import Foundation
 
-
 @Observable
 @MainActor
 public final class MenuManager {
-
     // MARK: - Properties
+
     @ObservationIgnored private var webservice: WebserviceProvider
     public var coffees: [CoffeeModel] = []
     public var cakes: [CakeModel] = []
 
-
     // MARK: - Computed Properties
+
     public var coffeeSequence: CoffeeService {
         // print errors and filter out nil values
 
         return CoffeeService(databaseAPI: webservice.databaseAPI)
-
     }
 
     public var cakeService: CakeService {
@@ -31,18 +29,12 @@ public final class MenuManager {
     }
 
     // MARK: - Initializer
-    public init(){
+
+    public init() {
         self.webservice = WebserviceProvider(inMode: .dev)
     }
 
     public init(from webservice: consuming WebserviceProvider) {
         self.webservice = webservice
     }
-
-
-
-
-
-
-
 }
