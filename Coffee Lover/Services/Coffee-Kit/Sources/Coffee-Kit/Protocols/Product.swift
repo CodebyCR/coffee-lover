@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Product: Identifiable, Sendable, Codable, CustomDebugStringConvertible {
+public protocol Product: Identifiable, Sendable, Codable, CustomDebugStringConvertible, Hashable {
     var id: UInt16 { get }
     var name: String { get }
     var price: Float64 { get }
@@ -15,3 +15,11 @@ public protocol Product: Identifiable, Sendable, Codable, CustomDebugStringConve
     var debugDescription: String { get }
 }
 
+public extension Product {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(price)
+        hasher.combine(metadata)
+    }
+}
