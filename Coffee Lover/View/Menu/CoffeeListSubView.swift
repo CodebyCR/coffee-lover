@@ -11,9 +11,14 @@ import SwiftUI
 @MainActor
 struct CoffeeListSubView: View {
     @Environment(MenuManager.self) private var menu
+    @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
 
     var body: some View {
         List {
+            if menu.coffees.isEmpty {
+                ContentUnavailableView("No Internet connection.", image: "globe", description: Text("Please check your connection."))
+            }
+
             ForEach(menu.coffees, id: \.id) { entry in
 
                 NavigationLink(
@@ -24,6 +29,7 @@ struct CoffeeListSubView: View {
                             .swipeActions {
                                 Button("Add") {
                                     print("Add \(entry.name) to cart ...")
+                                    orderBuilder.addProduct(entry)
                                 }
                             }
                     })

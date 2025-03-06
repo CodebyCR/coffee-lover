@@ -18,19 +18,32 @@ struct MenuNaviagtionView: View {
 
     var body: some View {
         NavigationStack(path: $homeNavigationStack) {
-            CoffeeListView()
-                .tag(MenuNavigationEntry.coffee)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        VStack {
-                            Text(homeNavigationStack.last?.rawValue ?? "Coffee")
-                                .foregroundStyle(.white)
-                                .padding(4)
-                                .fontWeight(.bold)
+            VStack {
+                CoffeeListView()
+                    .tag(MenuNavigationEntry.coffee)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .principal) {
+                            VStack {
+                                Text(homeNavigationStack.last?.rawValue ?? "Coffee")
+                                    .foregroundStyle(.white)
+                                    .padding(4)
+                                    .fontWeight(.bold)
+                            }
                         }
                     }
-                }
+
+                RoundedRectangle(cornerRadius: 16)
+                    .frame(height: 50)
+                    .foregroundColor(.brown)
+                    .overlay {
+                        Text("Categorie Placeholder")
+                            .foregroundStyle(.white)
+
+                            .fontWeight(.bold)
+                    }
+                    .padding([.bottom, .horizontal], 16)
+            }
         }
         .background(
             Color

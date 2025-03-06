@@ -14,6 +14,7 @@ enum MainTab {
 
 @MainActor
 struct ContentView: View {
+    @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
     @State private var selectedTab: MainTab = .menu
 
     var body: some View {
@@ -37,11 +38,14 @@ struct ContentView: View {
 
             // MARK: - Cart
 
-            ShoppingCartView()
-                .tabItem {
-                    Label("Cart", systemImage: "cart")
-                }
-                .tag(MainTab.cart)
+            withAnimation(.bouncy) {
+                ShoppingCartView()
+                    .tabItem {
+                        Label("Cart", systemImage: "cart")
+                    }
+                    .tag(MainTab.cart)
+                    .badge(orderBuilder.totalProducts)
+            }
         }
         .accentColor(.brown)
     }
@@ -50,6 +54,7 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(OrderBuilder(for: UUID()))
 }
 
 //                VStack {
