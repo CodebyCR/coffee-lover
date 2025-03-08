@@ -32,17 +32,9 @@ struct MenuNaviagtionView: View {
                             }
                         }
                     }
+                    
 
-                RoundedRectangle(cornerRadius: 16)
-                    .frame(height: 50)
-                    .foregroundColor(.brown)
-                    .overlay {
-                        Text("Categorie Placeholder")
-                            .foregroundStyle(.white)
 
-                            .fontWeight(.bold)
-                    }
-                    .padding([.bottom, .horizontal], 16)
             }
         }
         .background(

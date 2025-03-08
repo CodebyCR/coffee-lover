@@ -10,67 +10,34 @@ import SwiftUI
 
 struct ShoppingCartView: View {
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
-    @State private var activePopover: Bool = false
 
     var body: some View {
-        VStack {
-            List {
-                if orderBuilder.products.isEmpty {
-                    ContentUnavailableView("Your cart is Empty.", systemImage: "cart", description: Text("Enjoy some tasty pices ❤️"))
-                }
+        NavigationStack {
+            VStack {
+                List {
+                    if orderBuilder.products.isEmpty {
+                        ContentUnavailableView("Your cart is Empty.", systemImage: "cart", description: Text("Enjoy some tasty pices ❤️"))
+                    }
 
-                ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
-                    NavigationLink(
-                        destination: {
-                            ProductDetailView(product: productWithQuantity.product)
-                        }, label: {
-                            // Stepper need Binding (outsource to separate view)
-                            // Quantity with stepper
-                            //                        HStack {
-                            //                            Text("\(productWithQuantity.quantity)")
-                            //
-                            //                            @Bindable var quantity: Int = productWithQuantity.quantity
-                            //
-                            //                            Stepper(value: $quantity, in: 0 ... 100) {
-                            //                                Text(productWithQuantity.product.name)
-                            //                            }
-                            //                        }
-                            MenuEntry(productEntry: productWithQuantity.product)
-                                .swipeActions {
-                                    Button("Add") {
-                                        print("Add \(productWithQuantity.product.name) to cart ...")
+                    ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
+                        NavigationLink(
+                            destination: {
+                                ProductDetailView(product: productWithQuantity.product)
+                            }, label: {
+                                ProductQuantityView(of: productWithQuantity)
+                                    .swipeActions {
+                                        Button("Remove") {
+                                            print("Remove \(productWithQuantity.product.name) from cart ...")
+                                            orderBuilder.removeAll(productWithQuantity.product)
+                                        }
                                     }
-                                }
-                        }
-                    )
+                            }
+                        )
+                    }
                 }
-            }
-
-            //        Spacer()
-            // Order Button
-            Button {
-                print("Ordering...")
-                let _ = orderBuilder.build() // do something with the order
-                activePopover.toggle()
-
-            } label: {
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.green)
-                    .frame(height: 50)
-                    .overlay(
-                        Text(String(format: "Order (%@)", CurrencyFormatter.formatAmount(orderBuilder.totalAmount)))
-                            .foregroundColor(.white)
-                            .font(.headline)
-                    )
-            }
-            .disabled(orderBuilder.products.isEmpty)
-            .padding([.bottom, .horizontal], 16)
-            .alert("Order Confirmed 🎉", isPresented: $activePopover) {
-                Button("OK") {
-                    activePopover.toggle()
+                .safeAreaInset(edge: .bottom) {
+                    OrderButtonView()
                 }
-            } message: {
-                Text("Your order arrive you sone.")
             }
         }
     }
@@ -79,4 +46,38 @@ struct ShoppingCartView: View {
 #Preview {
     ShoppingCartView()
         .environment(OrderBuilder(for: UUID()))
+}
+
+struct OrderButtonView: View {
+    @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
+    @State private var activePopover: Bool = false
+
+    var body: some View {
+        Button {
+            print("Ordering...")
+            let _ = orderBuilder.build() // do something with the order
+            activePopover.toggle()
+
+        } label: {
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.green)
+                .frame(height: 50)
+                .background(.ultraThinMaterial)
+                .opacity(0.8)
+                .overlay(
+                    Text(String(format: "Order (%@)", CurrencyFormatter.formatAmount(orderBuilder.totalAmount)))
+                        .foregroundColor(.white)
+                        .font(.headline)
+                )
+        }
+        .disabled(orderBuilder.products.isEmpty)
+        .padding([.bottom, .horizontal], 8)
+        .alert("Order Confirmed 🎉", isPresented: $activePopover) {
+            Button("OK") {
+                activePopover.toggle()
+            }
+        } message: {
+            Text("Your order will arrive soon.")
+        }
+    }
 }

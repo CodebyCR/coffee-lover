@@ -16,7 +16,7 @@ struct CoffeeListSubView: View {
     var body: some View {
         List {
             if menu.coffees.isEmpty {
-                ContentUnavailableView("No Internet connection.", image: "globe", description: Text("Please check your connection."))
+                ContentUnavailableView("No Internet connection.", systemImage: "wifi.exclamationmark.circle", description: Text("Please check your connection."))
             }
 
             ForEach(menu.coffees, id: \.id) { entry in

@@ -48,6 +48,20 @@ public class OrderBuilder {
         }
     }
 
+    public func removeProduct(_ product: any Product) {
+        if let index = products.firstIndex(where: { $0.product.id == product.id }) {
+            if products[index].quantity > 1 {
+                products[index].quantity -= 1
+            } else {
+                products.remove(at: index)
+            }
+        }
+    }
+
+    public func removeAll(_ product: any Product) {
+        products.removeAll { $0.product.id == product.id }
+    }
+
     public func build() -> Order? {
         guard !products.isEmpty else {
             return nil
