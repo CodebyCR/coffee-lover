@@ -34,7 +34,7 @@ public final class MenuManager {
         self.webservice = WebserviceProvider(inMode: .dev)
     }
 
-    public init(from webservice: consuming WebserviceProvider) {
+    public init(from webservice: WebserviceProvider) {
         self.webservice = webservice
     }
 }

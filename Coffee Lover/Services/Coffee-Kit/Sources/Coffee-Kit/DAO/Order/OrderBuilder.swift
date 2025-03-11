@@ -12,7 +12,7 @@ public class OrderBuilder {
     // MARK: - Properties
 
     private(set) var userId: UUID
-    public var products: [ProductQuantity] = []
+    public var products: [ProductPack] = []
     public var totalProducts: Int {
         products.reduce(0) { Int($0) + Int($1.quantity) }
     }
@@ -37,14 +37,14 @@ public class OrderBuilder {
     // MARK: - Methods
 
     public func addProduct(_ product: any Product, quantity: UInt8) {
-        products.append(ProductQuantity(quantity: quantity, product: product))
+        products.append(ProductPack(quantity: quantity, product: product))
     }
 
     public func addProduct(_ product: any Product) {
         if let index = products.firstIndex(where: { $0.product.id == product.id }) {
             products[index].quantity += 1
         } else {
-            products.append(ProductQuantity(quantity: 1, product: product))
+            products.append(ProductPack(quantity: 1, product: product))
         }
     }
 

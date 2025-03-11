@@ -72,8 +72,9 @@ struct ProductDetailView: View {
                             .foregroundColor(.white)
                             .font(.headline)
                     )
+                    .padding([.bottom, .horizontal], 8)
             }
-            .padding([.bottom, .horizontal], 8)
+//            .padding([.bottom, .horizontal], 8)
         }
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public struct OrderService {
     // MARK: - Properties
 
@@ -19,6 +20,30 @@ public struct OrderService {
     }
 
     // MARK: - Methods
+
+    public func takeOrder(_ newOrder: Order) async throws {
+        let createOrderURL = orderUrl / "id/\(newOrder.id)"
+        let requestData = try JSONEncoder().encode(newOrder)
+        var request = URLRequest(url: createOrderURL)
+        request.httpMethod = "POST"
+        request.httpBody = requestData
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        print("Post to \(createOrderURL)")
+
+        let (_, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              200 ..< 300 ~= httpResponse.statusCode
+        else {
+            print("""
+            Error in \(#file)
+            \t\(#function) \(#line):\(#column)
+            \tStatus code: \((response as? HTTPURLResponse)?.statusCode ?? 0)
+            """)
+            throw FetchError.invalidResponse
+        }
+    }
 
 //    public func create(new order: Order) async throws {
 //        let orderJSON = try JSONEncoder().encode(order)

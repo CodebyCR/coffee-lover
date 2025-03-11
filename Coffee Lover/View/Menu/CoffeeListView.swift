@@ -14,27 +14,20 @@
 import Coffee_Kit
 import SwiftUI
 
+
+
 @MainActor
 struct CoffeeListView: View {
+    @State private var menuCategories: [MenuCategory] = MenuCategory.allCases
+    @State private var selectedCategory: MenuCategory = .coffee
+
     var body: some View {
         ZStack {
             VStack {
                 Spacer()
                 CoffeeListSubView()
                     .safeAreaInset(edge: .bottom) {
-                        RoundedRectangle(cornerRadius: 16)
-                            .frame(height: 50)
-                            .foregroundColor(.brown)
-
-                            .background(.ultraThinMaterial)
-                            .opacity(0.8)
-                            .overlay {
-                                Text("Categorie Placeholder")
-                                    .foregroundStyle(.white)
-
-                                    .fontWeight(.bold)
-                            }
-                            .padding([.bottom, .horizontal], 8)
+                        CategorieChooserView(menuCategories: $menuCategories, selectedCategory: $selectedCategory)
                     }
             }
         }
@@ -62,4 +55,36 @@ struct CoffeeListView: View {
     CoffeeListView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
         .environment(OrderBuilder(for: UUID()))
+}
+
+struct CategorieChooserView: View {
+    @Binding var menuCategories: [MenuCategory]
+    @Binding var selectedCategory: MenuCategory
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 16)
+            .frame(height: 48)
+            .foregroundColor(.brown)
+            .background(.ultraThinMaterial)
+            .opacity(0.8)
+            .overlay {
+                SegmentedPicker(
+                    selection: $selectedCategory,
+                    items: $menuCategories,
+                    selectionColor: .brown
+                ) { category in
+                    Text(category.rawValue)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                        .background(selectedCategory == category ? .brown : .clear)
+                        .onTapGesture {
+                            selectedCategory = category
+                        }
+                }
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 12)
+                )
+            }
+            .padding([.bottom, .horizontal], 8)
+    }
 }

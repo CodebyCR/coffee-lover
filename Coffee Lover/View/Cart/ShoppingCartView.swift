@@ -50,12 +50,18 @@ struct ShoppingCartView: View {
 
 struct OrderButtonView: View {
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
+    @Environment(OrderManager.self) var orderManager: OrderManager
     @State private var activePopover: Bool = false
 
     var body: some View {
         Button {
             print("Ordering...")
-            let _ = orderBuilder.build() // do something with the order
+            guard let newOrder = orderBuilder.build() else {
+                print("Order could not be created")
+                return
+            }
+
+            orderManager.takeOrder(newOrder)
             activePopover.toggle()
 
         } label: {
@@ -69,9 +75,10 @@ struct OrderButtonView: View {
                         .foregroundColor(.white)
                         .font(.headline)
                 )
+                .padding([.bottom, .horizontal], 8)
         }
         .disabled(orderBuilder.products.isEmpty)
-        .padding([.bottom, .horizontal], 8)
+//        .padding([.bottom, .horizontal], 8)
         .alert("Order Confirmed 🎉", isPresented: $activePopover) {
             Button("OK") {
                 activePopover.toggle()

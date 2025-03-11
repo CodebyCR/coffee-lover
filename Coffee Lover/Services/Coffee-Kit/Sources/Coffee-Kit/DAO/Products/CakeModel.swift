@@ -13,6 +13,7 @@ public struct CakeModel: Product, Codable, Hashable {
     public let name: String
     public let price: Float64
     public let metadata: Metadata
+    public var menuCategory: MenuCategory
     public var debugDescription: String {
         "CakeModel: id=\(id), name=\(name), price=\(price), metadata=\(metadata)"
     }
@@ -24,6 +25,7 @@ public struct CakeModel: Product, Codable, Hashable {
         name = "Caffee"
         price = 3.20
         metadata = Metadata()
+        menuCategory = .cake
     }
 
     // MARK: - Equatable

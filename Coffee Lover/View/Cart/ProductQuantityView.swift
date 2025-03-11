@@ -13,7 +13,7 @@ struct ProductQuantityView: View {
     @Binding var productEntry: any Product
     @Binding var quantity: UInt8
 
-    init(of productWithQuantity: ProductQuantity) {
+    init(of productWithQuantity: ProductPack) {
         self._productEntry = Binding.constant(productWithQuantity.product)
         self._quantity = Binding.constant(productWithQuantity.quantity)
     }

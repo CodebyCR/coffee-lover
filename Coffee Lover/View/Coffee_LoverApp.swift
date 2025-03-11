@@ -12,12 +12,14 @@ import SwiftUI
 struct Coffee_LoverApp: App {
     @State var menuManager = MenuManager(from: WebserviceProvider(inMode: .dev))
     @State var orderBuilder = OrderBuilder(for: UUID())
+    @State var orderManager = OrderManager(from: WebserviceProvider(inMode: .dev))
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(menuManager)
                 .environment(orderBuilder)
+                .environment(orderManager)
         }
     }
 }

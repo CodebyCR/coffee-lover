@@ -6,15 +6,15 @@
 //
 import Foundation
 
-public struct Order: Identifiable, Sendable { // , Codable
+public struct Order: Identifiable, Sendable {
     public let id: UUID
     public let userId: UUID
     public let timestamp: Date
-    public let products: [ProductQuantity]
+    public let products: [ProductPack]
     public let totalPrice: Float64
     public let paymentOption: PaymentOption
 
-    public init(userId: UUID, orderdProducts: [ProductQuantity], paymentOption: PaymentOption) {
+    public init(userId: UUID, orderdProducts: [ProductPack], paymentOption: PaymentOption) {
         id = UUID()
         self.userId = userId
         timestamp = .now
@@ -23,3 +23,29 @@ public struct Order: Identifiable, Sendable { // , Codable
         self.paymentOption = paymentOption
     }
 }
+
+extension Order: Codable  {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userId
+        case timestamp
+        case products
+        case totalPrice
+        case paymentOption
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        userId = try container.decode(UUID.self, forKey: .userId)
+        timestamp = try container.decode(Date.self, forKey: .timestamp)
+        products = try container.decode([ProductPack].self, forKey: .products)
+        totalPrice = try container.decode(Float64.self, forKey: .totalPrice)
+        paymentOption = try container.decode(PaymentOption.self, forKey: .paymentOption)
+    }
+
+        
+
+
+}
+

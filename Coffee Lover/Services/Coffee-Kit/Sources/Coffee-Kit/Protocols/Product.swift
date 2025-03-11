@@ -13,6 +13,7 @@ public protocol Product: Identifiable, Sendable, Codable, CustomDebugStringConve
     var price: Float64 { get }
     var metadata: Metadata { get }
     var debugDescription: String { get }
+    var menuCategory: MenuCategory { get }
 }
 
 public extension Product {
