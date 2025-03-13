@@ -13,8 +13,8 @@ public final class MenuManager {
     // MARK: - Properties
 
     @ObservationIgnored private var webservice: WebserviceProvider
-    public var coffees: [CoffeeModel] = []
-    public var cakes: [CakeModel] = []
+
+    public var coffees: [Product] = []
 
     // MARK: - Computed Properties
 

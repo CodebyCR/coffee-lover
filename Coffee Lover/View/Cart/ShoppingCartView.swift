@@ -9,7 +9,8 @@ import Coffee_Kit
 import SwiftUI
 
 struct ShoppingCartView: View {
-    @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
+    @Environment(OrderBuilder.self) var orderBuilder
+    @Environment(MenuManager.self) var menuManager
 
     var body: some View {
         NavigationStack {

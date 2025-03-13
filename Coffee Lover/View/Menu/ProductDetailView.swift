@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
-    @State public var product: any Product
+    @State public var product: Product
 
     var body: some View {
         // Image Placeholder
@@ -80,7 +80,7 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    let coffee = CoffeeModel()
+    let coffee = Product()
     ProductDetailView(product: coffee)
         .environment(OrderBuilder(for: UUID()))
 }

@@ -9,12 +9,14 @@ import Coffee_Kit
 import SwiftUI
 
 struct ProductQuantityView: View {
+    @Environment(MenuManager.self) var menuManager
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
-    @Binding var productEntry: any Product
+    @Binding var productEntry: Product
     @Binding var quantity: UInt8
 
-    init(of productWithQuantity: ProductPack) {
+    init(of productWithQuantity: OrderProduct) {
         self._productEntry = Binding.constant(productWithQuantity.product)
+
         self._quantity = Binding.constant(productWithQuantity.quantity)
     }
 
@@ -44,9 +46,6 @@ struct ProductQuantityView: View {
                         .italic()
                 }
             }
-
-
-
 
         }.frame(
             height: 60

@@ -5,24 +5,19 @@
 //  Created by Christoph Rohde on 22.01.25.
 //
 
-
 import Foundation
 
 @MainActor
 public struct CakeService {
-
     // MARK: Properties
 
     let cakeURL: URL
 
-
     // MARK: Initializer
-
 
     public init(databaseAPI: borrowing DatabaseAPI) {
         self.cakeURL = databaseAPI.baseURL / "cake"
     }
-
 
     // MARK: Methods
 
@@ -43,12 +38,12 @@ public struct CakeService {
         return drinkIds
     }
 
-    public func load(by id: consuming String) async throws -> CakeModel {
+    public func load(by id: consuming String) async throws -> Product {
         let cakeByIdUrl = cakeURL / "id" / id
 
         let (data, response) = try await URLSession.shared.data(from: cakeByIdUrl)
 
-        guard let coffee = try? JSONDecoder().decode(CakeModel.self, from: data) else {
+        guard let coffee = try? JSONDecoder().decode(Product.self, from: data) else {
             print(response)
 
             let stacktrace = Thread.callStackSymbols.joined(separator: "\n")
@@ -64,8 +59,8 @@ public struct CakeService {
         return coffee
     }
 
-    public func load(by ids: [String]) async -> AsyncThrowingStream<CakeModel, Error> {
-        return AsyncThrowingStream<CakeModel, Error> { continuation in
+    public func load(by ids: [String]) async -> AsyncThrowingStream<Product, Error> {
+        return AsyncThrowingStream<Product, Error> { continuation in
             Task {
                 do {
                     for id in ids {
@@ -80,8 +75,8 @@ public struct CakeService {
         }
     }
 
-    public func loadAll() async -> AsyncStream<Result<CakeModel, Error>> {
-        return AsyncStream<Result<CakeModel, Error>> { continuation in
+    public func loadAll() async -> AsyncStream<Result<Product, Error>> {
+        return AsyncStream<Result<Product, Error>> { continuation in
             Task {
                 do {
                     let ids = try await getIds()
@@ -96,5 +91,4 @@ public struct CakeService {
             }
         }
     }
-
 }

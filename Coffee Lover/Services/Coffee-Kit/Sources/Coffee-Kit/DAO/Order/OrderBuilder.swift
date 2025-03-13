@@ -12,7 +12,8 @@ public class OrderBuilder {
     // MARK: - Properties
 
     private(set) var userId: UUID
-    public var products: [ProductPack] = []
+    public var products: [OrderProduct] = []
+
     public var totalProducts: Int {
         products.reduce(0) { Int($0) + Int($1.quantity) }
     }
@@ -28,28 +29,28 @@ public class OrderBuilder {
         self.userId = userId
     }
 
-    /// Init from existing Order
-    public init(use order: Order) {
-        self.userId = order.userId
-        self.products = order.products
-    }
+//    /// Init from existing Order
+//    public init(use order: Order) {
+//        self.userId = order.userId
+//        self.products = order.items
+//    }
 
     // MARK: - Methods
 
-    public func addProduct(_ product: any Product, quantity: UInt8) {
-        products.append(ProductPack(quantity: quantity, product: product))
+    public func addProduct(_ product: Product, quantity: UInt8) {
+        products.append(OrderProduct(product: product, quantity: quantity))
     }
 
-    public func addProduct(_ product: any Product) {
-        if let index = products.firstIndex(where: { $0.product.id == product.id }) {
+    public func addProduct(_ product: Product) {
+        if let index = products.firstIndex(where: { $0.id == product.id }) {
             products[index].quantity += 1
         } else {
-            products.append(ProductPack(quantity: 1, product: product))
+            addProduct(product, quantity: 1)
         }
     }
 
-    public func removeProduct(_ product: any Product) {
-        if let index = products.firstIndex(where: { $0.product.id == product.id }) {
+    public func removeProduct(_ product: Product) {
+        if let index = products.firstIndex(where: { $0.id == product.id }) {
             if products[index].quantity > 1 {
                 products[index].quantity -= 1
             } else {
@@ -58,8 +59,8 @@ public class OrderBuilder {
         }
     }
 
-    public func removeAll(_ product: any Product) {
-        products.removeAll { $0.product.id == product.id }
+    public func removeAll(_ product: Product) {
+        products.removeAll { $0.id == product.id }
     }
 
     public func build() -> Order? {
@@ -67,8 +68,10 @@ public class OrderBuilder {
             return nil
         }
 
+        let orderItems = products.map { OrderItem(from: $0) }
+
         // Currently fake user id and only cash payment is supported
-        let newOrder = Order(userId: UUID(), orderdProducts: products, paymentOption: .cash)
+        let newOrder = Order(userId: UUID(), orderdProducts: orderItems, paymentOption: .cash)
         products.removeAll()
 
         return newOrder

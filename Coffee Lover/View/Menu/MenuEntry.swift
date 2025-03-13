@@ -5,16 +5,16 @@
 //  Created by Christoph Rohde on 20.10.24.
 //
 
-import SwiftUI
 import Coffee_Kit
+import SwiftUI
 
 struct MenuEntry: View {
-    var productEntry: any Product
+    var productEntry: Product
 
     var body: some View {
         HStack {
             HStack {
-                Text("\(productEntry.id)")
+                Text("\(productEntry.categoryNumber)")
                     .fontWeight(.thin)
                     .italic()
                     .bold()

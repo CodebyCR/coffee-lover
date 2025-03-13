@@ -9,7 +9,6 @@ import Foundation
 
 @MainActor
 public struct CoffeeService {
-
     // MARK: Properties
 
     let coffeeURL: URL
@@ -40,12 +39,12 @@ public struct CoffeeService {
         return drinkIds
     }
 
-    public func load(by id: consuming String) async throws -> CoffeeModel {
+    public func load(by id: consuming String) async throws -> Product {
         let coffeeByIdUrl = coffeeURL / "id" / id
 
         let (data, response) = try await URLSession.shared.data(from: coffeeByIdUrl)
 
-        guard let coffee = try? JSONDecoder().decode(CoffeeModel.self, from: data) else {
+        guard let coffee = try? JSONDecoder().decode(Product.self, from: data) else {
             print(response)
 
             let stacktrace = Thread.callStackSymbols.joined(separator: "\n")
@@ -61,8 +60,8 @@ public struct CoffeeService {
         return coffee
     }
 
-    public func load(by ids: [String]) async -> AsyncThrowingStream<CoffeeModel, Error> {
-        return AsyncThrowingStream<CoffeeModel, Error> { continuation in
+    public func load(by ids: [String]) async -> AsyncThrowingStream<Product, Error> {
+        return AsyncThrowingStream<Product, Error> { continuation in
             Task {
                 do {
                     for id in ids {
@@ -94,14 +93,14 @@ public struct CoffeeService {
 //        }
 //    }
 
-    public func loadAll() async -> AsyncStream<Result<CoffeeModel, Error>> {
-        return AsyncStream<Result<CoffeeModel, Error>> { continuation in
+    public func loadAll() async -> AsyncStream<Result<Product, Error>> {
+        return AsyncStream<Result<Product, Error>> { continuation in
             Task {
                 do {
                     let ids = try await getIds()
                     for id in ids {
-                        let coffeeModel = try await load(by: id)
-                        continuation.yield(.success(coffeeModel))
+                        let product = try await load(by: id)
+                        continuation.yield(.success(product))
                     }
                 } catch {
                     continuation.yield(.failure(error))
@@ -110,5 +109,4 @@ public struct CoffeeService {
             }
         }
     }
-
 }
