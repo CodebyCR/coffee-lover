@@ -21,7 +21,7 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             // MARK: - Orders
 
-            OrderListView()
+            OrderNaviagtionView()
                 .tabItem {
                     Label("Orders", systemImage: "tray.and.arrow.down.fill")
                 }
@@ -39,7 +39,7 @@ struct ContentView: View {
             // MARK: - Cart
 
             withAnimation(.bouncy) {
-                ShoppingCartView()
+                CartNaviagtionView()
                     .tabItem {
                         Label("Cart", systemImage: "cart")
                     }
