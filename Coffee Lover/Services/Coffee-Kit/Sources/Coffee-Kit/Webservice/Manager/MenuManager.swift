@@ -14,19 +14,17 @@ public final class MenuManager {
 
     @ObservationIgnored private var webservice: WebserviceProvider
 
-    public var coffees: [Product] = []
+    public var items: [Product] = []
 
     // MARK: - Computed Properties
 
-    public var coffeeSequence: CoffeeService {
-        // print errors and filter out nil values
-
+    public var itemSequence: CoffeeService {
         return CoffeeService(databaseAPI: webservice.databaseAPI)
     }
 
-    public var cakeService: CakeService {
-        return CakeService(databaseAPI: webservice.databaseAPI)
-    }
+//    public var cakeService: CakeService {
+//        return CakeService(databaseAPI: webservice.databaseAPI)
+//    }
 
     // MARK: - Initializer
 
@@ -36,5 +34,11 @@ public final class MenuManager {
 
     public init(from webservice: WebserviceProvider) {
         self.webservice = webservice
+    }
+
+    // MARK: - Methods
+
+    public func getSelection(for category: MenuCategory) -> [Product] {
+        items.filter { $0.category == category.rawValue.lowercased() }
     }
 }

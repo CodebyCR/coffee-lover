@@ -76,23 +76,6 @@ public struct CoffeeService {
         }
     }
 
-//    public func loadAll() async -> AsyncThrowingStream<CoffeeModel, Error> {
-//        return AsyncThrowingStream<CoffeeModel, Error> { continuation in
-//            Task {
-//                do {
-//                    let ids = try await getIds()
-//                    for id in ids {
-//                        let coffeeModel = try await load(by: id)
-//                        continuation.yield(coffeeModel)
-//                    }
-//                    continuation.finish()
-//                } catch {
-//                    continuation.finish(throwing: error)
-//                }
-//            }
-//        }
-//    }
-
     public func loadAll() async -> AsyncStream<Result<Product, Error>> {
         return AsyncStream<Result<Product, Error>> { continuation in
             Task {

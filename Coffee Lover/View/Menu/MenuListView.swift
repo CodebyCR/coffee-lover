@@ -14,10 +14,8 @@
 import Coffee_Kit
 import SwiftUI
 
-
-
 @MainActor
-struct CoffeeListView: View {
+struct MenuListView: View {
     @State private var menuCategories: [MenuCategory] = MenuCategory.allCases
     @State private var selectedCategory: MenuCategory = .coffee
 
@@ -25,7 +23,7 @@ struct CoffeeListView: View {
         ZStack {
             VStack {
                 Spacer()
-                CoffeeListSubView()
+                MenuListSubView(selectedCategory: $selectedCategory)
                     .safeAreaInset(edge: .bottom) {
                         CategorieChooserView(menuCategories: $menuCategories, selectedCategory: $selectedCategory)
                     }
@@ -52,7 +50,7 @@ struct CoffeeListView: View {
 }
 
 #Preview {
-    CoffeeListView()
+    MenuListView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
         .environment(OrderBuilder(for: UUID()))
 }

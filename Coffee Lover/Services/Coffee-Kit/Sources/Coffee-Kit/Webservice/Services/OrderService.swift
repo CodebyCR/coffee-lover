@@ -36,6 +36,9 @@ public struct OrderService {
         guard let httpResponse = response as? HTTPURLResponse,
               200 ..< 300 ~= httpResponse.statusCode
         else {
+            let requestDataJson = String(data: requestData, encoding: .utf8) ?? "nil"
+
+            print(requestDataJson)
             print("""
             Error in \(#file)
             \t\(#function) \(#line):\(#column)

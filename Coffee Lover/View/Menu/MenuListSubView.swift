@@ -9,17 +9,18 @@ import Coffee_Kit
 import SwiftUI
 
 @MainActor
-struct CoffeeListSubView: View {
+struct MenuListSubView: View {
+    @Binding var selectedCategory: MenuCategory
     @Environment(MenuManager.self) private var menu
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
 
     var body: some View {
         List {
-            if menu.coffees.isEmpty {
+            if menu.items.isEmpty {
                 ContentUnavailableView("No Internet connection.", systemImage: "wifi.exclamationmark.circle", description: Text("Please check your connection."))
             }
 
-            ForEach(menu.coffees, id: \.id) { entry in
+            ForEach(menu.getSelection(for: selectedCategory), id: \.id) { entry in
 
                 NavigationLink(
                     destination: {
@@ -41,11 +42,11 @@ struct CoffeeListSubView: View {
     }
 
     fileprivate func addMenuEntiesAnimated() async {
-        if !menu.coffees.isEmpty {
+        if !menu.items.isEmpty {
             return
         }
 
-        for await coffee in await menu.coffeeSequence.loadAll() {
+        for await coffee in await menu.itemSequence.loadAll() {
             withAnimation(.spring(response: 0.8, dampingFraction: 0.6)) {
                 // animate menu entries...
                 switch coffee {
@@ -53,7 +54,7 @@ struct CoffeeListSubView: View {
                     print(error)
                 case .success(let coffee):
                     print("Adding \(coffee.name)...")
-                    menu.coffees.append(coffee)
+                    menu.items.append(coffee)
                 }
             }
         }
@@ -61,6 +62,6 @@ struct CoffeeListSubView: View {
 }
 
 #Preview {
-    CoffeeListView()
+    MenuListView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
 }

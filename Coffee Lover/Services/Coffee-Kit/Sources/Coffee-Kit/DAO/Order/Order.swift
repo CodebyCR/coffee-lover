@@ -14,19 +14,40 @@ public struct Order {
     public let paymentOption: String
     public let paymentStatus: String
     public let items: [OrderItem]
+
+    public var orderDateAsFloat64: Float64 {
+        Float64(orderDate.timeIntervalSince1970)
+    }
 }
 
 // MARK: - Initializer
 
 public extension Order {
+    init() {
+        // demo
+        id = UUID(uuidString: "2E2F208E-9EBB-4B40-801D-BDD5859858C3")!
+        userId = UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!
+        orderDate = Date(timeIntervalSince1970: 763811237.81686)
+        orderStatus = "ordered"
+        paymentOption = "Cash"
+        paymentStatus = "pending"
+        items = [
+            OrderItem(id: UUID(uuidString: "D607034C-94BE-4225-8275-D960E88020C9")!, quantity: 2)
+        ]
+    }
+
     init(userId: UUID, orderdProducts: [OrderItem], paymentOption: PaymentOption) {
         id = UUID()
         self.userId = userId
-        orderDate = Date()
+        orderDate = Date.now
         orderStatus = "ordered"
         self.paymentOption = paymentOption.rawValue
         paymentStatus = "pending"
         items = orderdProducts
+
+        let rawDate = 763811237.81686
+        let date = Date(timeIntervalSince1970: rawDate)
+        print("Date: \(date)")
     }
 }
 
@@ -72,10 +93,22 @@ extension Order: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(UUID.self, forKey: .id)
         userId = try container.decode(UUID.self, forKey: .userId)
-        orderDate = try container.decode(Date.self, forKey: .orderDate)
+        let rawOrderDate = try container.decode(Float64.self, forKey: .orderDate)
+        orderDate = Date(timeIntervalSince1970: rawOrderDate)
         orderStatus = try container.decode(String.self, forKey: .orderStatus)
         paymentOption = try container.decode(String.self, forKey: .paymentOption)
         paymentStatus = try container.decode(String.self, forKey: .paymentStatus)
         items = try container.decode([OrderItem].self, forKey: .items)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(userId, forKey: .userId)
+        try container.encode(orderDate, forKey: .orderDate)
+        try container.encode(orderStatus, forKey: .orderStatus)
+        try container.encode(paymentOption, forKey: .paymentOption)
+        try container.encode(paymentStatus, forKey: .paymentStatus)
+        try container.encode(items, forKey: .items)
     }
 }

@@ -19,7 +19,7 @@ struct MenuNaviagtionView: View {
     var body: some View {
         NavigationStack(path: $homeNavigationStack) {
             VStack {
-                CoffeeListView()
+                MenuListView()
                     .tag(MenuNavigationEntry.coffee)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {

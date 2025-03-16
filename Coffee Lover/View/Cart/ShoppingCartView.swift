@@ -14,30 +14,49 @@ struct ShoppingCartView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                List {
-                    if orderBuilder.products.isEmpty {
-                        ContentUnavailableView("Your cart is Empty.", systemImage: "cart", description: Text("Enjoy some tasty pices ❤️"))
-                    }
+            ZStack {
+                VStack {
+                    Spacer()
+                    List {
+                        if orderBuilder.products.isEmpty {
+                            ContentUnavailableView("Your cart is Empty.", systemImage: "cart", description: Text("Enjoy some tasty pices ❤️"))
+                        }
 
-                    ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
-                        NavigationLink(
-                            destination: {
-                                ProductDetailView(product: productWithQuantity.product)
-                            }, label: {
-                                ProductQuantityView(of: productWithQuantity)
-                                    .swipeActions {
-                                        Button("Remove") {
-                                            print("Remove \(productWithQuantity.product.name) from cart ...")
-                                            orderBuilder.removeAll(productWithQuantity.product)
+                        ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
+                            NavigationLink(
+                                destination: {
+                                    ProductDetailView(product: productWithQuantity.product)
+                                }, label: {
+                                    ProductQuantityView(of: productWithQuantity)
+                                        .swipeActions {
+                                            Button("Remove") {
+                                                print("Remove \(productWithQuantity.product.name) from cart ...")
+                                                orderBuilder.removeAll(productWithQuantity.product)
+                                            }
                                         }
-                                    }
-                            }
-                        )
+                                }
+                            )
+                        }
+                    }
+                    .safeAreaInset(edge: .bottom) {
+                        OrderButtonView()
                     }
                 }
-                .safeAreaInset(edge: .bottom) {
-                    OrderButtonView()
+            }
+            .background(
+                Color
+                    .brown
+                    .gradient
+            )
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    VStack {
+                        Text("Cart")
+                            .foregroundStyle(.white)
+                            .padding(4)
+                            .fontWeight(.bold)
+                    }
                 }
             }
         }
@@ -48,4 +67,3 @@ struct ShoppingCartView: View {
     ShoppingCartView()
         .environment(OrderBuilder(for: UUID()))
 }
-
