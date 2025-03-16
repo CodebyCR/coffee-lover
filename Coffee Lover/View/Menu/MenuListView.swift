@@ -39,7 +39,7 @@ struct MenuListView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 VStack {
-                    Text("Coffee")
+                    Text(selectedCategory.rawValue)
                         .foregroundStyle(.white)
                         .padding(4)
                         .fontWeight(.bold)

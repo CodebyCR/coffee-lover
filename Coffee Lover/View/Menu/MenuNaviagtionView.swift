@@ -22,19 +22,6 @@ struct MenuNaviagtionView: View {
                 MenuListView()
                     .tag(MenuNavigationEntry.coffee)
                     .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .principal) {
-                            VStack {
-                                Text(homeNavigationStack.last?.rawValue ?? "Coffee")
-                                    .foregroundStyle(.white)
-                                    .padding(4)
-                                    .fontWeight(.bold)
-                            }
-                        }
-                    }
-                    
-
-
             }
         }
         .background(
