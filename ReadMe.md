@@ -30,4 +30,4 @@
 
 ### Preview
 
-![Coffee Lover Preview](https://github.com/CodebyCR/coffee-lover/blob/main/preview/Pasted%20image%20250316184620.png)
+![Coffee Lover Preview](https://github.com/CodebyCR/coffee-lover/blob/main/Preview/Pasted%20image%2020250316184620.png)
