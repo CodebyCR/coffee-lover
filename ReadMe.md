@@ -27,3 +27,7 @@
 
  - [GitHub (Coffee Mate)](https://github.com/CodebyCR/coffee-mate)
  - [GitHub (Coffe API)](https://github.com/CodebyCR/Coffee-API)
+
+### Preview
+
+![Coffee Lover Preview](https://github.com/CodebyCR/coffee-lover/blob/main/preview/Pasted%20image%20250316184620.png)

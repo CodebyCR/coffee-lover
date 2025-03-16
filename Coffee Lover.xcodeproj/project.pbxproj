@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E43F27B2D8756AD0051D32B /* ReadMe.md */; };
 		8E772C772D3585C500E6D7B5 /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E772C762D3585C500E6D7B5 /* Coffee-Kit */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		8E2C69632CC4F86C004B334D /* Coffee Lover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coffee Lover.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E2C69732CC4F86F004B334D /* Coffee LoverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E2C697D2CC4F86F004B334D /* Coffee LoverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E43F27B2D8756AD0051D32B /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -94,6 +96,7 @@
 		8E2C695A2CC4F86B004B334D = {
 			isa = PBXGroup;
 			children = (
+				8E43F27B2D8756AD0051D32B /* ReadMe.md */,
 				8E43F2782D8755C60051D32B /* Preview */,
 				8E2C69652CC4F86C004B334D /* Coffee Lover */,
 				8E2C69802CC4F86F004B334D /* Coffee LoverUITests */,
@@ -234,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
