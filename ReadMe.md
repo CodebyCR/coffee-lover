@@ -22,7 +22,7 @@
  - SwiftLint
  - Swift Package Manager
  - Vapor
- - 
+
 ### See also:
 
  - [GitHub (Coffee Mate)](https://github.com/CodebyCR/coffee-mate)
