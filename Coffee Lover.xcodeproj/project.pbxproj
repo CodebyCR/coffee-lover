@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E43F27B2D8756AD0051D32B /* ReadMe.md */; };
-		8E772C772D3585C500E6D7B5 /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E772C762D3585C500E6D7B5 /* Coffee-Kit */; };
+		8EDB2FE72D9ABA200028A03A /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDB2FE62D9ABA200028A03A /* Coffee-Kit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -72,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E772C772D3585C500E6D7B5 /* Coffee-Kit in Frameworks */,
+				8EDB2FE72D9ABA200028A03A /* Coffee-Kit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,7 +136,7 @@
 			);
 			name = "Coffee Lover";
 			packageProductDependencies = (
-				8E772C762D3585C500E6D7B5 /* Coffee-Kit */,
+				8EDB2FE62D9ABA200028A03A /* Coffee-Kit */,
 			);
 			productName = "Coffee Lover";
 			productReference = 8E2C69632CC4F86C004B334D /* Coffee Lover.app */;
@@ -218,7 +218,7 @@
 			mainGroup = 8E2C695A2CC4F86B004B334D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8E772C752D3585C500E6D7B5 /* XCLocalSwiftPackageReference "Coffee Lover/Services/Coffee-Kit" */,
+				8EDB2FE12D9AB8190028A03A /* XCLocalSwiftPackageReference "../../Coffee-Kit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8E2C69642CC4F86C004B334D /* Products */;
@@ -427,6 +427,8 @@
 				DEVELOPMENT_TEAM = 5JFNMP7X7J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Coffee Lover";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -456,6 +458,8 @@
 				DEVELOPMENT_TEAM = 5JFNMP7X7J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Coffee Lover";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -584,14 +588,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8E772C752D3585C500E6D7B5 /* XCLocalSwiftPackageReference "Coffee Lover/Services/Coffee-Kit" */ = {
+		8EDB2FE12D9AB8190028A03A /* XCLocalSwiftPackageReference "../../Coffee-Kit" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "Coffee Lover/Services/Coffee-Kit";
+			relativePath = "../../Coffee-Kit";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8E772C762D3585C500E6D7B5 /* Coffee-Kit */ = {
+		8EDB2FE62D9ABA200028A03A /* Coffee-Kit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Coffee-Kit";
 		};
