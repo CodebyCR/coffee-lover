@@ -19,7 +19,7 @@ struct ShoppingCartView: View {
                     Spacer()
                     List {
                         if orderBuilder.products.isEmpty {
-                            ContentUnavailableView("Your cart is Empty.", systemImage: "cart", description: Text("Enjoy some tasty pices ❤️"))
+                            ContentUnavailableView("Your cart is empty.", systemImage: "cart", description: Text("Enjoy some tasty pieces ❤️"))
                         }
 
                         ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
