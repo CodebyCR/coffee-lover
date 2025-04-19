@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E43F27B2D8756AD0051D32B /* ReadMe.md */; };
-		8EDB2FE72D9ABA200028A03A /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDB2FE62D9ABA200028A03A /* Coffee-Kit */; };
+		8E5DC3DF2DB394250023FFAF /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E5DC3DE2DB394250023FFAF /* Coffee-Kit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -49,9 +49,22 @@
 		8E43F27B2D8756AD0051D32B /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8E5DC3DD2DB393F10023FFAF /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Coffee-Lover-Info.plist",
+			);
+			target = 8E2C69622CC4F86C004B334D /* Coffee Lover */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8E2C69652CC4F86C004B334D /* Coffee Lover */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8E5DC3DD2DB393F10023FFAF /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */,
+			);
 			path = "Coffee Lover";
 			sourceTree = "<group>";
 		};
@@ -72,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EDB2FE72D9ABA200028A03A /* Coffee-Kit in Frameworks */,
+				8E5DC3DF2DB394250023FFAF /* Coffee-Kit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,7 +149,7 @@
 			);
 			name = "Coffee Lover";
 			packageProductDependencies = (
-				8EDB2FE62D9ABA200028A03A /* Coffee-Kit */,
+				8E5DC3DE2DB394250023FFAF /* Coffee-Kit */,
 			);
 			productName = "Coffee Lover";
 			productReference = 8E2C69632CC4F86C004B334D /* Coffee Lover.app */;
@@ -427,6 +440,7 @@
 				DEVELOPMENT_TEAM = 5JFNMP7X7J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Coffee-Lover-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Coffee Lover";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -458,6 +472,7 @@
 				DEVELOPMENT_TEAM = 5JFNMP7X7J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Coffee-Lover-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Coffee Lover";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -595,7 +610,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8EDB2FE62D9ABA200028A03A /* Coffee-Kit */ = {
+		8E5DC3DE2DB394250023FFAF /* Coffee-Kit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Coffee-Kit";
 		};
