@@ -6,17 +6,22 @@
 //
 import Coffee_Kit
 import SwiftUI
+import OSLog
 
 struct OrderButtonView: View {
-    @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
-    @Environment(OrderManager.self) var orderManager: OrderManager
+
+    let logger = Logger(subsystem: "codebyCR.coffee.lover", category: "OrderButtonView")
+
+    @Environment(OrderBuilder.self) var orderBuilder
+    @Environment(OrderManager.self) var orderManager
     @State private var activePopover: Bool = false
 
     var body: some View {
         Button {
-            print("Ordering...")
+            logger.info("Ordering...")
+
             guard let newOrder = orderBuilder.build() else {
-                print("Order could not be created")
+                logger.error("Order could not be created")
                 return
             }
 
