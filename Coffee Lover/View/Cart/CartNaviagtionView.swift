@@ -37,5 +37,5 @@ struct CartNaviagtionView: View {
 #Preview {
     CartNaviagtionView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
-        .environment(OrderBuilder(for: UUID()))
+        .environment(OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!))
 }
