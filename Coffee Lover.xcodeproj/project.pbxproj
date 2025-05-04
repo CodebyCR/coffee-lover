@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E43F27B2D8756AD0051D32B /* ReadMe.md */; };
-		8E5DC3DF2DB394250023FFAF /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E5DC3DE2DB394250023FFAF /* Coffee-Kit */; };
+		8E9F17D12DBCF88E00FB1CE1 /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E9F17D02DBCF88E00FB1CE1 /* Coffee-Kit */; };
+		8EF840952DC15DC900ED729B /* Harmonize in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF840942DC15DC900ED729B /* Harmonize */; };
+		8EF840972DC15DC900ED729B /* HarmonizeSemantics in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF840962DC15DC900ED729B /* HarmonizeSemantics */; };
+		8EF840992DC15DC900ED729B /* HarmonizeUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF840982DC15DC900ED729B /* HarmonizeUtils */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -47,13 +50,21 @@
 		8E2C69732CC4F86F004B334D /* Coffee LoverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E2C697D2CC4F86F004B334D /* Coffee LoverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E43F27B2D8756AD0051D32B /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
+		8ECD190F2DC7D5AF00111EEF /* .harmonize.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .harmonize.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		8E5DC3DD2DB393F10023FFAF /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */ = {
+		8EF8409F2DC1603D00ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee LoverTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Coffee-Lover-Info.plist",
+				MemorySaftyTests.swift,
+			);
+			target = 8E2C69722CC4F86F004B334D /* Coffee LoverTests */;
+		};
+		8EF840A02DC1617700ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee Lover" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MemorySaftyTests.swift,
 			);
 			target = 8E2C69622CC4F86C004B334D /* Coffee Lover */;
 		};
@@ -62,9 +73,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8E2C69652CC4F86C004B334D /* Coffee Lover */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				8E5DC3DD2DB393F10023FFAF /* Exceptions for "Coffee Lover" folder in "Coffee Lover" target */,
-			);
 			path = "Coffee Lover";
 			sourceTree = "<group>";
 		};
@@ -78,6 +86,15 @@
 			path = Preview;
 			sourceTree = "<group>";
 		};
+		8EF8409A2DC15EC200ED729B /* Coffee LoverTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8EF840A02DC1617700ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee Lover" target */,
+				8EF8409F2DC1603D00ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee LoverTests" target */,
+			);
+			path = "Coffee LoverTests";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E5DC3DF2DB394250023FFAF /* Coffee-Kit in Frameworks */,
+				8E9F17D12DBCF88E00FB1CE1 /* Coffee-Kit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +110,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EF840992DC15DC900ED729B /* HarmonizeUtils in Frameworks */,
+				8EF840972DC15DC900ED729B /* HarmonizeSemantics in Frameworks */,
+				8EF840952DC15DC900ED729B /* Harmonize in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +129,8 @@
 		8E2C695A2CC4F86B004B334D = {
 			isa = PBXGroup;
 			children = (
+				8ECD190F2DC7D5AF00111EEF /* .harmonize.yaml */,
+				8EF8409A2DC15EC200ED729B /* Coffee LoverTests */,
 				8E43F27B2D8756AD0051D32B /* ReadMe.md */,
 				8E43F2782D8755C60051D32B /* Preview */,
 				8E2C69652CC4F86C004B334D /* Coffee Lover */,
@@ -146,10 +168,11 @@
 			fileSystemSynchronizedGroups = (
 				8E2C69652CC4F86C004B334D /* Coffee Lover */,
 				8E43F2782D8755C60051D32B /* Preview */,
+				8EF8409A2DC15EC200ED729B /* Coffee LoverTests */,
 			);
 			name = "Coffee Lover";
 			packageProductDependencies = (
-				8E5DC3DE2DB394250023FFAF /* Coffee-Kit */,
+				8E9F17D02DBCF88E00FB1CE1 /* Coffee-Kit */,
 			);
 			productName = "Coffee Lover";
 			productReference = 8E2C69632CC4F86C004B334D /* Coffee Lover.app */;
@@ -170,6 +193,9 @@
 			);
 			name = "Coffee LoverTests";
 			packageProductDependencies = (
+				8EF840942DC15DC900ED729B /* Harmonize */,
+				8EF840962DC15DC900ED729B /* HarmonizeSemantics */,
+				8EF840982DC15DC900ED729B /* HarmonizeUtils */,
 			);
 			productName = "Coffee LoverTests";
 			productReference = 8E2C69732CC4F86F004B334D /* Coffee LoverTests.xctest */;
@@ -231,7 +257,8 @@
 			mainGroup = 8E2C695A2CC4F86B004B334D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8EDB2FE12D9AB8190028A03A /* XCLocalSwiftPackageReference "../../Coffee-Kit" */,
+				8E9F17CF2DBCF88E00FB1CE1 /* XCLocalSwiftPackageReference "../../Coffee-Kit" */,
+				8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8E2C69642CC4F86C004B334D /* Products */;
@@ -603,16 +630,42 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8EDB2FE12D9AB8190028A03A /* XCLocalSwiftPackageReference "../../Coffee-Kit" */ = {
+		8E9F17CF2DBCF88E00FB1CE1 /* XCLocalSwiftPackageReference "../../Coffee-Kit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../Coffee-Kit";
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/perrystreetsoftware/Harmonize";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		8E5DC3DE2DB394250023FFAF /* Coffee-Kit */ = {
+		8E9F17D02DBCF88E00FB1CE1 /* Coffee-Kit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Coffee-Kit";
+		};
+		8EF840942DC15DC900ED729B /* Harmonize */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */;
+			productName = Harmonize;
+		};
+		8EF840962DC15DC900ED729B /* HarmonizeSemantics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */;
+			productName = HarmonizeSemantics;
+		};
+		8EF840982DC15DC900ED729B /* HarmonizeUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */;
+			productName = HarmonizeUtils;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
