@@ -5,11 +5,10 @@
 //  Created by Christoph Rohde on 13.03.25.
 //
 import Coffee_Kit
-import SwiftUI
 import OSLog
+import SwiftUI
 
 struct OrderButtonView: View {
-
     let logger = Logger(subsystem: "codebyCR.coffee.lover", category: "OrderButtonView")
 
     @Environment(OrderBuilder.self) var orderBuilder
@@ -32,7 +31,6 @@ struct OrderButtonView: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.green)
                 .frame(height: 50)
-                .background(.ultraThinMaterial)
                 .opacity(0.8)
                 .overlay(
                     Text(String(format: "Order (%@)", CurrencyFormatter.formatAmount(orderBuilder.totalAmount)))
@@ -51,4 +49,13 @@ struct OrderButtonView: View {
             Text("Your order will arrive soon.")
         }
     }
+}
+
+#Preview("OrderButtonView (Darkmode)") {
+    let webservice = WebserviceProvider(inMode: .dev)
+
+    return OrderButtonView()
+        .environment(MenuManager(from: webservice))
+        .environment(OrderManager(from: webservice))
+        .preferredColorScheme(.dark)
 }

@@ -53,36 +53,7 @@ struct MenuListView: View {
     MenuListView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
         .environment(OrderBuilder(for: UUID()))
+        .preferredColorScheme(.dark)
 }
 
-struct CategorieChooserView: View {
-    @Binding var menuCategories: [MenuCategory]
-    @Binding var selectedCategory: MenuCategory
 
-    var body: some View {
-        RoundedRectangle(cornerRadius: 16)
-            .frame(height: 48)
-            .foregroundColor(.brown)
-            .background(.ultraThinMaterial)
-            .opacity(0.8)
-            .overlay {
-                SegmentedPicker(
-                    selection: $selectedCategory,
-                    items: $menuCategories,
-                    selectionColor: .brown
-                ) { category in
-                    Text(category.rawValue)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                        .background(selectedCategory == category ? .brown : .clear)
-                        .onTapGesture {
-                            selectedCategory = category
-                        }
-                }
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 12)
-                )
-            }
-            .padding([.bottom, .horizontal], 8)
-    }
-}
