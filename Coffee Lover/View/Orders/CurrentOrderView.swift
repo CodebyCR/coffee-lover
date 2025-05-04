@@ -36,3 +36,7 @@ struct CurrentOrderView: View {
         }
     }
 }
+
+#Preview {
+    CurrentOrderView(currentOrder: .constant(Order()))
+}
