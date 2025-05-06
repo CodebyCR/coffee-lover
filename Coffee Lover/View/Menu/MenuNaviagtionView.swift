@@ -8,19 +8,11 @@
 import Coffee_Kit
 import SwiftUI
 
-enum MenuNavigationEntry: String {
-    case coffee = "Coffee"
-    case cake = "Cake"
-}
-
 struct MenuNaviagtionView: View {
-    @State private var homeNavigationStack: [MenuNavigationEntry] = []
-
     var body: some View {
-        NavigationStack(path: $homeNavigationStack) {
+        NavigationStack {
             VStack {
                 MenuListView()
-                    .tag(MenuNavigationEntry.coffee)
                     .navigationBarTitleDisplayMode(.inline)
             }
         }
