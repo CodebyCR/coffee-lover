@@ -22,7 +22,7 @@ struct MenuListView: View {
     var body: some View {
         ZStack {
             VStack {
-                Spacer()
+                Spacer(minLength: 8)
                 MenuListSubView(selectedCategory: $selectedCategory)
                     .safeAreaInset(edge: .bottom) {
                         CategorieChooserView(menuCategories: $menuCategories, selectedCategory: $selectedCategory)
@@ -38,22 +38,24 @@ struct MenuListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                VStack {
-                    Text(selectedCategory.rawValue)
-                        .foregroundStyle(.white)
-                        .padding(4)
-                        .fontWeight(.bold)
-                }
+                Text(selectedCategory.rawValue)
+                    .frame(minWidth: 40, maxWidth: 200)
+                    .foregroundStyle(.white)
+                    .fontWeight(.bold)
             }
         }
     }
 }
 
-#Preview {
+#Preview("MenuListView") {
     MenuListView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
         .environment(OrderBuilder(for: UUID()))
         .preferredColorScheme(.dark)
 }
 
-
+#Preview("ContentView") {
+    ContentView()
+        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(OrderBuilder(for: UUID()))
+}

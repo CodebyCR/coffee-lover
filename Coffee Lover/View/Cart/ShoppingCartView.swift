@@ -16,7 +16,7 @@ struct ShoppingCartView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    Spacer()
+                    Spacer(minLength: 8)
                     List {
                         if orderBuilder.products.isEmpty {
                             ContentUnavailableView("Your cart is empty.", systemImage: "cart", description: Text("Enjoy some tasty pieces ❤️"))

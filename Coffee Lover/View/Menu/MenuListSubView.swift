@@ -36,7 +36,7 @@ struct MenuListSubView: View {
                     })
             }
         }
-        .task(priority: .background) {
+        .task(priority: .userInitiated) {
             await addMenuEntiesAnimated()
         }
     }
