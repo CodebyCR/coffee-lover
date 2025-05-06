@@ -26,13 +26,9 @@ struct CategorieChooserView: View {
                     Text(category.rawValue)
                         .foregroundStyle(.white)
                         .fontWeight(.bold)
-                        .background(selectedCategory == category ? .brown : .clear)
-                        .onTapGesture {
-                            selectedCategory = category
-                        }
                 }
                 .clipShape(
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
                 )
             }
             .padding([.bottom, .horizontal], 8)
