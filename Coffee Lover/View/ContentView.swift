@@ -14,10 +14,12 @@ enum MainTab {
 
 @MainActor
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
     @State private var selectedTab: MainTab = .menu
 
     var body: some View {
+        // MARK: - TabView
         TabView(selection: $selectedTab) {
             // MARK: - Orders
 
@@ -38,16 +40,17 @@ struct ContentView: View {
 
             // MARK: - Cart
 
-            withAnimation(.bouncy) {
-                CartNaviagtionView()
-                    .tabItem {
-                        Label("Cart", systemImage: "cart")
-                    }
-                    .tag(MainTab.cart)
-                    .badge(orderBuilder.totalProducts)
-            }
+
+            CartNaviagtionView()
+                .tabItem {
+                    Label("Cart", systemImage: "cart")
+                }
+                .tag(MainTab.cart)
+                .badge(orderBuilder.totalProducts)
+
         }
         .accentColor(.brown)
+
     }
 }
 

@@ -21,7 +21,6 @@ struct MenuListSubView: View {
             }
 
             ForEach(menu.getSelection(for: selectedCategory), id: \.id) { entry in
-
                 NavigationLink(
                     destination: {
                         ProductDetailView(product: entry)
@@ -33,9 +32,13 @@ struct MenuListSubView: View {
                                     orderBuilder.addProduct(entry)
                                 }
                             }
-                    })
+
+                    }
+                )
+
             }
         }
+        .listStyle(.grouped)
         .task(priority: .userInitiated) {
             await addMenuEntiesAnimated()
         }
@@ -46,7 +49,7 @@ struct MenuListSubView: View {
             return
         }
 
-        for await coffee in await menu.itemSequence.loadAll() {
+        for await coffee in await menu.productService.loadAll() {
             withAnimation(.spring(response: 0.8, dampingFraction: 0.6)) {
                 // animate menu entries...
                 switch coffee {

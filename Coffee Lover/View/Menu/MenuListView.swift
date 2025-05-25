@@ -29,12 +29,7 @@ struct MenuListView: View {
                     }
             }
         }
-        .background(
-            Color
-                .brown
-                .gradient
-        )
-
+        .background(Color.brown.gradient)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {

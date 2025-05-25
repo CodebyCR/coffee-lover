@@ -13,7 +13,7 @@ final class MemorySaftyTests: XCTestCase {
 
     public func testShouldCaptureSelfWeaklyOnViewModels() {
         let message = "'self' should capture weakly in closures at this place."
-        let suffixes = ["ViewModel", "Service", "Manager"]
+        let suffixes = ["ViewModel", "Service", "Manager", "View"]
         let memoryLeakCanidates = Harmonize
             .productionCode()
             .classes()
