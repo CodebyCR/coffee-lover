@@ -20,6 +20,10 @@ struct Coffee_LoverApp: App {
                 .environment(menuManager)
                 .environment(orderBuilder)
                 .environment(orderManager)
+                .task {
+                    // Fill cache
+                    await menuManager.fillUpCache()
+                }
         }
     }
 }
