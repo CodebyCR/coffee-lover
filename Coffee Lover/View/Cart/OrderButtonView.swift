@@ -15,29 +15,23 @@ struct OrderButtonView: View {
     @Environment(OrderManager.self) var orderManager
     @State private var activePopover: Bool = false
 
+
+
     var body: some View {
         Button {
             logger.info("Ordering...")
 
-            guard let newOrder = orderBuilder.build() else {
-                logger.error("Order could not be created")
-                return
+            do{
+                let newOrder = try orderBuilder.build()
+                orderManager.takeOrder(newOrder)
+                activePopover.toggle()
+            } catch {
+                logger.error("Order could not be created. \(error.localizedDescription)")
+                // GUI feedback
             }
 
-            orderManager.takeOrder(newOrder)
-            activePopover.toggle()
-
         } label: {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.green)
-                .frame(height: 50)
-                .opacity(0.8)
-                .overlay(
-                    Text(String(format: "Order (%@)", CurrencyFormatter.formatAmount(orderBuilder.totalAmount)))
-                        .foregroundColor(.white)
-                        .font(.headline)
-                )
-                .padding([.bottom, .horizontal], 8)
+            OrderButtonLabel(orderBuilder: orderBuilder)
         }
         .disabled(orderBuilder.products.isEmpty)
 //        .padding([.bottom, .horizontal], 8)
@@ -58,4 +52,21 @@ struct OrderButtonView: View {
         .environment(MenuManager(from: webservice))
         .environment(OrderManager(from: webservice))
         .preferredColorScheme(.dark)
+}
+
+struct OrderButtonLabel: View {
+    @Bindable public var orderBuilder: OrderBuilder
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 16)
+            .fill(Color.green)
+            .frame(height: 50)
+            .opacity(0.8)
+            .overlay(
+                Text(String(format: "Order (%@)", CurrencyFormatter.formatAmount(orderBuilder.totalAmount)))
+                    .foregroundColor(.white)
+                    .font(.headline)
+            )
+            .padding([.bottom, .horizontal], 8)
+    }
 }
