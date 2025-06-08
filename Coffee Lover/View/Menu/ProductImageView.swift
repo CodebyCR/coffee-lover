@@ -4,34 +4,35 @@
 //
 //  Created by Christoph Rohde on 22.05.25.
 //
-import SwiftUI
 import Coffee_Kit
+import SwiftUI
+import UIKit
 
 struct ProductImageView: View {
+    @Environment(ImageManager.self) private var imageManager
     @Binding var product: Product
+    @State private var imageData = Data()
+    let frameSize: CGFloat
 
     var body: some View {
-            VStack {
-                if let imageURL = product.imageUrl {
-                    AsyncImage(url: imageURL) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(minWidth: 200, minHeight: 200)
-                            .cornerRadius(16)
-                            .padding()
+        VStack {
+            if let uIImage = UIImage(data: imageData) {
+                Image(uiImage: uIImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(minWidth: frameSize, minHeight: frameSize)
+                    .cornerRadius(8)
+                    .shadow(radius: 1.0)
 
-                    } placeholder: {
-                        ProgressView()
-                            .frame(width: 200, height: 200)
-                    }
-                } else {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                        .padding()
-                }
+            } else {
+                Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(minWidth: frameSize, minHeight: frameSize)
             }
         }
+        .task {
+            imageData = await imageManager.fetchImageData(for: product)
+        }
+    }
 }

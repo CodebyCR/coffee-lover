@@ -14,36 +14,46 @@ struct ProductDetailView: View {
 
     var body: some View {
         // Image Placeholder
-        ScrollView {
 
-            ProductImageView(product: $product)
+//                .ignoresSafeArea()
 
-            HStack {
-                Text(product.name)
-                    .font(.title)
-                    .fontWeight(.semibold)
-                    .italic()
+        VStack {
+            ZStack {
+                ScrollView {
+                    ZStack {
+                        Color.brown
 
-                Spacer()
+                        ProductImageView(product: $product, frameSize: 200)
+                            .padding(12)
+                    }
 
-                Text(CurrencyFormatter.formatAmount(product.price))
-                    .font(.title)
-                    .italic()
-            }.padding(.horizontal, 24)
+                    HStack {
+                        Text(product.name)
+                            .font(.title)
+                            .fontWeight(.semibold)
+                            .italic()
 
+                        Spacer()
 
-            DescriptionSectionView(
-                title: "Description",
-                 description: "Handcrafted coffee with a touch of cream. Made with love and care."
-            ).padding(.horizontal, 8)
+                        Text(CurrencyFormatter.formatAmount(product.price))
+                            .font(.title)
+                            .italic()
+                    }.padding(.horizontal, 24)
 
-            DescriptionSectionView(
-                title: "Ingredients",
-                description: "water, coffee, milk, sugar, cream."
-            ).padding(.horizontal, 8)
+                    DescriptionSectionView(
+                        title: "Description",
+                        description: "Handcrafted coffee with a touch of cream. Made with love and care."
+                    ).padding(.horizontal, 8)
 
-            Spacer()
+                    DescriptionSectionView(
+                        title: "Ingredients",
+                        description: "water, coffee, milk, sugar, cream."
+                    ).padding(.horizontal, 8)
 
+                    Spacer()
+                }
+            }
+            .listStyle(.plain)
             .safeAreaInset(edge: .bottom) {
                 Button {
                     print("Add to cart")
@@ -52,7 +62,6 @@ struct ProductDetailView: View {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color.green)
                         .frame(height: 50)
-                        .background(.ultraThinMaterial)
                         .opacity(0.8)
                         .overlay(
                             Text(String(format: "Add to cart (%@)", CurrencyFormatter.formatAmount(product.price)))
@@ -60,6 +69,7 @@ struct ProductDetailView: View {
                                 .font(.headline)
                         )
                         .padding([.bottom, .horizontal], 8)
+                        .shadow(radius: 1)
                 }
                 //            .padding([.bottom, .horizontal], 8)
             }
@@ -67,33 +77,28 @@ struct ProductDetailView: View {
     }
 }
 
-//#Preview {
+// #Preview {
 //    let coffee = Product()
 //    ProductDetailView(product: coffee)
 //        .environment(OrderBuilder(for: UUID()))
-//}
-
-
+// }
 
 struct DescriptionSectionView: View {
-
     public let title: String
     public let description: String
 
     var body: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.brown)
+                .fill(Color.brown.opacity(0.9))
                 .opacity(0.2)
-            
-            
+
             VStack(alignment: .leading) {
                 Text(title)
                     .font(.headline)
                     .fontWeight(.bold)
                     .padding(.vertical, 8)
-                
-                
+
                 Text(description)
                     .padding(.bottom, 8)
 
@@ -102,11 +107,10 @@ struct DescriptionSectionView: View {
     }
 }
 
-
 #Preview {
     DescriptionSectionView(
         title: "Description",
-         description: "Handcrafted coffee with a touch of chocolate. Made with love and care."
+        description: "Handcrafted coffee with a touch of chocolate. Made with love and care."
     )
     .padding()
 }
