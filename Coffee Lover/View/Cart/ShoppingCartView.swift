@@ -8,46 +8,40 @@
 import Coffee_Kit
 import SwiftUI
 
+@MainActor
 struct ShoppingCartView: View {
     @Environment(OrderBuilder.self) var orderBuilder
     @Environment(MenuManager.self) var menuManager
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                VStack {
-                    Spacer(minLength: 8)
-                    List {
-                        if orderBuilder.products.isEmpty {
-                            ContentUnavailableView("Your cart is empty.", systemImage: "cart", description: Text("Enjoy some tasty pieces ❤️"))
-                        }
+            List {
+                if orderBuilder.products.isEmpty {
+                    ContentUnavailableView("Your cart is empty.", systemImage: "cart", description: Text("Enjoy some tasty pieces ❤️"))
+                }
 
-                        ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
-                            NavigationLink(
-                                destination: {
-                                    ProductDetailView(product: productWithQuantity.product)
-                                }, label: {
-                                    ProductQuantityView(of: productWithQuantity)
-                                        .swipeActions {
-                                            Button("Remove") {
-                                                print("Remove \(productWithQuantity.product.name) from cart ...")
-                                                orderBuilder.removeAll(productWithQuantity.product)
-                                            }
-                                        }
+                ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
+                    NavigationLink(
+                        destination: {
+                            ProductDetailView(product: productWithQuantity.product)
+                        }, label: {
+                            ProductQuantityView(orderProduct: productWithQuantity)
+                                .swipeActions {
+                                    Button("Remove") {
+                                        print("Remove \(productWithQuantity.product.name) from cart ...")
+                                        orderBuilder.removeAll(productWithQuantity.product)
+                                    }
                                 }
-                            )
                         }
-                    }
-                    .safeAreaInset(edge: .bottom) {
-                        OrderButtonView()
-                    }
+                    )
                 }
             }
-            .background(
-                Color
-                    .brown
-                    .gradient
-            )
+            .listStyle(.plain)
+            .safeAreaInset(edge: .bottom) {
+                OrderButtonView()
+            }
+            .toolbarBackground(Color.brown.gradient)
+            .toolbarBackground(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
@@ -63,7 +57,7 @@ struct ShoppingCartView: View {
     }
 }
 
-#Preview {
-    ShoppingCartView()
-        .environment(OrderBuilder(for: UUID()))
-}
+// #Preview {
+//    ShoppingCartView()
+//        .environment(OrderBuilder(for: UUID()))
+// }

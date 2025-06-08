@@ -20,25 +20,24 @@ struct MenuListView: View {
     @State private var selectedCategory: MenuCategory = .coffee
 
     var body: some View {
-        ZStack {
-            VStack {
-                Spacer(minLength: 8)
-                MenuListSubView(selectedCategory: $selectedCategory)
-                    .safeAreaInset(edge: .bottom) {
-                        CategorieChooserView(menuCategories: $menuCategories, selectedCategory: $selectedCategory)
-                    }
+        MenuListSubView(selectedCategory: $selectedCategory)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color.brown.gradient)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .safeAreaInset(edge: .bottom) {
+                CategorieChooserView(
+                    menuCategories: $menuCategories,
+                    selectedCategory: $selectedCategory
+                )
             }
-        }
-        .background(Color.brown.gradient)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(selectedCategory.rawValue)
-                    .frame(minWidth: 40, maxWidth: 200)
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(selectedCategory.rawValue)
+                        .frame(minWidth: 40, maxWidth: 200)
+                        .foregroundStyle(.white)
+                        .fontWeight(.bold)
+                }
             }
-        }
     }
 }
 

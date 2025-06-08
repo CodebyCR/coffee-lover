@@ -11,10 +11,11 @@ import SwiftUI
 struct MenuNaviagtionView: View {
     var body: some View {
         NavigationStack {
-            VStack {
+//            VStack {
                 MenuListView()
                     .navigationBarTitleDisplayMode(.inline)
-            }
+                    .toolbarBackground(.brown)
+//            }
         }
         .background(
             Color

@@ -25,23 +25,22 @@ struct MenuListSubView: View {
                     destination: {
                         ProductDetailView(product: entry)
                     }, label: {
-                        MenuEntry(productEntry: entry)
+                        MenuEntry(product: entry)
                             .swipeActions {
                                 Button("Add") {
                                     print("Add \(entry.name) to cart ...")
                                     orderBuilder.addProduct(entry)
                                 }
                             }
-
                     }
                 )
-
             }
         }
-        .listStyle(.grouped)
+        .listStyle(.plain)
         .task(priority: .userInitiated) {
             await addMenuEntiesAnimated()
         }
+        
     }
 
     fileprivate func addMenuEntiesAnimated() async {

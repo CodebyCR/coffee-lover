@@ -10,70 +10,35 @@ import SwiftUI
 
 struct MenuEntry: View {
     @State
-    var productEntry: Product
+    var product: Product
 
     var body: some View {
         HStack {
-
             HStack {
+                ProductImageView(product: $product, frameSize: 54)
+                    .padding(.trailing, 8)
 
-                ProductImageMinView(product: $productEntry)
-
-                Text("\(productEntry.categoryNumber)")
+                Text("\(product.categoryNumber)")
                     .fontWeight(.thin)
                     .italic()
                     .bold()
 
-                Text(productEntry.name)
+                Text(product.name)
                     .fontWeight(.semibold)
                     .italic()
             }
 
-
-
             Spacer()
 
-            Text(CurrencyFormatter.formatAmount(productEntry.price))
+            Text(CurrencyFormatter.formatAmount(product.price))
                 .italic()
 
-            }.frame(height: 60)
+        }.frame(height: 60)
 //            .padding(.leading, 8)
-        }
-
+    }
 }
-
 
 #Preview {
-    MenuEntry(productEntry: Product())
-    .preferredColorScheme(.dark)
-}
-
-struct ProductImageMinView: View {
-    @Binding var product: Product
-    let framesize: CGFloat = 54
-
-    var body: some View {
-        VStack {
-            if let imageURL = product.imageUrl {
-                AsyncImage(url: imageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: framesize, height: framesize)
-                        .cornerRadius(8)
-                        .padding()
-                    
-                } placeholder: {
-                    ProgressView()
-                        .frame(width: framesize, height: framesize)
-                }
-            } else {
-                Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: framesize, height: framesize)
-                    .padding()
-            }
-        }
-    }
+    MenuEntry(product: Product())
+        .preferredColorScheme(.dark)
 }
