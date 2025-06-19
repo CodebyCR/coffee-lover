@@ -16,30 +16,20 @@ struct ShoppingCartView: View {
     var body: some View {
         NavigationStack {
             List {
-                if orderBuilder.products.isEmpty {
-                    ContentUnavailableView("Your cart is empty.", systemImage: "cart", description: Text("Enjoy some tasty pieces ❤️"))
-                }
-
                 ForEach(orderBuilder.products, id: \.id) { productWithQuantity in
-                    NavigationLink(
-                        destination: {
-                            ProductDetailView(product: productWithQuantity.product)
-                        }, label: {
-                            ProductQuantityView(orderProduct: productWithQuantity)
-                                .swipeActions {
-                                    Button("Remove") {
-                                        print("Remove \(productWithQuantity.product.name) from cart ...")
-                                        orderBuilder.removeAll(productWithQuantity.product)
-                                    }
+                    NavigationLink(value: productWithQuantity) {
+                        ProductQuantityView(orderProduct: productWithQuantity)
+                            .swipeActions {
+                                Button("Remove") {
+                                    print("Remove \(productWithQuantity.product.name) from cart ...")
+                                    orderBuilder.removeAll(productWithQuantity.product)
                                 }
-                        }
-                    )
+                            }
+                    }
+
                 }
             }
             .listStyle(.plain)
-            .safeAreaInset(edge: .bottom) {
-                OrderButtonView()
-            }
             .toolbarBackground(Color.brown.gradient)
             .toolbarBackground(.visible, for: .navigationBar)
             .navigationBarTitleDisplayMode(.inline)
@@ -53,6 +43,19 @@ struct ShoppingCartView: View {
                     }
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                OrderButtonView()
+            }
+            .overlay {
+                if orderBuilder.products.isEmpty {
+                    ContentUnavailableView("Your cart is empty.", systemImage: "cart", description: Text("Enjoy some tasty pieces ❤️"))
+                }
+            }
+            .navigationDestination(for: OrderProduct.self) { productWithQuantity in
+                ProductDetailView(product: productWithQuantity.product)
+            }
+
+
         }
     }
 }
