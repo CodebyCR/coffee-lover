@@ -25,8 +25,7 @@ struct ProductImageView: View {
                     .shadow(radius: 1.0)
 
             } else {
-                Image(systemName: "photo")
-                    .resizable()
+                ProgressView()
                     .scaledToFit()
                     .frame(minWidth: frameSize, minHeight: frameSize)
             }
