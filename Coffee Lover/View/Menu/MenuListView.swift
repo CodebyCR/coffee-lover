@@ -16,37 +16,105 @@ import SwiftUI
 
 @MainActor
 struct MenuListView: View {
-    @State private var menuCategories: [MenuCategory] = MenuCategory.allCases
-    @State private var selectedCategory: MenuCategory = .coffee
+    @Environment(MenuManager.self) var menu
+    @Environment(OrderBuilder.self) var orderBuilder
+    @State private var menuCategories = MenuCategory.allCases
+    @State private var selectedCategory = MenuCategory.coffee
 
     var body: some View {
-        MenuListSubView(selectedCategory: $selectedCategory)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color.brown.gradient)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .safeAreaInset(edge: .bottom) {
-                CategorieChooserView(
-                    menuCategories: $menuCategories,
-                    selectedCategory: $selectedCategory
-                )
-            }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text(selectedCategory.rawValue)
-                        .frame(minWidth: 40, maxWidth: 200)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
+
+            ScrollViewReader { proxy in
+                List {
+
+                        ForEach(menuCategories, id: \.id) { category in
+//                            Section(category.debugDescription) {
+                                ForEach(menu.getSelection(for: category), id: \.id) { entry in
+                                    NavigationLink(value: entry) {
+                                        MenuEntry(product: entry)
+                                            .swipeActions {
+                                                Button("Add") {
+                                                    print("Add \(entry.name) to cart ...")
+                                                    orderBuilder.addProduct(entry)
+                                                }
+                                            }
+                                    }
+                                }
+//                            }
+                            .id(category)
+
+
+                    }
+                }
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text(selectedCategory.rawValue)
+                            .frame(minWidth: 40, maxWidth: 200)
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                    }
+                }
+                .listStyle(.plain)
+                .toolbarBackground(Color.brown.gradient)
+                .toolbarBackground(.visible, for: .navigationBar)
+                .navigationBarTitleDisplayMode(.inline)
+                .listRowSeparator(.hidden)
+                .safeAreaInset(edge: .bottom) {
+                    if !menu.items.isEmpty {
+                        CategorieChooserView(
+                            menuCategories: $menuCategories,
+                            selectedCategory: $selectedCategory
+                        )
+                    }
+                }
+                .overlay {
+                    if menu.items.isEmpty {
+                        ContentUnavailableView("No Internet connection.", systemImage: "wifi.exclamationmark.circle", description: Text("Please check your connection."))
+                    }
+                }
+                .navigationDestination(for: Product.self) { product in
+                    ProductDetailView(product: product)
+                }
+                .task(priority: .userInitiated) {
+                    await addMenuEntiesAnimated()
+                }
+                .onChange(of: selectedCategory, initial: false) {
+                    print("Scrolling to \(selectedCategory.rawValue)...")
+                    withAnimation {
+                        proxy.scrollTo(selectedCategory, anchor: .top)
+                    }
                 }
             }
     }
+
+    fileprivate func addMenuEntiesAnimated() async {
+        guard menu.items.isEmpty else {
+            return
+        }
+
+        for await product in await menu.productService.loadAll() {
+            withAnimation(.spring(response: 0.8, dampingFraction: 0.6)) {
+                // animate menu entries...
+                switch product {
+                case .failure(let error):
+                    print(error)
+                case .success(let product):
+                    print("Adding \(product.name)...")
+                    menu.items.append(product)
+                }
+            }
+        }
+    }
+
 }
 
-#Preview("MenuListView") {
-    MenuListView()
-        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
-        .environment(OrderBuilder(for: UUID()))
-        .preferredColorScheme(.dark)
-}
+
+
+//#Preview("MenuListView") {
+//    MenuListView()
+//        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+//        .environment(OrderBuilder(for: UUID()))
+//        .preferredColorScheme(.dark)
+//}
 
 #Preview("ContentView") {
     ContentView()
