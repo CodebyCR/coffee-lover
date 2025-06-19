@@ -7,8 +7,7 @@
 
 import Foundation
 
-public struct CurrencyFormatter {
-    
+public enum CurrencyFormatter {
     public static func formatAmount(_ amount: Double) -> String {
         let formatter = NumberFormatter()
         formatter.locale = .current
@@ -18,7 +17,7 @@ public struct CurrencyFormatter {
         guard let formattedAmount = formatter.string(from: NSNumber(value: amount)) else {
             return String(amount)
         }
-        
+
         return formattedAmount
     }
 }
