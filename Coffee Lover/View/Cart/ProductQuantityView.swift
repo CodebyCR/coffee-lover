@@ -8,44 +8,35 @@
 import Coffee_Kit
 import SwiftUI
 
+@MainActor
 struct ProductQuantityView: View {
     @Environment(MenuManager.self) var menuManager
-    @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
-    @Binding var productEntry: Product
-    @Binding var quantity: UInt8
-
-    init(of productWithQuantity: OrderProduct) {
-        self._productEntry = Binding.constant(productWithQuantity.product)
-
-        self._quantity = Binding.constant(productWithQuantity.quantity)
-    }
+    @Environment(OrderBuilder.self) var orderBuilder
+    @StateObject var orderProduct: OrderProduct
 
     var body: some View {
-        // Stepper need Binding (outsource to separate view)
-        // Quantity with stepper
-        //                        HStack {
-        //                            Text("\(productWithQuantity.quantity)")
-        //
-        //                            @Bindable var quantity: Int = productWithQuantity.quantity
-        //
-        //                            Stepper(value: $quantity, in: 0 ... 100) {
-        //                                Text(productWithQuantity.product.name)
-        //                            }
-        //                        }
-
         HStack {
-            Stepper(value: $quantity, in: 0 ... 100) {
-                HStack {
-                    Text("\(quantity) x \(productEntry.name)")
-                        .fontWeight(.semibold)
-                        .italic()
+//            Stepper(value: $orderProduct.quantity, in: 1 ... 100) {
+//                Text()
+//            }
+//            .onSubmit {
+//                orderBuilder.updateQuantity(of: orderProduct)
+//            }
 
-                    Spacer()
-
-                    Text(CurrencyFormatter.formatAmount(productEntry.price))
-                        .italic()
-                }
+            Stepper("\(orderProduct.quantity) x \(orderProduct.product.name)") {
+                orderProduct.quantity += 1
+                orderBuilder.updateQuantity(of: orderProduct)
+            } onDecrement: {
+                orderProduct.quantity -= 1
+                orderBuilder.updateQuantity(of: orderProduct)
             }
+            .fontWeight(.semibold)
+            .italic()
+
+            Spacer()
+
+            Text(CurrencyFormatter.formatAmount(orderProduct.price))
+                .italic()
 
         }.frame(
             height: 60
@@ -54,6 +45,8 @@ struct ProductQuantityView: View {
     }
 }
 
-// #Preview {
-//    ProductQuantityView()
-// }
+#Preview {
+    ProductQuantityView(orderProduct: OrderProduct())
+        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(OrderBuilder(for: UUID()))
+}
