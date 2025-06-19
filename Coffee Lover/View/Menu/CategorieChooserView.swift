@@ -14,9 +14,17 @@ struct CategorieChooserView: View {
 
     var body: some View {
         RoundedRectangle(cornerRadius: 16, style: .continuous)
+            .fill(.clear)
+            .background(.ultraThinMaterial)
             .frame(height: 50)
-            .foregroundColor(.brown)
-            .opacity(0.8)
+            .clipShape(
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(.brown)
+                    .opacity(0.3)
+            }
             .overlay {
                 SegmentedPicker(
                     selection: $selectedCategory,
@@ -34,7 +42,6 @@ struct CategorieChooserView: View {
             .padding([.bottom, .horizontal], 8)
     }
 }
-
 
 #Preview {
     CategorieChooserView(
