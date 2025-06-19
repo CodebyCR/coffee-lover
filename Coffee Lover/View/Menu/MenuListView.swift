@@ -25,10 +25,11 @@ struct MenuListView: View {
 
             ScrollViewReader { proxy in
                 List {
-
                         ForEach(menuCategories, id: \.id) { category in
-//                            Section(category.debugDescription) {
-                                ForEach(menu.getSelection(for: category), id: \.id) { entry in
+                            CategoryTitle(categoryTitle: category.rawValue)
+                                .id(category)
+
+                            ForEach(menu.getSelection(for: category), id: \.id) { entry in
                                     NavigationLink(value: entry) {
                                         MenuEntry(product: entry)
                                             .swipeActions {
@@ -39,10 +40,6 @@ struct MenuListView: View {
                                             }
                                     }
                                 }
-//                            }
-                            .id(category)
-
-
                     }
                 }
                 .toolbar {
@@ -121,3 +118,5 @@ struct MenuListView: View {
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
         .environment(OrderBuilder(for: UUID()))
 }
+
+
