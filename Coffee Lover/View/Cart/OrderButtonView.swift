@@ -8,54 +8,59 @@ import Coffee_Kit
 import OSLog
 import SwiftUI
 
+@MainActor
 struct OrderButtonView: View {
     let logger = Logger(subsystem: "codebyCR.coffee.lover", category: "OrderButtonView")
 
     @Environment(OrderBuilder.self) var orderBuilder
     @Environment(OrderManager.self) var orderManager
     @State private var activePopover: Bool = false
-
-
+    @State private var orderResultMessage = ""
 
     var body: some View {
         Button {
-            logger.info("Ordering...")
-
-            do{
-                let newOrder = try orderBuilder.build()
-                orderManager.takeOrder(newOrder)
-                activePopover.toggle()
-            } catch {
-                logger.error("Order could not be created. \(error.localizedDescription)")
-                // GUI feedback
-            }
-
+            takeOrder()
         } label: {
-            OrderButtonLabel(orderBuilder: orderBuilder)
+            OrderButtonLabel()
         }
         .disabled(orderBuilder.products.isEmpty)
-//        .padding([.bottom, .horizontal], 8)
         .alert("Order Confirmed 🎉", isPresented: $activePopover) {
             Button("OK") {
                 activePopover.toggle()
             }
         } message: {
-            Text("Your order will arrive soon.")
+            Text(orderResultMessage)
         }
+    }
+
+    fileprivate func takeOrder() {
+        let result = orderManager.takeOrder(from: orderBuilder)
+
+        switch result {
+        case .success(let message):
+            logger.info("Order successfully taken.")
+            orderResultMessage = message
+            activePopover.toggle()
+
+        case .failure(let error):
+            logger.error("Failed to take order: \(error.localizedDescription)")
+            orderResultMessage = "Something went wrong, please try again."
+            // Handle error appropriately, e.g., show an alert
+        }
+
     }
 }
 
 #Preview("OrderButtonView (Darkmode)") {
-    let webservice = WebserviceProvider(inMode: .dev)
-
     return OrderButtonView()
-        .environment(MenuManager(from: webservice))
-        .environment(OrderManager(from: webservice))
+        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(OrderManager(from: WebserviceProvider(inMode: .dev)))
         .preferredColorScheme(.dark)
 }
 
+@MainActor
 struct OrderButtonLabel: View {
-    @Bindable public var orderBuilder: OrderBuilder
+    @Environment(OrderBuilder.self) var orderBuilder
 
     var body: some View {
         RoundedRectangle(cornerRadius: 16)
