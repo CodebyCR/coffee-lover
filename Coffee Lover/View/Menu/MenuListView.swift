@@ -26,8 +26,10 @@ struct MenuListView: View {
             ScrollViewReader { proxy in
                 List {
                         ForEach(menuCategories, id: \.id) { category in
-                            CategoryTitle(categoryTitle: category.rawValue)
-                                .id(category)
+                            if !menu.items.isEmpty {
+                                CategoryTitle(categoryTitle: category.rawValue)
+                                    .id(category)
+                            }
 
                             ForEach(menu.getSelection(for: category), id: \.id) { entry in
                                     NavigationLink(value: entry) {
@@ -39,6 +41,7 @@ struct MenuListView: View {
                                                 }
                                             }
                                     }
+                                    .opacity(0)
                                 }
                     }
                 }
@@ -79,6 +82,13 @@ struct MenuListView: View {
                     withAnimation {
                         proxy.scrollTo(selectedCategory, anchor: .top)
                     }
+                }
+                .refreshable {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    print("Refreshing menu...")
+                    try? await Task.sleep(for: .seconds(2.0))
+                    print("Menu refreshed.")
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 }
             }
     }

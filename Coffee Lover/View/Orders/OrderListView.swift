@@ -56,6 +56,13 @@ struct OrderListView: View {
                 }
             }
         }
+        .refreshable {
+            // Simulate a network call to fetch new orders
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            try? await Task.sleep(nanoseconds: 2 * 1_000_000_000) // 2 seconds
+            print("Orders refreshed")
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        }
     }
 }
 
