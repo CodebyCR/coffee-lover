@@ -11,40 +11,39 @@ import SwiftUI
 struct OrderListView: View {
 
     @State private var currentOrder = Order()
-    @State private var orderHistory = [Order(), Order()]
+    @State private var isExpanded = false
+    @State private var orderHistory = (0 ... 15).map { _ in
+        Order()
+    }
 
     var body: some View {
         ZStack {
             VStack {
-                Spacer()
-                List {
-                    Section(header:
-                        Text("Current Order")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.brown)
-                    ) {
-                        CurrentOrderView(currentOrder: $currentOrder)
+                CurrentOrderView(currentOrder: $currentOrder, isExpanded: $isExpanded)
+                    .onTapGesture {
+                        withAnimation(.bouncy) {
+                            isExpanded.toggle()
+                        }
                     }
 
-                    Section(header:
-                        Text("Order History")
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.brown)
-                    ) {
+                List {
+
+                    CategoryTitle(categoryTitle: "Order History")
+                        .scrollTargetLayout()
+
                         OrderHistoryView(orderHistory: $orderHistory)
-                    }
+
                 }
+                .scrollTargetBehavior(.viewAligned)
+                .listStyle(.insetGrouped)
             }
-            .listStyle(.insetGrouped)
+
         }
         .background(
             Color
                 .brown
                 .gradient
-        )
-
+            )
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
