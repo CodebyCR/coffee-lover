@@ -14,18 +14,36 @@ struct Coffee_LoverApp: App {
     @State var orderBuilder = OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!)
     @State var orderManager = OrderManager(from: WebserviceProvider(inMode: .dev))
     @State var imageManager = ImageManager(from: WebserviceProvider(inMode: .dev))
+    @State private var showSplashScreen = true
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(menuManager)
-                .environment(orderBuilder)
-                .environment(orderManager)
-                .environment(imageManager)
-                .task {
-                    // Fill cache
-                    await menuManager.fillUpCache()
+            // MARK: - Splash Screen
+            ZStack {
+                if showSplashScreen {
+                    SplashScreen()
+                        .transition(.opacity)
+                        .task {
+                            // Fill cache
+                            await menuManager.fillUpCache()
+
+                        }
+                        .onAppear {
+                            withAnimation(.easeOut(duration: 2.5)) {
+                                showSplashScreen = false
+                            }
+                        }
+
+
                 }
+                else {
+                    ContentView()
+                        .environment(menuManager)
+                        .environment(orderBuilder)
+                        .environment(orderManager)
+                        .environment(imageManager)
+                }
+            }
         }
     }
 }
