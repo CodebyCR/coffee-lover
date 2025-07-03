@@ -10,6 +10,7 @@ import SwiftUI
 
 @MainActor
 struct ProductQuantityView: View {
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     @Environment(MenuManager.self) var menuManager
     @Environment(OrderBuilder.self) var orderBuilder
     @StateObject var orderProduct: OrderProduct
@@ -25,9 +26,11 @@ struct ProductQuantityView: View {
 
             Stepper("\(orderProduct.quantity) x \(orderProduct.product.name)") {
                 orderProduct.quantity += 1
+                feedbackGenerator.impactOccurred()
                 orderBuilder.updateQuantity(of: orderProduct)
             } onDecrement: {
                 orderProduct.quantity -= 1
+                feedbackGenerator.impactOccurred()
                 orderBuilder.updateQuantity(of: orderProduct)
             }
             .fontWeight(.semibold)

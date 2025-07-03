@@ -57,6 +57,7 @@ struct ProductDetailView: View {
             .safeAreaInset(edge: .bottom) {
                 Button {
                     print("Add to cart")
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                     orderBuilder.addProduct(product)
                 } label: {
                     RoundedRectangle(cornerRadius: 16)

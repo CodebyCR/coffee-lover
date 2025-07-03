@@ -10,12 +10,14 @@ import SwiftUI
 
 @MainActor
 struct OrderButtonView: View {
+    let feedbackGenerator = UINotificationFeedbackGenerator()
     let logger = Logger(subsystem: "codebyCR.coffee.lover", category: "OrderButtonView")
 
     @Environment(OrderBuilder.self) var orderBuilder
     @Environment(OrderManager.self) var orderManager
     @State private var activePopover: Bool = false
     @State private var orderResultMessage = ""
+
 
     var body: some View {
         Button {
@@ -34,16 +36,22 @@ struct OrderButtonView: View {
     }
 
     fileprivate func takeOrder() {
+        feedbackGenerator.prepare()
         let result = orderManager.takeOrder(from: orderBuilder)
+
 
         switch result {
         case .success(let message):
             logger.info("Order successfully taken.")
+            // Success feedback
+            feedbackGenerator.notificationOccurred(.success)
             orderResultMessage = message
             activePopover.toggle()
 
         case .failure(let error):
             logger.error("Failed to take order: \(error.localizedDescription)")
+            // Failure feedback
+            feedbackGenerator.notificationOccurred(.error)
             orderResultMessage = "Something went wrong, please try again."
             // Handle error appropriately, e.g., show an alert
         }

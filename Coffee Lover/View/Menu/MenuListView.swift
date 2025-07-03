@@ -37,11 +37,12 @@ struct MenuListView: View {
                                             .swipeActions {
                                                 Button("Add") {
                                                     print("Add \(entry.name) to cart ...")
+                                                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                                                     orderBuilder.addProduct(entry)
                                                 }
                                             }
                                     }
-                                    .opacity(0)
+//                                    .opacity(0)
                                 }
                     }
                 }
@@ -58,6 +59,13 @@ struct MenuListView: View {
                 .toolbarBackground(.visible, for: .navigationBar)
                 .navigationBarTitleDisplayMode(.inline)
                 .listRowSeparator(.hidden)
+                .refreshable {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    print("Refreshing menu...")
+                    try? await Task.sleep(for: .seconds(2.0))
+                    print("Menu refreshed.")
+                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                }
                 .safeAreaInset(edge: .bottom) {
                     if !menu.items.isEmpty {
                         CategorieChooserView(
@@ -83,13 +91,7 @@ struct MenuListView: View {
                         proxy.scrollTo(selectedCategory, anchor: .top)
                     }
                 }
-                .refreshable {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    print("Refreshing menu...")
-                    try? await Task.sleep(for: .seconds(2.0))
-                    print("Menu refreshed.")
-                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                }
+
             }
     }
 
