@@ -15,7 +15,11 @@ struct CurrentOrderView: View {
     @State var totalItems = 3
     @State private var orderStatus: OrderStatus = .ordered
     @State private var paymentStatus: PaymentStatus = .pending
-    @State private var id: String = UUID().uuidString.substring(to: String.Index(encodedOffset: 18))
+    @State private var id: String = {
+        let s = UUID().uuidString;
+        let end = String.Index(utf16Offset: min(18, s.utf16.count), in: s);
+        return String(s[..<end])
+    }()
 
     var body: some View {
         VStack(spacing: 0) {
@@ -204,12 +208,8 @@ enum PaymentStatus: String, CaseIterable, Identifiable {
 }
 
 
-
-
-
 #Preview {
     @Previewable var isExpanded: Bool = true
     CurrentOrderView(currentOrder: .constant(Order()), isExpanded: .constant(isExpanded))
-
-
 }
+

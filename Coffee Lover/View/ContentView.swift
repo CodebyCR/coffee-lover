@@ -9,7 +9,7 @@ import Coffee_Kit
 import SwiftUI
 
 enum MainTab {
-    case orders, menu, cart
+    case orders, menu, cart, search
 }
 
 @MainActor
@@ -17,41 +17,83 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
     @State private var selectedTab: MainTab = .menu
+    @State private var lookupValue: String = ""
+    
 
     var body: some View {
+        
         // MARK: - TabView
-        TabView(selection: $selectedTab) {
-            // MARK: - Orders
 
-            OrderNaviagtionView()
-                .tabItem {
-                    Label("Orders", systemImage: "tray.and.arrow.down.fill")
-                }
-                .tag(MainTab.orders)
-                .badge(1)
+        TabView(selection: $selectedTab) {
+            
+            // MARK: - Orders
+            
+            Tab("Orders", systemImage: "tray.and.arrow.down.fill", value: MainTab.orders) {
+                OrderNaviagtionView()
+            }
+            .badge(1)
 
             // MARK: - Menu
 
-            MenuNaviagtionView()
-                .tabItem {
-                    Label("Menu", systemImage: "list.bullet")
-                }
-                .tag(MainTab.menu)
+            Tab("Menu", systemImage: "list.bullet", value: MainTab.menu) {
+                MenuNaviagtionView()
+            
+            }
 
             // MARK: - Cart
-
-
-            CartNaviagtionView()
-                .tabItem {
-                    Label("Cart", systemImage: "cart")
+            
+            Tab("Cart", systemImage: "cart", value: MainTab.cart) {
+                CartNaviagtionView()
+            }
+            .badge(orderBuilder.totalProducts)
+            
+            // MARK: - Search
+            
+            Tab("Search", systemImage: "magnifyingglass", value: MainTab.search, role: .search) {
+                NavigationStack {
+                    if lookupValue.isEmpty {
+                        
+                        SearchCategoryGrid(lookupValue: $lookupValue)
+                            .toolbarBackground(Color.brown.gradient)
+                            .toolbarBackground(.visible, for: .navigationBar)
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .principal) {
+                                    VStack {
+                                        Text("Categories")
+                                            .foregroundStyle(.white)
+                                            .padding(4)
+                                            .fontWeight(.bold)
+                                    }
+                                }
+                            }
+                            
+                        
+                    }
+                    else {
+                        MenuNaviagtionView(filteredOn: $lookupValue)
+                    }
                 }
-                .tag(MainTab.cart)
-                .badge(orderBuilder.totalProducts)
+                .searchable(text: $lookupValue, placement: .navigationBarDrawer, prompt: "Foodname, Ingriedients, etc. ")
+                .background(
+                    Color
+                        .brown
+                        .gradient
+                )
 
+                
+                
+                    
+                    
+            }
+            
+                
+            
         }
         .accentColor(.brown)
-
+        // .tabBarMinimizeBehavior(.onScrollDown) (ios26)
     }
+
 }
 
 #Preview {

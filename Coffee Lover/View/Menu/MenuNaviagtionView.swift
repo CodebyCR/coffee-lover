@@ -9,10 +9,21 @@ import Coffee_Kit
 import SwiftUI
 
 struct MenuNaviagtionView: View {
+    @Binding var lookupValue: String
+    
+    init(){
+        self._lookupValue = .constant("")
+    }
+
+    init(filteredOn lookupValue: Binding<String>) {
+        self._lookupValue = lookupValue
+    }
+    
+    
     var body: some View {
         NavigationStack {
 //            VStack {
-                MenuListView()
+            MenuListView(lookupValue: $lookupValue)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbarBackground(.brown)
 //            }

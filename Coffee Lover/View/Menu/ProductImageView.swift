@@ -30,7 +30,7 @@ struct ProductImageView: View {
                     .frame(minWidth: frameSize, minHeight: frameSize)
             }
         }
-        .task {
+        .task(priority: .userInitiated) {
             imageData = await imageManager.fetchImageData(for: product)
         }
     }

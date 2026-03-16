@@ -23,11 +23,7 @@ struct Coffee_LoverApp: App {
                 if showSplashScreen {
                     SplashScreen()
                         .transition(.opacity)
-                        .task {
-                            // Fill cache
-                            await menuManager.fillUpCache()
 
-                        }
                         .onAppear {
                             withAnimation(.easeOut(duration: 2.5)) {
                                 showSplashScreen = false
@@ -43,6 +39,11 @@ struct Coffee_LoverApp: App {
                         .environment(orderManager)
                         .environment(imageManager)
                 }
+            }
+            .task {
+                // Fill cache
+                await menuManager.fillUpCache()
+
             }
         }
     }
