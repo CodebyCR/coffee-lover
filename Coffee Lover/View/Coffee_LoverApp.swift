@@ -6,15 +6,27 @@
 //
 
 import Coffee_Kit
+import Authentication_Kit
 import SwiftUI
 
 @main
 struct Coffee_LoverApp: App {
+    private let keychain = DefaultKeychainManager()
+    private let authManager: AutenticationManager
+    private let baseURL = URL(string: "http://cr-mac.local:8080/test/authentication")!
+    @State private var authBuilder: AuthenticationBuilder
     @State var menuManager = MenuManager(from: WebserviceProvider(inMode: .dev))
     @State var orderBuilder = OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!)
     @State var orderManager = OrderManager(from: WebserviceProvider(inMode: .dev))
     @State var imageManager = ImageManager(from: WebserviceProvider(inMode: .dev))
     @State private var showSplashScreen = true
+    
+    init() {
+        let manager = AutenticationManager(keychain: keychain, baseURL: baseURL)
+        self.authManager = manager
+        // Initialisierung des Builders mit dem Manager
+        _authBuilder = State(initialValue: AuthenticationBuilder(authManager: manager, baseURL: baseURL))
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -33,11 +45,23 @@ struct Coffee_LoverApp: App {
 
                 }
                 else {
-                    ContentView()
-                        .environment(menuManager)
-                        .environment(orderBuilder)
-                        .environment(orderManager)
-                        .environment(imageManager)
+                    Group {
+                        switch authBuilder.status {
+                        case .loggedIn(let user):
+                            //MainView(user: user)
+                            ContentView()
+                                .environment(menuManager)
+                                .environment(orderBuilder)
+                                .environment(orderManager)
+                                .environment(imageManager)
+                                .environment(authBuilder)
+                        case .idle, .loading, .error, .loggedOut:
+                            LoginView()
+                                .environment(authBuilder)
+                        }
+                    }
+                    
+         
                 }
             }
             .task {
@@ -45,6 +69,29 @@ struct Coffee_LoverApp: App {
                 await menuManager.fillUpCache()
 
             }
+        }
+    }
+}
+
+
+struct MainView: View {
+    let user: User
+    @Environment(AuthenticationBuilder.self) private var authBuilder
+    
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
+                Text("Willkommen, \(user.name)!")
+                    .font(.title)
+                
+                Text("E-Mail: \(user.email)")
+                
+                Button("Abmelden") {
+                    authBuilder.status = .loggedOut
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .navigationTitle("Dashboard")
         }
     }
 }

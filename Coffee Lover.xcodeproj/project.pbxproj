@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83505F7A2F8420F100C67F3F /* Authentication-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 83505F792F8420F100C67F3F /* Authentication-Kit */; };
 		8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E43F27B2D8756AD0051D32B /* ReadMe.md */; };
 		8E8659152EE603BF0048A07A /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E8659142EE603BF0048A07A /* Coffee-Kit */; };
 		8EF840952DC15DC900ED729B /* Harmonize in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF840942DC15DC900ED729B /* Harmonize */; };
@@ -103,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E8659152EE603BF0048A07A /* Coffee-Kit in Frameworks */,
+				83505F7A2F8420F100C67F3F /* Authentication-Kit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +128,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		83505F782F8420F100C67F3F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8E2C695A2CC4F86B004B334D = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +144,7 @@
 				8E43F2782D8755C60051D32B /* Preview */,
 				8E2C69652CC4F86C004B334D /* Coffee Lover */,
 				8E2C69802CC4F86F004B334D /* Coffee LoverUITests */,
+				83505F782F8420F100C67F3F /* Frameworks */,
 				8E2C69642CC4F86C004B334D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -173,6 +183,7 @@
 			name = "Coffee Lover";
 			packageProductDependencies = (
 				8E8659142EE603BF0048A07A /* Coffee-Kit */,
+				83505F792F8420F100C67F3F /* Authentication-Kit */,
 			);
 			productName = "Coffee Lover";
 			productReference = 8E2C69632CC4F86C004B334D /* Coffee Lover.app */;
@@ -656,6 +667,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		83505F792F8420F100C67F3F /* Authentication-Kit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E9F17CF2DBCF88E00FB1CE1 /* XCLocalSwiftPackageReference "../../Coffee-Kit" */;
+			productName = "Authentication-Kit";
+		};
 		8E8659142EE603BF0048A07A /* Coffee-Kit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Coffee-Kit";

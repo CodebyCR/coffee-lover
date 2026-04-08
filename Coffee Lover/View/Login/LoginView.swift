@@ -5,29 +5,29 @@
 //  Created by Christoph Rohde on 05.07.25.
 //
 
- import SwiftUI
- import Coffee_Kit
+import SwiftUI
+import Authentication_Kit
 
  struct LoginView: View {
-    @StateObject private var viewModel = AuthViewModel()
+    @Environment(AuthenticationBuilder.self) private var authBuilder
     @State private var showRegistration = false
-    let coffeeBrownLight = Color(rgb: CoffeeColor.coffeeBrownLight.getRGB())
-    let coffeeBrownDark = Color(rgb: CoffeeColor.coffeeBrownDark.getRGB())
-    let coffeeAccent = Color(rgb: CoffeeColor.coffeeAccent.getRGB())
 
-    let rawGradient = Color.brown.gradient
-    // from raw gradient to Gradient
     let gradient = Gradient(stops: [
         Gradient.Stop(color: Color.brown, location: 0.0),
         Gradient.Stop(color: Color.brown.opacity(0.8), location: 1.0)
     ])
 
     var body: some View {
-        NavigationView {
+        @Bindable var builder = authBuilder
+        
+        NavigationStack {
             ZStack {
-                // Background mit Coffee-Thema
                 LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
+                    // Geste zum Schließen der Tastatur
+                    .onTapGesture {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
 
                 VStack(spacing: 20) {
                     Spacer()
@@ -39,49 +39,57 @@
                         .foregroundColor(.white)
                         .padding(.bottom, 20)
 
-                    Text("Willkommen zurück!")
+                    Text("Welcome back!")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
 
                     VStack(spacing: 15) {
-                        TextField("E-Mail", text: $viewModel.email)
+                        TextField("", text: $builder.email, prompt: Text("Email").foregroundStyle(.gray.opacity(0.5)))
                             .padding()
-                            .background(Color.white.opacity(0.8))
+                            .background(Color.white.opacity(0.9))
                             .cornerRadius(10)
                             .keyboardType(.emailAddress)
                             .autocapitalization(.none)
-                            .tint(coffeeBrownDark) // Text cursor color
+                            .foregroundStyle(.black)
 
-                        SecureField("Passwort", text: $viewModel.password)
+                        SecureField("", text: $builder.password, prompt: Text("********").foregroundStyle(.gray.opacity(0.5)))
                             .padding()
-                            .background(Color.white.opacity(0.8))
+                            .background(Color.white.opacity(0.9))
                             .cornerRadius(10)
-                            .tint(coffeeBrownDark) // Text cursor color
+                            .foregroundStyle(.black)
                     }
                     .padding(.horizontal)
 
                     Button(action: {
                         Task {
-                            await viewModel.login()
+                            await authBuilder.login()
                         }
                     }) {
-                        Text("Anmelden")
-                            .font(.headline)
-                            .foregroundColor(coffeeBrownDark)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(coffeeAccent)
-                            .cornerRadius(10)
+                        if case .loading = authBuilder.status {
+                            ProgressView()
+                                .tint(.white)
+                                .padding()
+                        } else {
+                            Text("Log In")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.brown)
+                                .cornerRadius(10)
+                        }
                     }
                     .padding(.horizontal)
+                    .disabled(authBuilder.status == .loading)
 
-                    // Fehlermeldung anzeigen
-                    if let errorMessage = viewModel.errorMessage {
-                        Text(errorMessage)
+                    // Show error message
+                    if case .error(let error) = authBuilder.status {
+                        Text(error.localizedDescription)
                             .foregroundColor(.red)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
+                            .background(Color.white.opacity(0.8).cornerRadius(5))
                     }
 
                     Spacer()
@@ -89,7 +97,7 @@
                     Button(action: {
                         showRegistration = true
                     }) {
-                        Text("Noch kein Konto? Registrieren")
+                        Text("No account yet? \(Text("Register").fontWeight(.semibold))")
                             .font(.subheadline)
                             .foregroundColor(.white)
                     }
@@ -99,12 +107,21 @@
             .navigationBarHidden(true)
             .sheet(isPresented: $showRegistration) {
                 RegistrationView()
+                    .environment(authBuilder)
+            }
+            .onAppear {
+                authBuilder.status = .idle
+            }
+            .onChange(of: showRegistration) { _, newValue in
+                if newValue {
+                    authBuilder.status = .idle
+                }
             }
         }
     }
  }
 
-// Preview für LoginView
+// Preview for LoginView
  struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()

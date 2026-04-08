@@ -6,20 +6,21 @@
 //
 
 import SwiftUI
-import Coffee_Kit
+import Authentication_Kit
 
 struct RegistrationView: View {
-    @Environment(\.dismiss) var dismiss // Um die Ansicht zu schließen
-    @StateObject private var viewModel = AuthViewModel() // Oder ein separates RegistrationViewModel
-    let coffeeBrownLight = Color(rgb: CoffeeColor.coffeeBrownLight.getRGB())
-    let coffeeBrownDark = Color(rgb: CoffeeColor.coffeeBrownDark.getRGB())
-    let coffeeAccent = Color(rgb: CoffeeColor.coffeeAccent.getRGB())
+    @Environment(\.dismiss) var dismiss
+    @Environment(AuthenticationBuilder.self) private var authBuilder
 
     var body: some View {
+        @Bindable var builder = authBuilder
+        
         ZStack {
-            // Background mit Coffee-Thema
-            LinearGradient(gradient: Gradient(colors: [coffeeBrownLight, coffeeBrownDark]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [.brown.opacity(0.7), .brown]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
 
             VStack(spacing: 20) {
                 Spacer()
@@ -31,59 +32,75 @@ struct RegistrationView: View {
                     .foregroundColor(.white)
                     .padding(.bottom, 20)
 
-                Text("Neues Konto erstellen")
+                Text("Create new account")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
 
                 VStack(spacing: 15) {
-                    TextField("E-Mail", text: $viewModel.email)
+                    TextField("", text: $builder.name, prompt: Text("Name").foregroundStyle(.gray.opacity(0.5)))
                         .padding()
-                        .background(Color.white.opacity(0.8))
+                        .background(Color.white.opacity(0.9))
+                        .cornerRadius(10)
+                        .autocapitalization(.words)
+                        .foregroundStyle(.black)
+
+                    TextField("", text: $builder.email, prompt: Text("Email").foregroundStyle(.gray.opacity(0.5)))
+                        .padding()
+                        .background(Color.white.opacity(0.9))
                         .cornerRadius(10)
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
-                        .tint(coffeeBrownDark)
+                        .foregroundStyle(.black)
 
-                    SecureField("Passwort", text: $viewModel.password)
-                        .padding()
-                        .background(Color.white.opacity(0.8))
-                        .cornerRadius(10)
-                        .tint(coffeeBrownDark)
+                    Group{
+                        SecureField("", text: $builder.password, prompt: Text("********")
+                            .foregroundStyle(.gray.opacity(0.5)))
 
-                    SecureField("Passwort bestätigen", text: $viewModel.confirmPassword)
-                        .padding()
-                        .background(Color.white.opacity(0.8))
-                        .cornerRadius(10)
-                        .tint(coffeeBrownDark)
+                        
+                        SecureField("", text: $builder.passwordRetyped, prompt: Text("********")
+                            .foregroundStyle(.gray.opacity(0.5)))
+                 
+                    }
+                    .padding()
+                    .background(Color.white.opacity(0.9))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                 }
                 .padding(.horizontal)
 
                 Button(action: {
                     Task {
-                        await viewModel.register()
-                        // Hier könnte eine Logik stehen, um die Registrierung abzuschließen und die Ansicht zu schließen
-                        if viewModel.registrationSuccessful {
+                        await authBuilder.register()
+                        if case .loggedIn = authBuilder.status {
                             dismiss()
                         }
                     }
                 }) {
-                    Text("Registrieren")
-                        .font(.headline)
-                        .foregroundColor(coffeeBrownDark)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(coffeeAccent)
-                        .cornerRadius(10)
+                    if case .loading = authBuilder.status {
+                        ProgressView()
+                            .tint(.brown)
+                            .padding()
+                    } else {
+                        Text("Register")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.brown)
+                            .cornerRadius(10)
+                    }
                 }
                 .padding(.horizontal)
+                .disabled(authBuilder.status == .loading)
 
-                // Fehlermeldung anzeigen
-                if let errorMessage = viewModel.errorMessage {
-                    Text(errorMessage)
+                // Show error message
+                if case .error(let error) = authBuilder.status {
+                    Text(error.localizedDescription)
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
+                        .background(Color.white.opacity(0.8).cornerRadius(5))
                 }
 
                 Spacer()
@@ -91,17 +108,23 @@ struct RegistrationView: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Text("Bereits ein Konto? Anmelden")
+                    Text("Already have an account? \(Text("Log In").fontWeight(.semibold)) here")
                         .font(.subheadline)
                         .foregroundColor(.white)
                 }
                 .padding(.bottom, 30)
             }
         }
+        .onAppear {
+            authBuilder.status = .idle
+        }
+        .onDisappear {
+            authBuilder.status = .idle
+        }
     }
 }
 
-// Preview für RegistrationView
+// Preview for RegistrationView
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
         RegistrationView()
