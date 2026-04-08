@@ -9,19 +9,15 @@ import SwiftUI
 import Authentication_Kit
 
 struct RegistrationView: View {
-    @Environment(\.dismiss) var dismiss
+    @Binding var showRegistration: Bool
     @Environment(AuthenticationBuilder.self) private var authBuilder
 
     var body: some View {
         @Bindable var builder = authBuilder
         
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.brown.opacity(0.7), .brown]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                }
-
+            // Background is now handled by LoginView
+            
             VStack(spacing: 20) {
                 Spacer()
 
@@ -72,14 +68,12 @@ struct RegistrationView: View {
                 Button(action: {
                     Task {
                         await authBuilder.register()
-                        if case .loggedIn = authBuilder.status {
-                            dismiss()
-                        }
+                        // Status will change to .loggedIn which triggers transition in AppView
                     }
                 }) {
                     if case .loading = authBuilder.status {
                         ProgressView()
-                            .tint(.brown)
+                            .tint(.white)
                             .padding()
                     } else {
                         Text("Register")
@@ -106,7 +100,7 @@ struct RegistrationView: View {
                 Spacer()
 
                 Button(action: {
-                    dismiss()
+                    showRegistration = false
                 }) {
                     Text("Already have an account? \(Text("Log In").fontWeight(.semibold)) here")
                         .font(.subheadline)
@@ -118,15 +112,13 @@ struct RegistrationView: View {
         .onAppear {
             authBuilder.status = .idle
         }
-        .onDisappear {
-            authBuilder.status = .idle
-        }
     }
 }
 
 // Preview for RegistrationView
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationView()
+        RegistrationView(showRegistration: .constant(true))
+            .background(Color.brown)
     }
 }

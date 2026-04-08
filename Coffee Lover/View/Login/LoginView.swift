@@ -24,99 +24,108 @@ import Authentication_Kit
             ZStack {
                 LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
-                    // Geste zum Schließen der Tastatur
                     .onTapGesture {
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
 
-                VStack(spacing: 20) {
-                    Spacer()
-
-                    Image(systemName: "cup.and.saucer.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 20)
-
-                    Text("Welcome back!")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-
-                    VStack(spacing: 15) {
-                        TextField("", text: $builder.email, prompt: Text("Email").foregroundStyle(.gray.opacity(0.5)))
-                            .padding()
-                            .background(Color.white.opacity(0.9))
-                            .cornerRadius(10)
-                            .keyboardType(.emailAddress)
-                            .autocapitalization(.none)
-                            .foregroundStyle(.black)
-
-                        SecureField("", text: $builder.password, prompt: Text("********").foregroundStyle(.gray.opacity(0.5)))
-                            .padding()
-                            .background(Color.white.opacity(0.9))
-                            .cornerRadius(10)
-                            .foregroundStyle(.black)
-                    }
-                    .padding(.horizontal)
-
-                    Button(action: {
-                        Task {
-                            await authBuilder.login()
-                        }
-                    }) {
-                        if case .loading = authBuilder.status {
-                            ProgressView()
-                                .tint(.white)
-                                .padding()
-                        } else {
-                            Text("Log In")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.brown)
-                                .cornerRadius(10)
-                        }
-                    }
-                    .padding(.horizontal)
-                    .disabled(authBuilder.status == .loading)
-
-                    // Show error message
-                    if case .error(let error) = authBuilder.status {
-                        Text(error.localizedDescription)
-                            .foregroundColor(.red)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                            .background(Color.white.opacity(0.8).cornerRadius(5))
-                    }
-
-                    Spacer()
-
-                    Button(action: {
-                        showRegistration = true
-                    }) {
-                        Text("No account yet? \(Text("Register").fontWeight(.semibold))")
-                            .font(.subheadline)
-                            .foregroundColor(.white)
-                    }
-                    .padding(.bottom, 30)
+                if !showRegistration {
+                    loginContent(builder: $builder)
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .leading).combined(with: .opacity),
+                            removal: .move(edge: .leading).combined(with: .opacity)
+                        ))
+                } else {
+                    RegistrationView(showRegistration: $showRegistration)
+                        .environment(authBuilder)
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing).combined(with: .opacity),
+                            removal: .move(edge: .trailing).combined(with: .opacity)
+                        ))
                 }
             }
+            .animation(.spring(response: 0.5, dampingFraction: 0.8), value: showRegistration)
             .navigationBarHidden(true)
-            .sheet(isPresented: $showRegistration) {
-                RegistrationView()
-                    .environment(authBuilder)
-            }
             .onAppear {
                 authBuilder.status = .idle
             }
-            .onChange(of: showRegistration) { _, newValue in
-                if newValue {
-                    authBuilder.status = .idle
+        }
+    }
+
+    @ViewBuilder
+    private func loginContent(builder: Bindable<AuthenticationBuilder>) -> some View {
+        VStack(spacing: 20) {
+            Spacer()
+
+            Image(systemName: "cup.and.saucer.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100, height: 100)
+                .foregroundColor(.white)
+                .padding(.bottom, 20)
+
+            Text("Welcome back!")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+
+            VStack(spacing: 15) {
+                TextField("", text: builder.email, prompt: Text("Email").foregroundStyle(.gray.opacity(0.5)))
+                    .padding()
+                    .background(Color.white.opacity(0.9))
+                    .cornerRadius(10)
+                    .keyboardType(.emailAddress)
+                    .autocapitalization(.none)
+                    .foregroundStyle(.black)
+
+                SecureField("", text: builder.password, prompt: Text("********").foregroundStyle(.gray.opacity(0.5)))
+                    .padding()
+                    .background(Color.white.opacity(0.9))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
+            }
+            .padding(.horizontal)
+
+            Button(action: {
+                Task {
+                    await authBuilder.login()
+                }
+            }) {
+                if case .loading = authBuilder.status {
+                    ProgressView()
+                        .tint(.white)
+                        .padding()
+                } else {
+                    Text("Log In")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.brown)
+                        .cornerRadius(10)
                 }
             }
+            .padding(.horizontal)
+            .disabled(authBuilder.status == .loading)
+
+            // Show error message
+            if case .error(let error) = authBuilder.status {
+                Text(error.localizedDescription)
+                    .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .background(Color.white.opacity(0.8).cornerRadius(5))
+            }
+
+            Spacer()
+
+            Button(action: {
+                showRegistration = true
+            }) {
+                Text("No account yet? \(Text("Register").fontWeight(.semibold))")
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+            }
+            .padding(.bottom, 30)
         }
     }
  }

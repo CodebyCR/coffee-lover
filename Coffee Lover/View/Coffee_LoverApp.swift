@@ -42,40 +42,38 @@ struct Coffee_LoverApp: App {
             ZStack {
                 if showSplashScreen {
                     SplashScreen()
-                        .transition(.opacity)
-
-                        .onAppear {
-                            withAnimation(.easeOut(duration: 2.5)) {
-                                showSplashScreen = false
-                            }
-                        }
-
-
+                        .transition(.asymmetric(insertion: .opacity, removal: .scale(scale: 1.5).combined(with: .opacity)))
+                        .zIndex(1) // Ensure splash stays on top during removal
                 }
                 else {
                     Group {
                         switch authBuilder.status {
-                        case .loggedIn(let user):
-                            //MainView(user: user)
+                        case .loggedIn:
                             ContentView()
                                 .environment(menuManager)
                                 .environment(orderBuilder)
                                 .environment(orderManager)
                                 .environment(imageManager)
                                 .environment(authBuilder)
+                                .transition(.move(edge: .trailing).combined(with: .opacity))
                         case .idle, .loading, .error, .loggedOut:
                             LoginView()
                                 .environment(authBuilder)
+                                .transition(.move(edge: .leading).combined(with: .opacity))
                         }
                     }
-                    
-         
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8), value: authBuilder.status)
                 }
             }
             .task {
-                // Fill cache
                 await menuManager.fillUpCache()
-
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    withAnimation(.easeInOut(duration: 0.8)) {
+                        showSplashScreen = false
+                    }
+                }
             }
         }
     }
