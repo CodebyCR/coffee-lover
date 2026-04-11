@@ -15,7 +15,7 @@ struct Coffee_LoverApp: App {
     private let authManager: AutenticationManager
     private let baseURL = URL(string: "http://cr-mac.local:8080/test/authentication")!
     
-    @State private var authBuilder: AuthenticationBuilder
+    @State var authBuilder: AuthenticationBuilder
     @State var menuManager: MenuManager
     @State var orderBuilder = OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!)
     @State var orderManager: OrderManager
@@ -31,9 +31,7 @@ struct Coffee_LoverApp: App {
         self.menuManager = MenuManager(from: webserviceProvider)
         self.orderManager = OrderManager(from: webserviceProvider)
         self.imageManager = ImageManager(from: webserviceProvider)
-        
-        // Initialisierung des Builders mit dem Manager
-        _authBuilder = State(initialValue: AuthenticationBuilder(authManager: manager, baseURL: baseURL))
+        self.authBuilder = AuthenticationBuilder(authManager: manager, baseURL: baseURL)
     }
 
     var body: some Scene {
@@ -62,17 +60,30 @@ struct Coffee_LoverApp: App {
                                 .transition(.move(edge: .leading).combined(with: .opacity))
                         }
                     }
-                    .animation(.spring(response: 0.6, dampingFraction: 0.8), value: authBuilder.status)
+                    .animation(
+                        .spring(response: 0.6, dampingFraction: 0.8),
+                        value: authBuilder.status
+                    )
+                    
                 }
             }
+            // MARK: - Lifecycle Modifiers (Ganz außen!)
             .task {
+                // Startet sofort beim App-Launch
                 await menuManager.fillUpCache()
-            }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                do {
+                    try await Task.sleep(for: .seconds(2.0))
                     withAnimation(.easeInOut(duration: 0.8)) {
                         showSplashScreen = false
                     }
+                } catch {
+                    print("Splash screen task cancelled: \(error)")
+                }
+            }
+            // Hängt jetzt am ZStack und lauscht von Sekunde 0 an!
+            .onChange(of: authBuilder.status, initial: false) {
+                if case .loggedIn = authBuilder.status {
+                    hideKeyboard()
                 }
             }
         }

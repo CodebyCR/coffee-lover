@@ -11,6 +11,11 @@ import Authentication_Kit
 struct RegistrationView: View {
     @Binding var showRegistration: Bool
     @Environment(AuthenticationBuilder.self) private var authBuilder
+    @FocusState private var focusedField: Field?
+
+    enum Field: Hashable {
+        case name, email, password, passwordRetyped
+    }
 
     var body: some View {
         @Bindable var builder = authBuilder
@@ -40,6 +45,8 @@ struct RegistrationView: View {
                         .cornerRadius(10)
                         .autocapitalization(.words)
                         .foregroundStyle(.black)
+                        .focused($focusedField, equals: .name)
+                        .submitLabel(.next)
 
                     TextField("", text: $builder.email, prompt: Text("Email").foregroundStyle(.gray.opacity(0.5)))
                         .padding()
@@ -48,15 +55,19 @@ struct RegistrationView: View {
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
                         .foregroundStyle(.black)
+                        .focused($focusedField, equals: .email)
+                        .submitLabel(.next)
 
-                    Group{
+                    Group {
                         SecureField("", text: $builder.password, prompt: Text("********")
                             .foregroundStyle(.gray.opacity(0.5)))
+                            .focused($focusedField, equals: .password)
+                            .submitLabel(.next)
 
-                        
                         SecureField("", text: $builder.passwordRetyped, prompt: Text("********")
                             .foregroundStyle(.gray.opacity(0.5)))
-                 
+                            .focused($focusedField, equals: .passwordRetyped)
+                            .submitLabel(.join)
                     }
                     .padding()
                     .background(Color.white.opacity(0.9))
@@ -64,11 +75,28 @@ struct RegistrationView: View {
                     .foregroundStyle(.black)
                 }
                 .padding(.horizontal)
+                .onSubmit {
+                    switch focusedField {
+                    case .name:
+                        focusedField = .email
+                    case .email:
+                        focusedField = .password
+                    case .password:
+                        focusedField = .passwordRetyped
+                    case .passwordRetyped:
+                        focusedField = nil
+                        Task {
+                            await authBuilder.register()
+                        }
+                    default:
+                        break
+                    }
+                }
 
                 Button(action: {
+                    focusedField = nil
                     Task {
                         await authBuilder.register()
-                        // Status will change to .loggedIn which triggers transition in AppView
                     }
                 }) {
                     if case .loading = authBuilder.status {
@@ -100,6 +128,7 @@ struct RegistrationView: View {
                 Spacer()
 
                 Button(action: {
+                    focusedField = nil
                     showRegistration = false
                 }) {
                     Text("Already have an account? \(Text("Log In").fontWeight(.semibold)) here")
@@ -111,6 +140,16 @@ struct RegistrationView: View {
         }
         .onAppear {
             authBuilder.status = .idle
+        }
+        .onChange(of: authBuilder.status) {
+            if case .loggedIn = authBuilder.status {
+                focusedField = nil
+                hideKeyboard()
+            }
+        }
+        .onTapGesture {
+            focusedField = nil
+            hideKeyboard()
         }
     }
 }

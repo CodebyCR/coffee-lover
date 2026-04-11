@@ -11,6 +11,11 @@ import Authentication_Kit
  struct LoginView: View {
     @Environment(AuthenticationBuilder.self) private var authBuilder
     @State private var showRegistration = false
+    @FocusState private var focusedField: Field?
+
+    enum Field: Hashable {
+        case email, password
+    }
 
     let gradient = Gradient(stops: [
         Gradient.Stop(color: Color.brown, location: 0.0),
@@ -25,11 +30,19 @@ import Authentication_Kit
                 LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        focusedField = nil
                     }
 
                 if !showRegistration {
                     loginContent(builder: $builder)
+                        .onChange(of: authBuilder.status, initial: false) {
+                            switch authBuilder.status {
+                            case .loggedIn(_):
+                                focusedField = nil
+                            default:
+                                break
+                            }
+                        }
                         .transition(.asymmetric(
                             insertion: .move(edge: .leading).combined(with: .opacity),
                             removal: .move(edge: .leading).combined(with: .opacity)
@@ -76,25 +89,44 @@ import Authentication_Kit
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
                     .foregroundStyle(.black)
+                    .focused($focusedField, equals: .email)
+                    .submitLabel(.next)
 
                 SecureField("", text: builder.password, prompt: Text("********").foregroundStyle(.gray.opacity(0.5)))
                     .padding()
                     .background(Color.white.opacity(0.9))
                     .cornerRadius(10)
                     .foregroundStyle(.black)
+                    .focused($focusedField, equals: .password)
+                    .submitLabel(.go)
             }
             .padding(.horizontal)
+            .onSubmit {
+                switch focusedField {
+                case .email:
+                    focusedField = .password
+                case .password:
+                    focusedField = nil
+                    Task {
+                        await authBuilder.login()
+                    }
+                default:
+                    break
+                }
+            }
 
             Button(action: {
+                focusedField = nil
                 Task {
                     await authBuilder.login()
                 }
             }) {
-                if case .loading = authBuilder.status {
+                switch authBuilder.status {
+                case .loading:
                     ProgressView()
                         .tint(.white)
                         .padding()
-                } else {
+                default:
                     Text("Log In")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -119,6 +151,7 @@ import Authentication_Kit
             Spacer()
 
             Button(action: {
+                focusedField = nil
                 showRegistration = true
             }) {
                 Text("No account yet? \(Text("Register").fontWeight(.semibold))")

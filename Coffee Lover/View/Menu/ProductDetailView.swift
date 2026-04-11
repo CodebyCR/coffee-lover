@@ -75,6 +75,9 @@ struct ProductDetailView: View {
                 //            .padding([.bottom, .horizontal], 8)
             }
         }
+        .onAppear {
+            hideKeyboard()
+        }
     }
 }
 

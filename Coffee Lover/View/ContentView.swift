@@ -81,19 +81,15 @@ struct ContentView: View {
                         .gradient
                 )
 
-                
-                
-                    
-                    
             }
-            
-                
             
         }
         .accentColor(.brown)
+        .onChange(of: selectedTab) {
+            hideKeyboard()
+        }
         // .tabBarMinimizeBehavior(.onScrollDown) (ios26)
     }
-
 }
 
 #Preview {
