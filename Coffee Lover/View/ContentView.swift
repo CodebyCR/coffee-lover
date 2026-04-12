@@ -16,6 +16,7 @@ enum MainTab {
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
+    @Environment(NavigationManager.self) var navigationManager: NavigationManager
     @State private var selectedTab: MainTab = .menu
     @State private var lookupValue: String = ""
     
@@ -29,28 +30,29 @@ struct ContentView: View {
             // MARK: - Orders
             
             Tab("Orders", systemImage: "tray.and.arrow.down.fill", value: MainTab.orders) {
-                OrderNaviagtionView()
+                OrderNavigationView()
             }
             .badge(1)
 
             // MARK: - Menu
 
             Tab("Menu", systemImage: "list.bullet", value: MainTab.menu) {
-                MenuNaviagtionView()
+                MenuNavigationView()
             
             }
 
             // MARK: - Cart
             
             Tab("Cart", systemImage: "cart", value: MainTab.cart) {
-                CartNaviagtionView()
+                CartNavigationView()
             }
             .badge(orderBuilder.totalProducts)
             
             // MARK: - Search
             
             Tab("Search", systemImage: "magnifyingglass", value: MainTab.search, role: .search) {
-                NavigationStack {
+                @Bindable var navManager = navigationManager
+                NavigationStack(path: $navManager.searchPath) {
                     if lookupValue.isEmpty {
                         
                         SearchCategoryGrid(lookupValue: $lookupValue)
@@ -71,8 +73,12 @@ struct ContentView: View {
                         
                     }
                     else {
-                        MenuNaviagtionView(filteredOn: $lookupValue)
+                        MenuNavigationView(filteredOn: $lookupValue)
                     }
+                }
+                .navigationDestination(for: NavigationTarget.self) { target in
+                    navigationManager.destinationView(for: target)
+                        .environment(navigationManager)
                 }
                 .searchable(text: $lookupValue, placement: .navigationBarDrawer, prompt: "Foodname, Ingriedients, etc. ")
                 .background(

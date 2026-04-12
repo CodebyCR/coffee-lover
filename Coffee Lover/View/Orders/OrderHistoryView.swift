@@ -9,7 +9,10 @@ import Coffee_Kit
 import SwiftUI
 
 struct OrderHistoryView: View {
-    @Binding var orderHistory: [Order]
+    // refactor with OrderManager.completedOrder or similar property
+    @State private var orderHistory = (0 ... 15).map { _ in
+        Order()
+    }
 
     var body: some View {
         ForEach(orderHistory, id: \.id) { order in

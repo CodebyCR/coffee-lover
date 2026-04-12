@@ -1,5 +1,5 @@
 //
-//  MenuNaviagtionView.swift
+//  MenuNavigationView.swift
 //  Coffee Lover
 //
 //  Created by Christoph Rohde on 02.03.25.
@@ -9,10 +9,11 @@ import Coffee_Kit
 import Authentication_Kit
 import SwiftUI
 
-struct MenuNaviagtionView: View {
+struct MenuNavigationView: View {
     @Environment(AuthenticationBuilder.self) private var authBuilder
+    @Environment(NavigationManager.self) private var navigationManager
     @Binding var lookupValue: String
-    
+
     init(){
         self._lookupValue = .constant("")
     }
@@ -20,10 +21,12 @@ struct MenuNaviagtionView: View {
     init(filteredOn lookupValue: Binding<String>) {
         self._lookupValue = lookupValue
     }
-    
-    
+
+
     var body: some View {
-        NavigationStack {
+        @Bindable var navManager = navigationManager
+
+        NavigationStack(path: $navManager.menuPath) {
 //            VStack {
             MenuListView(lookupValue: $lookupValue)
                     .navigationBarTitleDisplayMode(.inline)
@@ -52,6 +55,10 @@ struct MenuNaviagtionView: View {
                             }
                         }
                     }
+                    .navigationDestination(for: NavigationTarget.self) { target in
+                        navigationManager.destinationView(for: target)
+                            .environment(navigationManager)
+                    }
 //            }
         }
         .background(
@@ -63,7 +70,7 @@ struct MenuNaviagtionView: View {
 }
 
 #Preview {
-    MenuNaviagtionView()
+    MenuNavigationView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
         .environment(AuthenticationBuilder(
             authManager: AutenticationManager(keychain: DefaultKeychainManager(), baseURL: URL(string: "http://localhost")!),

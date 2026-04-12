@@ -20,6 +20,7 @@ struct Coffee_LoverApp: App {
     @State var orderBuilder = OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!)
     @State var orderManager: OrderManager
     @State var imageManager: ImageManager
+    @State var navigationManager = NavigationManager.shared
     @State private var showSplashScreen = true
     
     init() {
@@ -27,7 +28,6 @@ struct Coffee_LoverApp: App {
         self.authManager = manager
         
         let webserviceProvider = WebserviceProvider(inMode: .dev, authManager: manager)
-        
         self.menuManager = MenuManager(from: webserviceProvider)
         self.orderManager = OrderManager(from: webserviceProvider)
         self.imageManager = ImageManager(from: webserviceProvider)
@@ -46,17 +46,19 @@ struct Coffee_LoverApp: App {
                 else {
                     Group {
                         switch authBuilder.status {
-                        case .loggedIn:
+                        case .loggedIn(let user):
                             ContentView()
                                 .environment(menuManager)
                                 .environment(orderBuilder)
                                 .environment(orderManager)
                                 .environment(imageManager)
                                 .environment(authBuilder)
+                                .environment(navigationManager)
                                 .transition(.move(edge: .trailing).combined(with: .opacity))
                         case .idle, .loading, .error, .loggedOut:
                             LoginView()
                                 .environment(authBuilder)
+                                .environment(navigationManager)
                                 .transition(.move(edge: .leading).combined(with: .opacity))
                         }
                     }
@@ -86,29 +88,6 @@ struct Coffee_LoverApp: App {
                     hideKeyboard()
                 }
             }
-        }
-    }
-}
-
-
-struct MainView: View {
-    let user: User
-    @Environment(AuthenticationBuilder.self) private var authBuilder
-    
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                Text("Willkommen, \(user.name)!")
-                    .font(.title)
-                
-                Text("E-Mail: \(user.email)")
-                
-                Button("Abmelden") {
-                    authBuilder.status = .loggedOut
-                }
-                .buttonStyle(.borderedProminent)
-            }
-            .navigationTitle("Dashboard")
         }
     }
 }

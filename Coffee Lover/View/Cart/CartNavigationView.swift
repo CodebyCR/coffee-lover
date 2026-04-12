@@ -1,5 +1,5 @@
 //
-//  OrderNaviagtionView.swift
+//  CartNavigationView.swift
 //  Coffee Lover
 //
 //  Created by Christoph Rohde on 13.03.25.
@@ -8,21 +8,29 @@
 import Coffee_Kit
 import SwiftUI
 
-struct OrderNaviagtionView: View {
+struct CartNavigationView: View {
+    @Environment(NavigationManager.self) private var navigationManager
+    
     var body: some View {
-        NavigationStack {
+        @Bindable var navManager = navigationManager
+        
+        NavigationStack(path: $navManager.cartPath) {
             VStack {
-                OrderListView()
+                ShoppingCartView()
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .principal) {
                             VStack {
-                                Text("Orders")
+                                Text("Cart")
                                     .foregroundStyle(.white)
                                     .padding(4)
                                     .fontWeight(.bold)
                             }
                         }
+                    }
+                    .navigationDestination(for: NavigationTarget.self) { target in
+                        navigationManager.destinationView(for: target)
+                            .environment(navigationManager)
                     }
             }
         }
@@ -35,6 +43,7 @@ struct OrderNaviagtionView: View {
 }
 
 #Preview {
-    OrderNaviagtionView()
+    CartNavigationView()
         .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!))
 }

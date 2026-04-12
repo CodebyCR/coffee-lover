@@ -9,19 +9,28 @@ import SwiftUI
 import Authentication_Kit
 
 struct RegistrationView: View {
-    @Binding var showRegistration: Bool
     @Environment(AuthenticationBuilder.self) private var authBuilder
+    @Environment(NavigationManager.self) private var navigationManager
     @FocusState private var focusedField: Field?
 
     enum Field: Hashable {
         case name, email, password, passwordRetyped
     }
+    
+    let gradient = Gradient(stops: [
+        Gradient.Stop(color: Color.brown, location: 0.0),
+        Gradient.Stop(color: Color.brown.opacity(0.8), location: 1.0)
+    ])
 
     var body: some View {
         @Bindable var builder = authBuilder
         
         ZStack {
-            // Background is now handled by LoginView
+            LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    focusedField = nil
+                }
             
             VStack(spacing: 20) {
                 Spacer()
@@ -129,7 +138,7 @@ struct RegistrationView: View {
 
                 Button(action: {
                     focusedField = nil
-                    showRegistration = false
+                    navigationManager.popToRoot(in: .auth)
                 }) {
                     Text("Already have an account? \(Text("Log In").fontWeight(.semibold)) here")
                         .font(.subheadline)
@@ -138,6 +147,7 @@ struct RegistrationView: View {
                 .padding(.bottom, 30)
             }
         }
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             authBuilder.status = .idle
         }
@@ -147,17 +157,13 @@ struct RegistrationView: View {
                 hideKeyboard()
             }
         }
-        .onTapGesture {
-            focusedField = nil
-            hideKeyboard()
-        }
     }
 }
 
 // Preview for RegistrationView
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationView(showRegistration: .constant(true))
-            .background(Color.brown)
+        RegistrationView()
+            .environment(NavigationManager.shared)
     }
 }

@@ -10,7 +10,7 @@ import Authentication_Kit
 
  struct LoginView: View {
     @Environment(AuthenticationBuilder.self) private var authBuilder
-    @State private var showRegistration = false
+    @Environment(NavigationManager.self) private var navigationManager
     @FocusState private var focusedField: Field?
 
     enum Field: Hashable {
@@ -24,8 +24,9 @@ import Authentication_Kit
 
     var body: some View {
         @Bindable var builder = authBuilder
+        @Bindable var navManager = navigationManager
         
-        NavigationStack {
+        NavigationStack(path: $navManager.authentication) {
             ZStack {
                 LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                     .edgesIgnoringSafeArea(.all)
@@ -33,30 +34,26 @@ import Authentication_Kit
                         focusedField = nil
                     }
 
-                if !showRegistration {
-                    loginContent(builder: $builder)
-                        .onChange(of: authBuilder.status, initial: false) {
-                            switch authBuilder.status {
-                            case .loggedIn(_):
-                                focusedField = nil
-                            default:
-                                break
-                            }
+                loginContent(builder: $builder)
+                    .onChange(of: authBuilder.status, initial: false) {
+                        switch authBuilder.status {
+                        case .loggedIn(_):
+                            focusedField = nil
+                        default:
+                            break
                         }
-                        .transition(.asymmetric(
-                            insertion: .move(edge: .leading).combined(with: .opacity),
-                            removal: .move(edge: .leading).combined(with: .opacity)
-                        ))
-                } else {
-                    RegistrationView(showRegistration: $showRegistration)
-                        .environment(authBuilder)
-                        .transition(.asymmetric(
-                            insertion: .move(edge: .trailing).combined(with: .opacity),
-                            removal: .move(edge: .trailing).combined(with: .opacity)
-                        ))
-                }
+                    }
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .leading).combined(with: .opacity),
+                        removal: .move(edge: .leading).combined(with: .opacity)
+                    ))
             }
-            .animation(.spring(response: 0.5, dampingFraction: 0.8), value: showRegistration)
+            .navigationDestination(for: NavigationTarget.self) { target in
+                navigationManager.destinationView(for: target)
+                    .environment(authBuilder)
+                    .environment(navigationManager)
+            }
+            .animation(.spring(response: 0.5, dampingFraction: 0.8), value: navManager.authentication.count)
             .navigationBarHidden(true)
             .onAppear {
                 authBuilder.status = .idle
@@ -152,7 +149,7 @@ import Authentication_Kit
 
             Button(action: {
                 focusedField = nil
-                showRegistration = true
+                navigationManager.navigate(to: .register)
             }) {
                 Text("No account yet? \(Text("Register").fontWeight(.semibold))")
                     .font(.subheadline)

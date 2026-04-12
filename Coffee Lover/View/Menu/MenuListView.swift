@@ -39,7 +39,7 @@ struct MenuListView: View {
                     }
 
                     ForEach(menu.getSelection(for: category, with: lookupValue)) { entry in
-                        NavigationLink(value: entry) {
+                        NavigationLink(value: NavigationTarget.productDetail(entry)) {
                             MenuEntry(product: entry)
                                 .swipeActions {
                                     Button("Add") {
@@ -49,7 +49,6 @@ struct MenuListView: View {
                                     }
                                 }
                         }
-//                                    .opacity(0)
                     }
                 }
             }
@@ -85,9 +84,6 @@ struct MenuListView: View {
                 if menu.items.isEmpty {
                     ContentUnavailableView("No Internet connection.", systemImage: "wifi.exclamationmark.circle", description: Text("Please check your connection."))
                 }
-            }
-            .navigationDestination(for: Product.self) { product in
-                ProductDetailView(product: product)
             }
             .task(priority: .userInitiated) {
                 await addMenuEntiesAnimated()

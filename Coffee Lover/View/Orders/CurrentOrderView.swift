@@ -8,9 +8,10 @@
 import Coffee_Kit
 import SwiftUI
 
+
 struct CurrentOrderView: View {
-    @Binding var currentOrder: Order
-    @Binding var isExpanded: Bool
+    @State private var isExpanded: Bool = false
+    @Environment(OrderManager.self) private var orderManager
     @State var totalPrice: Double = 10.0
     @State var totalItems = 3
     @State private var orderStatus: OrderStatus = .ordered
@@ -41,7 +42,7 @@ struct CurrentOrderView: View {
             .padding(.horizontal, 20)
             .padding(.top, 20)
             .padding(.bottom, 16)
-
+            
             if isExpanded {
 
                 Divider()
@@ -51,7 +52,7 @@ struct CurrentOrderView: View {
                     OrderDetailRow(
                         icon: "clock",
                         title: "Ordered on",
-                        value: formatDateTime(currentOrder.orderDate)
+                        value: formatDateTime(orderManager.currentOrder.orderDate)
                     )
 
                     OrderDetailRow(
@@ -70,13 +71,13 @@ struct CurrentOrderView: View {
                     OrderDetailRow(
                         icon: "creditcard",
                         title: "Payment Method",
-                        value: currentOrder.paymentOption.description
+                        value: orderManager.currentOrder.paymentOption.description
                     )
 
                     OrderDetailRow(
                         icon: "checkmark.shield",
                         title: "Payment Status",
-                        value: currentOrder.paymentStatus.description,
+                        value: orderManager.currentOrder.paymentStatus.description,
                         statusColor: paymentStatusColor(paymentStatus)
                     )
                 }
@@ -88,6 +89,12 @@ struct CurrentOrderView: View {
         .cornerRadius(16)
         .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
         .padding(.horizontal, 16)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                isExpanded.toggle()
+            }
+        }
     }
 
     private func formatDateTime(_ date: Date) -> String {
@@ -209,7 +216,6 @@ enum PaymentStatus: String, CaseIterable, Identifiable {
 
 
 #Preview {
-    @Previewable var isExpanded: Bool = true
-    CurrentOrderView(currentOrder: .constant(Order()), isExpanded: .constant(isExpanded))
+    CurrentOrderView()
+        .environment(OrderManager(from: WebserviceProvider(inMode: .dev)))
 }
-
