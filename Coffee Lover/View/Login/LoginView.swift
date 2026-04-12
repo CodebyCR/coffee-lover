@@ -149,7 +149,7 @@ import Authentication_Kit
 
             Button(action: {
                 focusedField = nil
-                navigationManager.navigate(to: .register)
+                navigationManager.navigate(to: .register, in: .auth)
             }) {
                 Text("No account yet? \(Text("Register").fontWeight(.semibold))")
                     .font(.subheadline)
