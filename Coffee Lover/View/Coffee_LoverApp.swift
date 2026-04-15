@@ -46,7 +46,7 @@ struct Coffee_LoverApp: App {
                 else {
                     Group {
                         switch authBuilder.status {
-                        case .loggedIn(let user):
+                        case .loggedIn:
                             ContentView()
                                 .environment(menuManager)
                                 .environment(orderBuilder)
@@ -71,8 +71,15 @@ struct Coffee_LoverApp: App {
             }
             // MARK: - Lifecycle Modifiers (Ganz außen!)
             .task {
+                
                 // Startet sofort beim App-Launch
-                await menuManager.fillUpCache()
+                async let menuCache: () = menuManager.fillUpCache()
+                async let persistentLogin: () = authBuilder.checkPersistentLogin()
+                
+                // Parallel ausführen
+                _ = await (menuCache, persistentLogin)
+                
+                
                 do {
                     try await Task.sleep(for: .seconds(2.0))
                     withAnimation(.easeInOut(duration: 0.8)) {
