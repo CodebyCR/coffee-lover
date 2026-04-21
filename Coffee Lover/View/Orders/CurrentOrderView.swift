@@ -11,7 +11,8 @@ import SwiftUI
 
 struct CurrentOrderView: View {
     @State private var isExpanded: Bool = false
-    @Environment(OrderManager.self) private var orderManager
+    @State public var order: Order
+    
     @State var totalPrice: Double = 10.0
     @State var totalItems = 3
     @State private var orderStatus: OrderStatus = .ordered
@@ -23,6 +24,7 @@ struct CurrentOrderView: View {
     }()
 
     var body: some View {
+        
         VStack(spacing: 0) {
             // Header mit Order ID
             HStack {
@@ -30,14 +32,14 @@ struct CurrentOrderView: View {
                     Text("Current Order")
                         .font(.headline)
                         .fontWeight(.semibold)
-                    Text("Order #\(id)")
+                    Text("Order #\(order.id)")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
                 Spacer()
 
                 // Status Badge
-                StatusBadge(orderStatus: orderStatus)
+                StatusBadge(orderStatus: OrderStatus.get(by: order.orderStatus) )
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
@@ -52,7 +54,7 @@ struct CurrentOrderView: View {
                     OrderDetailRow(
                         icon: "clock",
                         title: "Ordered on",
-                        value: formatDateTime(orderManager.currentOrder.orderDate)
+                        value: formatDateTime(order.orderDate)
                     )
 
                     OrderDetailRow(
@@ -71,13 +73,13 @@ struct CurrentOrderView: View {
                     OrderDetailRow(
                         icon: "creditcard",
                         title: "Payment Method",
-                        value: orderManager.currentOrder.paymentOption.description
+                        value: order.paymentOption.description
                     )
 
                     OrderDetailRow(
                         icon: "checkmark.shield",
                         title: "Payment Status",
-                        value: orderManager.currentOrder.paymentStatus.description,
+                        value: order.paymentStatus.description,
                         statusColor: paymentStatusColor(paymentStatus)
                     )
                 }
@@ -147,7 +149,7 @@ struct OrderDetailRow: View {
 }
 
 struct StatusBadge: View {
-    let orderStatus: OrderStatus
+    @State var orderStatus: OrderStatus
 
     var body: some View {
         HStack(spacing: 4) {
@@ -183,7 +185,7 @@ struct StatusBadge: View {
     }
 }
 
-enum OrderStatus: String, CaseIterable, Identifiable {
+nonisolated enum OrderStatus: String, CaseIterable, Identifiable {
     case ordered = "ordered"
     case inPreparation = "in preparation"
     case inDelivery = "in delivery"
@@ -200,7 +202,7 @@ enum OrderStatus: String, CaseIterable, Identifiable {
 
 }
 
-enum PaymentStatus: String, CaseIterable, Identifiable {
+nonisolated enum PaymentStatus: String, CaseIterable, Identifiable {
     case pending = "pending"
     case paid = "paid"
     case failed = "failed"
@@ -216,6 +218,6 @@ enum PaymentStatus: String, CaseIterable, Identifiable {
 
 
 #Preview {
-    CurrentOrderView()
+    CurrentOrderView(order: Order())
         .environment(OrderManager(from: WebserviceProvider(inMode: .dev)))
 }

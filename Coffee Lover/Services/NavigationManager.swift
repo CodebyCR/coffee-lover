@@ -8,7 +8,7 @@ public enum NavigationTarget: Hashable {
     case content
     case productDetail(Product)
     case orderHistory
-    case currentOrder
+    case currentOrder(Order)
 }
 
 @Observable
@@ -56,8 +56,8 @@ public final class NavigationManager {
             ProductDetailView(product: product)
         case .orderHistory:
             OrderHistoryView()
-        case .currentOrder:
-            CurrentOrderView()
+        case .currentOrder(let order):
+            CurrentOrderView(order: order)
         }
     }
     

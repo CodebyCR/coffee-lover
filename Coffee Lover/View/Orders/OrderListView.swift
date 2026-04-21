@@ -9,11 +9,17 @@ import Coffee_Kit
 import SwiftUI
 
 struct OrderListView: View {
+    @Environment(OrderManager.self) private var orderManager
+    @State private var currentOrder: Order? = nil
+
 
     var body: some View {
         ZStack {
             VStack {
-                CurrentOrderView()
+                if let order = currentOrder {
+                    CurrentOrderView(order: order)
+                }
+                
 
                 List {
                     CategoryTitle(categoryTitle: "Order History")
@@ -49,6 +55,9 @@ struct OrderListView: View {
             try? await Task.sleep(for: .seconds(2))
             print("Orders refreshed")
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        }
+        .task {
+            currentOrder = orderManager.currentOrder
         }
     }
 }
