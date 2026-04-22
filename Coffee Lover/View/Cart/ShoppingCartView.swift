@@ -44,9 +44,7 @@ struct ShoppingCartView: View {
                 }
             }
             .safeAreaInset(edge: .bottom) {
-//                if !orderBuilder.products.isEmpty { // TODO: killed popover
-                    OrderButtonView()
-//                }
+                OrderButtonView()
             }
             .overlay {
                 if orderBuilder.products.isEmpty {

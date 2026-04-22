@@ -13,9 +13,6 @@ struct ProductDetailView: View {
     @State public var product: Product
 
     var body: some View {
-        // Image Placeholder
-
-//                .ignoresSafeArea()
 
         VStack {
             ZStack {
@@ -72,7 +69,7 @@ struct ProductDetailView: View {
                         .padding([.bottom, .horizontal], 8)
                         .shadow(radius: 1)
                 }
-                //            .padding([.bottom, .horizontal], 8)
+
             }
         }
         .onAppear {
@@ -81,11 +78,6 @@ struct ProductDetailView: View {
     }
 }
 
-// #Preview {
-//    let coffee = Product()
-//    ProductDetailView(product: coffee)
-//        .environment(OrderBuilder(for: UUID()))
-// }
 
 struct DescriptionSectionView: View {
     public let title: String

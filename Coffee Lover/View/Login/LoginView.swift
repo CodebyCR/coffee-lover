@@ -136,7 +136,6 @@ import Authentication_Kit
             .padding(.horizontal)
             .disabled(authBuilder.status == .loading)
 
-            // Show error message
             if case .error(let error) = authBuilder.status {
                 Text(error.localizedDescription)
                     .foregroundColor(.red)

@@ -17,7 +17,7 @@ struct Coffee_LoverApp: App {
     
     @State var authBuilder: AuthenticationBuilder
     @State var menuManager: MenuManager
-    @State var orderBuilder = OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!)
+    @State var orderBuilder = OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!) // TODO: UserId
     @State var orderManager: OrderManager
     @State var imageManager: ImageManager
     @State var navigationManager = NavigationManager.shared
@@ -26,7 +26,6 @@ struct Coffee_LoverApp: App {
     init() {
         let manager = AutenticationManager(keychain: keychain, baseURL: baseURL)
         self.authManager = manager
-        
         let webserviceProvider = WebserviceProvider(inMode: .dev, authManager: manager)
         self.menuManager = MenuManager(from: webserviceProvider)
         self.orderManager = OrderManager(from: webserviceProvider)

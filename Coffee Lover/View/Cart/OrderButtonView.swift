@@ -43,17 +43,14 @@ struct OrderButtonView: View {
         switch result {
         case .success(let message):
             logger.info("Order successfully taken.")
-            // Success feedback
             feedbackGenerator.notificationOccurred(.success)
             orderResultMessage = message
             activePopover.toggle()
 
         case .failure(let error):
             logger.error("Failed to take order: \(error.localizedDescription)")
-            // Failure feedback
             feedbackGenerator.notificationOccurred(.error)
             orderResultMessage = "Something went wrong, please try again."
-            // Handle error appropriately, e.g., show an alert
         }
 
     }

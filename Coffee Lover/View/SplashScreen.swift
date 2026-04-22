@@ -16,8 +16,6 @@ struct SplashScreen: View {
 
             VStack {
 
-
-
                 Text("Coffee Lover")
                     .font(.system(size: 48, weight: .bold))
                     .padding()

@@ -5,12 +5,6 @@
 //  Created by Christoph Rohde on 16.01.25.
 //
 
-//
-//  CoffeeListContent.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 16.01.25.
-//
 import Coffee_Kit
 import SwiftUI
 import OSLog
@@ -103,9 +97,7 @@ struct MenuListView: View {
             return
         }
 
-        for await product in await menu.productService.loadAll() { 
-//            withAnimation(.spring(response: 0.8, dampingFraction: 0.6)) {
-                // animate menu entries...
+        for await product in await menu.productService.loadAll() {
                 switch product {
                 case .failure(let error):
                     log.warning("Failed to load product: \(error.localizedDescription)")
@@ -113,7 +105,6 @@ struct MenuListView: View {
                     log.info("Adding \(product.name)...")
                     menu.items.append(product)
                 }
-//            }
         }
     }
 }
@@ -123,10 +114,4 @@ struct MenuListView: View {
 //        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
 //        .environment(OrderBuilder(for: UUID()))
 //        .preferredColorScheme(.dark)
-// }
-
-// #Preview("ContentView") {
-//    ContentView()
-//        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
-//        .environment(OrderBuilder(for: UUID()))
 // }

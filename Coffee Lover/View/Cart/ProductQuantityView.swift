@@ -17,13 +17,6 @@ struct ProductQuantityView: View {
 
     var body: some View {
         HStack {
-//            Stepper(value: $orderProduct.quantity, in: 1 ... 100) {
-//                Text()
-//            }
-//            .onSubmit {
-//                orderBuilder.updateQuantity(of: orderProduct)
-//            }
-
             Stepper("\(orderProduct.quantity) x \(orderProduct.product.name)") {
                 orderProduct.quantity += 1
                 feedbackGenerator.impactOccurred()

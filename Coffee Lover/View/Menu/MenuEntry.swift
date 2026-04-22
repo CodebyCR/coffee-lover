@@ -34,7 +34,6 @@ struct MenuEntry: View {
                 .italic()
 
         }.frame(height: 60)
-//            .padding(.leading, 8)
     }
 }
 

@@ -27,7 +27,6 @@ struct MenuNavigationView: View {
         @Bindable var navManager = navigationManager
 
         NavigationStack(path: $navManager.menuPath) {
-//            VStack {
             MenuListView(lookupValue: $lookupValue)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbarBackground(.brown)
@@ -59,7 +58,6 @@ struct MenuNavigationView: View {
                         navigationManager.destinationView(for: target)
                             .environment(navigationManager)
                     }
-//            }
         }
         .background(
             Color

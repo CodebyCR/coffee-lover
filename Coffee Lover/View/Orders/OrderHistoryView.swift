@@ -47,7 +47,6 @@ struct OrderHistoryItem: View {
     var body: some View {
         LazyVStack(alignment: .leading) {
             HStack {
-                // small font
                 Text("Order: \(order.id)")
                     .font(.caption)
             }

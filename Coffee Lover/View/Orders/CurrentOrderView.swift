@@ -26,7 +26,6 @@ struct CurrentOrderView: View {
     var body: some View {
         
         VStack(spacing: 0) {
-            // Header mit Order ID
             HStack {
                 VStack(alignment: .leading) {
                     Text("Current Order")
@@ -38,7 +37,6 @@ struct CurrentOrderView: View {
                 }
                 Spacer()
 
-                // Status Badge
                 StatusBadge(orderStatus: OrderStatus.get(by: order.orderStatus) )
             }
             .padding(.horizontal, 20)
@@ -49,7 +47,6 @@ struct CurrentOrderView: View {
 
                 Divider()
 
-                // Order Details
                 VStack(spacing: 16) {
                     OrderDetailRow(
                         icon: "clock",
@@ -120,33 +117,7 @@ struct CurrentOrderView: View {
     }
 }
 
-struct OrderDetailRow: View {
-    let icon: String
-    let title: String
-    let value: String
-    var isHighlighted: Bool = false
-    var statusColor: Color = .primary
 
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .foregroundColor(.blue)
-                .frame(width: 20, height: 20)
-
-            Text(title)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            Spacer()
-
-            Text(value)
-                .font(isHighlighted ? .headline : .subheadline)
-                .fontWeight(isHighlighted ? .semibold : .regular)
-                .foregroundColor(statusColor)
-        }
-        .padding(.vertical, 4)
-    }
-}
 
 struct StatusBadge: View {
     @State var orderStatus: OrderStatus
@@ -184,38 +155,6 @@ struct StatusBadge: View {
         }
     }
 }
-
-nonisolated enum OrderStatus: String, CaseIterable, Identifiable {
-    case ordered = "ordered"
-    case inPreparation = "in preparation"
-    case inDelivery = "in delivery"
-    case delivered = "delivered"
-    case cancelled = "cancelled"
-    case unknown = "unknown"
-
-    var id: Self { self }
-
-    public static func get(by name: String) -> Self {
-        let name = name.lowercased()
-        return allCases.first { $0.rawValue == name } ?? .unknown
-    }
-
-}
-
-nonisolated enum PaymentStatus: String, CaseIterable, Identifiable {
-    case pending = "pending"
-    case paid = "paid"
-    case failed = "failed"
-    case unknown = "unknown"
-
-    var id: Self { self }
-
-    public static func get(by name: String) -> Self {
-        let name = name.lowercased()
-        return allCases.first { $0.rawValue == name } ?? .unknown
-    }
-}
-
 
 #Preview {
     CurrentOrderView(order: Order())
