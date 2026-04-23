@@ -1,9 +1,3 @@
-//
-//  ContentView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 20.10.24.
-//
 
 import Coffee_Kit
 import SwiftUI

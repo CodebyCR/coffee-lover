@@ -1,9 +1,3 @@
-//
-//  CartNavigationView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 13.03.25.
-//
 
 import Coffee_Kit
 import SwiftUI

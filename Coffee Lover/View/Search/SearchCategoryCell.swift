@@ -1,9 +1,3 @@
-//
-//  SearchCategoryCell.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 23.12.25.
-//
 
 import SwiftUI
 

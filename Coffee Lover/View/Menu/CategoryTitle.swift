@@ -1,9 +1,4 @@
-//
-//  CategoryTitle.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 19.06.25.
-//
+
 import SwiftUI
 
 struct CategoryTitle: View {

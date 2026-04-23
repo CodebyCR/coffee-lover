@@ -1,9 +1,3 @@
-//
-//  LoginView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 05.07.25.
-//
 
 import SwiftUI
 import Authentication_Kit
@@ -159,9 +153,7 @@ import Authentication_Kit
     }
  }
 
-// Preview for LoginView
- struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
- }
+//#Preview("LoginView") {
+//    LoginView()
+//}
+ 

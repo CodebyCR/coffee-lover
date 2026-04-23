@@ -1,9 +1,3 @@
-//
-//  CategorieChooserView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 04.05.25.
-//
 
 import Coffee_Kit
 import SwiftUI

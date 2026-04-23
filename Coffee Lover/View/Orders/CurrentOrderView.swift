@@ -1,9 +1,3 @@
-//
-//  CurrentOrderView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 16.03.25.
-//
 
 import Coffee_Kit
 import SwiftUI
@@ -12,7 +6,6 @@ import SwiftUI
 struct CurrentOrderView: View {
     @State private var isExpanded: Bool = false
     @State public var order: Order
-    
     @State var totalPrice: Double = 10.0
     @State var totalItems = 3
     @State private var orderStatus: OrderStatus = .ordered

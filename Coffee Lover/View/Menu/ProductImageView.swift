@@ -1,9 +1,4 @@
-//
-//  ProductImageView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 22.05.25.
-//
+
 import Coffee_Kit
 import SwiftUI
 import UIKit

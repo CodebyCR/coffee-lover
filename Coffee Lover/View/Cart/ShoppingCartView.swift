@@ -1,9 +1,3 @@
-//
-//  ShoppingCart.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 03.03.25.
-//
 
 import Coffee_Kit
 import SwiftUI

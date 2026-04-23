@@ -1,9 +1,3 @@
-//
-//  MemorySaftyTests.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 29.04.25.
-//
 
 import Foundation
 import Harmonize

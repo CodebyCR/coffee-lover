@@ -1,9 +1,3 @@
-//
-//  OrderDetailRow.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 22.04.26.
-//
 
 import SwiftUI
 

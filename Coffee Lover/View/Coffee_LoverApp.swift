@@ -1,9 +1,3 @@
-//
-//  Coffee_LoverApp.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 20.10.24.
-//
 
 import Coffee_Kit
 import Authentication_Kit
@@ -40,7 +34,7 @@ struct Coffee_LoverApp: App {
                 if showSplashScreen {
                     SplashScreen()
                         .transition(.asymmetric(insertion: .opacity, removal: .scale(scale: 1.5).combined(with: .opacity)))
-                        .zIndex(1) // Ensure splash stays on top during removal
+                        .zIndex(1)
                 }
                 else {
                     Group {
@@ -70,12 +64,8 @@ struct Coffee_LoverApp: App {
             }
             // MARK: - Lifecycle Modifiers (Ganz außen!)
             .task {
-                
-                // Startet sofort beim App-Launch
                 async let menuCache: () = menuManager.fillUpCache()
                 async let persistentLogin: () = authBuilder.checkPersistentLogin()
-                
-                // Parallel ausführen
                 _ = await (menuCache, persistentLogin)
                 
                 
@@ -88,7 +78,6 @@ struct Coffee_LoverApp: App {
                     print("Splash screen task cancelled: \(error)")
                 }
             }
-            // Hängt jetzt am ZStack und lauscht von Sekunde 0 an!
             .onChange(of: authBuilder.status, initial: false) {
                 if case .loggedIn = authBuilder.status {
                     hideKeyboard()

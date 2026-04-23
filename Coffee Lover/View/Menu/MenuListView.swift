@@ -1,9 +1,3 @@
-//
-//  CoffeeListView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 16.01.25.
-//
 
 import Coffee_Kit
 import SwiftUI

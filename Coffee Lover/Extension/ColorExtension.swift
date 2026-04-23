@@ -1,9 +1,3 @@
-//
-//  ColorExtension.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 05.07.25.
-//
 
 import SwiftUI
 

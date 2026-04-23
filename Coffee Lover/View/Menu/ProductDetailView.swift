@@ -1,9 +1,3 @@
-//
-//  ProductDetailView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 06.03.25.
-//
 
 import Coffee_Kit
 import SwiftUI

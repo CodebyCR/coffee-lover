@@ -1,9 +1,3 @@
-//
-//  SplashScreen.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 26.06.25.
-//
 
 import SwiftUI
 
@@ -38,7 +32,6 @@ struct SplashScreen: View {
                     .padding()
                     .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                     .offset(y: -200)
-
 
             }
         }

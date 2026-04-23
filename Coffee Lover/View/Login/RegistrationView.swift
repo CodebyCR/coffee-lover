@@ -1,9 +1,3 @@
-//
-//  SwiftUIView.swift
-//  Coffee Lover
-//
-//  Created by Christoph Rohde on 05.07.25.
-//
 
 import SwiftUI
 import Authentication_Kit
@@ -125,7 +119,6 @@ struct RegistrationView: View {
                 .padding(.horizontal)
                 .disabled(authBuilder.status == .loading)
 
-                // Show error message
                 if case .error(let error) = authBuilder.status {
                     Text(error.localizedDescription)
                         .foregroundColor(.red)
