@@ -11,7 +11,6 @@ struct Coffee_LoverApp: App {
     
     @State var authBuilder: AuthenticationBuilder
     @State var menuManager: MenuManager
-    @State var orderBuilder = OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!) // TODO: UserId
     @State var orderManager: OrderManager
     @State var imageManager: ImageManager
     @State var navigationManager = NavigationManager.shared
@@ -39,15 +38,16 @@ struct Coffee_LoverApp: App {
                 else {
                     Group {
                         switch authBuilder.status {
-                        case .loggedIn:
+                        case .loggedIn(let user):
                             ContentView()
+                                .environment(navigationManager)
+                                .environment(authBuilder)
                                 .environment(menuManager)
-                                .environment(orderBuilder)
+                                .environment(OrderBuilder(for: user.id))
                                 .environment(orderManager)
                                 .environment(imageManager)
-                                .environment(authBuilder)
-                                .environment(navigationManager)
                                 .transition(.move(edge: .trailing).combined(with: .opacity))
+                            
                         case .idle, .loading, .error, .loggedOut:
                             LoginView()
                                 .environment(authBuilder)
@@ -78,7 +78,7 @@ struct Coffee_LoverApp: App {
                     print("Splash screen task cancelled: \(error)")
                 }
             }
-            .onChange(of: authBuilder.status, initial: false) {
+            .onChange(of: authBuilder.status, initial: true) {
                 if case .loggedIn = authBuilder.status {
                     hideKeyboard()
                 }
