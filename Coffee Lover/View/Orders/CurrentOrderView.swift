@@ -3,21 +3,90 @@ import Coffee_Kit
 import SwiftUI
 
 
+
+
+import SwiftUI
+
 struct CurrentOrderView: View {
-    @State private var isExpanded: Bool = false
-    @State public var order: Order
-    @State var totalPrice: Double = 10.0
-    @State var totalItems = 3
-    @State private var orderStatus: OrderStatus = .ordered
-    @State private var paymentStatus: PaymentStatus = .pending
-    @State private var id: String = {
-        let s = UUID().uuidString;
-        let end = String.Index(utf16Offset: min(18, s.utf16.count), in: s);
-        return String(s[..<end])
-    }()
+    @Environment(OrderManager.self) private var orderManager
+    @State private var viewState: OrderViewState = .noOrderPending
 
     var body: some View {
+        Group {
+            switch viewState {
+            case .noOrderPending:
+                HStack {
+                    Image(systemName: "cart.badge.minus")
+                        .font(.title2)
+                        .foregroundStyle(.secondary)
+                    Text("No active order")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color(uiColor: .systemBackground).opacity(0.8))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.horizontal)
+                
+            case .loading:
+                ProgressView("Lade Bestellung...")
+                    .controlSize(.large)
+                
+            case .loaded(let order):
+                // Ausgelagert in eine eigene View für bessere Lesbarkeit
+                OrderCardView(order: order)
+                
+            case .error(let error):
+                ContentUnavailableView(
+                    "Fehler beim Laden",
+                    systemImage: "exclamationmark.triangle",
+                    description: Text(error.localizedDescription)
+                )
+            }
+        }
+        // Der task-Modifier feuert, wenn die View erscheint UND jedes Mal, wenn sich `id` ändert.
+        .task(id: orderManager.pendingOrderId) {
+            await loadOrder()
+        }
+    }
+    
+    // MARK: - Structured Concurrency
+    private func loadOrder() async {
+        // 1. Wenn keine ID da ist, direkt abbrechen
+        guard let orderId = orderManager.pendingOrderId else {
+            viewState = .noOrderPending
+            return
+        }
         
+        // 2. Lade-State setzen
+        viewState = .loading
+        
+        // 3. Asynchron Laden (Simuliert eine statische Methode auf Order)
+        do {
+            let fetchedOrder = try await orderManager.getOrder(by: orderId)
+            // Automatischer Wechsel auf den Main Actor in SwiftUI (Swift 6)
+            viewState = .loaded(fetchedOrder)
+        } catch {
+            viewState = .error(error)
+        }
+    }
+    
+    
+}
+
+public enum OrderViewState {
+    case noOrderPending
+    case loading
+    case loaded(Order)
+    case error(Error)
+}
+
+struct OrderCardView: View {
+    let order: Order // Kein Optional und kein @State mehr! Die View existiert nur, wenn es eine Order gibt.
+    @State private var isExpanded: Bool = false
+
+    var body: some View {
         VStack(spacing: 0) {
             HStack {
                 VStack(alignment: .leading) {
@@ -26,37 +95,38 @@ struct CurrentOrderView: View {
                         .fontWeight(.semibold)
                     Text("Order #\(order.id)")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary) // .foregroundColor ist deprecated
                 }
                 Spacer()
 
-                StatusBadge(orderStatus: OrderStatus.get(by: order.orderStatus) )
+                StatusBadge(orderStatus: OrderStatus.get(by: order.orderStatus))
             }
             .padding(.horizontal, 20)
             .padding(.top, 20)
             .padding(.bottom, 16)
             
             if isExpanded {
-
                 Divider()
 
                 VStack(spacing: 16) {
                     OrderDetailRow(
                         icon: "clock",
                         title: "Ordered on",
-                        value: formatDateTime(order.orderDate)
+                        // Moderne Swift API für Daten statt DateFormatter!
+                        value: order.orderDate.formatted(date: .abbreviated, time: .shortened)
                     )
 
                     OrderDetailRow(
                         icon: "bag",
                         title: "Products",
-                        value: "\(totalItems) Units"
+                        value: "\(order.totalItems) Units"
                     )
 
                     OrderDetailRow(
                         icon: "dollarsign.circle",
                         title: "Total Price",
-                        value: totalPrice.formatted(.currency(code: "USD")),
+                        // Moderne Währungsformatierung
+                        value: order.totalPrice.formatted(.currency(code: "USD")),
                         isHighlighted: true
                     )
 
@@ -70,16 +140,15 @@ struct CurrentOrderView: View {
                         icon: "checkmark.shield",
                         title: "Payment Status",
                         value: order.paymentStatus.description,
-                        statusColor: paymentStatusColor(paymentStatus)
+                        statusColor: paymentStatusColor(PaymentStatus.get(by: order.paymentStatus))
                     )
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 20)
+                .padding(20)
             }
         }
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+        .background(Color(uiColor: .systemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 16)) // Modernes clipShape statt cornerRadius
+        .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
         .padding(.horizontal, 16)
         .contentShape(Rectangle())
         .onTapGesture {
@@ -89,31 +158,18 @@ struct CurrentOrderView: View {
         }
     }
 
-    private func formatDateTime(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
-    }
-
     private func paymentStatusColor(_ status: PaymentStatus) -> Color {
         switch status {
-        case .paid:
-            return .green
-        case .pending:
-            return .orange
-        case .failed:
-            return .red
-        case .unknown:
-            return .gray
+        case .paid: return .green
+        case .pending: return .orange
+        case .failed: return .red
+        case .unknown: return .gray
         }
     }
 }
 
-
-
 struct StatusBadge: View {
-    @State var orderStatus: OrderStatus
+    let orderStatus: OrderStatus // WICHTIG: let statt @State!
 
     var body: some View {
         HStack(spacing: 4) {
@@ -128,28 +184,17 @@ struct StatusBadge: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
         .background(statusColor.opacity(0.1))
-        .cornerRadius(12)
+        .clipShape(Capsule()) // Capsule ist hier oft schöner als ein harter cornerRadius
     }
 
     private var statusColor: Color {
         switch orderStatus {
-        case .ordered:
-            return .orange
-        case .inPreparation:
-            return .yellow
-        case .inDelivery:
-            return .green
-        case .delivered:
-            return .blue
-        case .cancelled:
-            return .red
-        case .unknown:
-            return .gray
+        case .ordered: return .orange
+        case .inPreparation: return .yellow
+        case .inDelivery: return .green
+        case .delivered: return .blue
+        case .cancelled: return .red
+        case .unknown: return .gray
         }
     }
-}
-
-#Preview {
-    CurrentOrderView(order: Order())
-        .environment(OrderManager(from: WebserviceProvider(inMode: .dev)))
 }

@@ -4,34 +4,31 @@ import SwiftUI
 
 struct OrderListView: View {
     @Environment(OrderManager.self) private var orderManager
-    @State private var currentOrder: Order? = nil
-
+    @State private var orderExists: Bool = false
 
     var body: some View {
         ZStack {
-            VStack {
-                if let order = currentOrder {
-                    CurrentOrderView(order: order)
-                }
-                
+            VStack(spacing: 0) {
+                CurrentOrderView()
+                    .padding(.vertical)
 
                 List {
-                    CategoryTitle(categoryTitle: "Order History")
-                        .scrollTargetLayout()
-
+                    Section {
+                        CategoryTitle(categoryTitle: "Order History")
+                            .scrollTargetLayout()
+                        
                         OrderHistoryView()
-
+                    }
                 }
                 .scrollTargetBehavior(.viewAligned)
                 .listStyle(.insetGrouped)
             }
-
         }
         .background(
             Color
                 .brown
                 .gradient
-            )
+        )
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -44,14 +41,16 @@ struct OrderListView: View {
             }
         }
         .refreshable {
-            // Simulate a network call to fetch new orders
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
-            try? await Task.sleep(for: .seconds(2))
-            print("Orders refreshed")
+            await orderManager.loadOrderHistory()
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         }
         .task {
-            currentOrder = orderManager.currentOrder
+            orderExists = orderManager.containsOrder
+            if orderManager.orderHistory.isEmpty {
+                print("OrderListView task: Initial history load")
+                await orderManager.loadOrderHistory()
+            }
         }
     }
 }

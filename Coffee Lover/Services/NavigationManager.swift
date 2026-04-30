@@ -56,8 +56,8 @@ public final class NavigationManager {
             ProductDetailView(product: product)
         case .orderHistory:
             OrderHistoryView()
-        case .currentOrder(let order):
-            CurrentOrderView(order: order)
+        case .currentOrder:
+            CurrentOrderView()
         }
     }
     
