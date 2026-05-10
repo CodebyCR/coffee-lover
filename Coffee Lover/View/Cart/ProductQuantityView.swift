@@ -1,5 +1,7 @@
 
-import Coffee_Kit
+import AuthenticationKit
+import ProductKit
+import OrderKit
 import SwiftUI
 
 @MainActor
@@ -36,7 +38,13 @@ struct ProductQuantityView: View {
 }
 
 #Preview {
+    let keychain = DefaultKeychainManager()
+    let databaseAPI: DatabaseAPI = .dev
+    let baseURL = databaseAPI.baseURL.appendingPathComponent("authentication")
+    let authenticationManager = AutenticationManager(keychain: keychain, databaseAPI: databaseAPI)
+    let webserviceProvider = WebserviceProvider(inMode: databaseAPI, autheticationManager: authenticationManager)
+    
     ProductQuantityView(orderProduct: OrderProduct())
-        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(MenuManager(from: webserviceProvider))
         .environment(OrderBuilder(for: UUID()))
 }

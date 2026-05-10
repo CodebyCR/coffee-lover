@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		83505F7A2F8420F100C67F3F /* Authentication-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 83505F792F8420F100C67F3F /* Authentication-Kit */; };
+		839B8A172FABA2B700983A02 /* AuthenticationKit in Frameworks */ = {isa = PBXBuildFile; productRef = 839B8A162FABA2B700983A02 /* AuthenticationKit */; };
+		839B8A192FABA2B700983A02 /* FoundationKit in Frameworks */ = {isa = PBXBuildFile; productRef = 839B8A182FABA2B700983A02 /* FoundationKit */; };
+		839B8A1B2FABA2B700983A02 /* ImageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 839B8A1A2FABA2B700983A02 /* ImageKit */; };
+		839B8A1D2FABA2B700983A02 /* OrderKit in Frameworks */ = {isa = PBXBuildFile; productRef = 839B8A1C2FABA2B700983A02 /* OrderKit */; };
+		839B8A1F2FABA2B700983A02 /* ProductKit in Frameworks */ = {isa = PBXBuildFile; productRef = 839B8A1E2FABA2B700983A02 /* ProductKit */; };
+		83D15C7A2FAF4F720037BA48 /* .harmonize.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 8ECD190F2DC7D5AF00111EEF /* .harmonize.yaml */; };
+		83D15C8E2FAF53780037BA48 /* Harmonize in Frameworks */ = {isa = PBXBuildFile; productRef = 83D15C8D2FAF53780037BA48 /* Harmonize */; };
+		83D15C902FAF53780037BA48 /* HarmonizeSemantics in Frameworks */ = {isa = PBXBuildFile; productRef = 83D15C8F2FAF53780037BA48 /* HarmonizeSemantics */; };
+		83D15C922FAF53780037BA48 /* HarmonizeUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 83D15C912FAF53780037BA48 /* HarmonizeUtils */; };
 		8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 8E43F27B2D8756AD0051D32B /* ReadMe.md */; };
-		8E8659152EE603BF0048A07A /* Coffee-Kit in Frameworks */ = {isa = PBXBuildFile; productRef = 8E8659142EE603BF0048A07A /* Coffee-Kit */; };
-		8EF840952DC15DC900ED729B /* Harmonize in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF840942DC15DC900ED729B /* Harmonize */; };
-		8EF840972DC15DC900ED729B /* HarmonizeSemantics in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF840962DC15DC900ED729B /* HarmonizeSemantics */; };
-		8EF840992DC15DC900ED729B /* HarmonizeUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 8EF840982DC15DC900ED729B /* HarmonizeUtils */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -30,7 +34,7 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
-		8E2C69742CC4F86F004B334D /* PBXContainerItemProxy */ = {
+		83D15C832FAF526B0037BA48 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8E2C695B2CC4F86B004B334D /* Project object */;
 			proxyType = 1;
@@ -46,32 +50,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		83D15C792FAE70E50037BA48 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		83D15C7F2FAF526B0037BA48 /* Coffee LoverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E2C69632CC4F86C004B334D /* Coffee Lover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Coffee Lover.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8E2C69732CC4F86F004B334D /* Coffee LoverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E2C697D2CC4F86F004B334D /* Coffee LoverUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Coffee LoverUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E43F27B2D8756AD0051D32B /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		8ECD190F2DC7D5AF00111EEF /* .harmonize.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .harmonize.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		8EF8409F2DC1603D00ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee LoverTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				MemorySaftyTests.swift,
-			);
-			target = 8E2C69722CC4F86F004B334D /* Coffee LoverTests */;
-		};
-		8EF840A02DC1617700ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee Lover" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				MemorySaftyTests.swift,
-			);
-			target = 8E2C69622CC4F86C004B334D /* Coffee Lover */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		83D15C802FAF526B0037BA48 /* Coffee LoverTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Coffee LoverTests";
+			sourceTree = "<group>";
+		};
 		8E2C69652CC4F86C004B334D /* Coffee Lover */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Coffee Lover";
@@ -87,34 +92,28 @@
 			path = Preview;
 			sourceTree = "<group>";
 		};
-		8EF8409A2DC15EC200ED729B /* Coffee LoverTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				8EF840A02DC1617700ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee Lover" target */,
-				8EF8409F2DC1603D00ED729B /* Exceptions for "Coffee LoverTests" folder in "Coffee LoverTests" target */,
-			);
-			path = "Coffee LoverTests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		83D15C7C2FAF526B0037BA48 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83D15C922FAF53780037BA48 /* HarmonizeUtils in Frameworks */,
+				83D15C902FAF53780037BA48 /* HarmonizeSemantics in Frameworks */,
+				83D15C8E2FAF53780037BA48 /* Harmonize in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E2C69602CC4F86C004B334D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E8659152EE603BF0048A07A /* Coffee-Kit in Frameworks */,
-				83505F7A2F8420F100C67F3F /* Authentication-Kit in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8E2C69702CC4F86F004B334D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8EF840992DC15DC900ED729B /* HarmonizeUtils in Frameworks */,
-				8EF840972DC15DC900ED729B /* HarmonizeSemantics in Frameworks */,
-				8EF840952DC15DC900ED729B /* Harmonize in Frameworks */,
+				839B8A1F2FABA2B700983A02 /* ProductKit in Frameworks */,
+				839B8A1D2FABA2B700983A02 /* OrderKit in Frameworks */,
+				839B8A192FABA2B700983A02 /* FoundationKit in Frameworks */,
+				839B8A172FABA2B700983A02 /* AuthenticationKit in Frameworks */,
+				839B8A1B2FABA2B700983A02 /* ImageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,23 +127,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		83505F782F8420F100C67F3F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		8E2C695A2CC4F86B004B334D = {
 			isa = PBXGroup;
 			children = (
-				8ECD190F2DC7D5AF00111EEF /* .harmonize.yaml */,
-				8EF8409A2DC15EC200ED729B /* Coffee LoverTests */,
 				8E43F27B2D8756AD0051D32B /* ReadMe.md */,
-				8E43F2782D8755C60051D32B /* Preview */,
+				8ECD190F2DC7D5AF00111EEF /* .harmonize.yaml */,
 				8E2C69652CC4F86C004B334D /* Coffee Lover */,
 				8E2C69802CC4F86F004B334D /* Coffee LoverUITests */,
-				83505F782F8420F100C67F3F /* Frameworks */,
+				8E43F2782D8755C60051D32B /* Preview */,
+				83D15C802FAF526B0037BA48 /* Coffee LoverTests */,
 				8E2C69642CC4F86C004B334D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -153,8 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				8E2C69632CC4F86C004B334D /* Coffee Lover.app */,
-				8E2C69732CC4F86F004B334D /* Coffee LoverTests.xctest */,
 				8E2C697D2CC4F86F004B334D /* Coffee LoverUITests.xctest */,
+				83D15C7F2FAF526B0037BA48 /* Coffee LoverTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,6 +153,32 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		83D15C7E2FAF526B0037BA48 /* Coffee LoverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83D15C852FAF526B0037BA48 /* Build configuration list for PBXNativeTarget "Coffee LoverTests" */;
+			buildPhases = (
+				83D15C7B2FAF526B0037BA48 /* Sources */,
+				83D15C7C2FAF526B0037BA48 /* Frameworks */,
+				83D15C7D2FAF526B0037BA48 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				83D15C842FAF526B0037BA48 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				83D15C802FAF526B0037BA48 /* Coffee LoverTests */,
+			);
+			name = "Coffee LoverTests";
+			packageProductDependencies = (
+				83D15C8D2FAF53780037BA48 /* Harmonize */,
+				83D15C8F2FAF53780037BA48 /* HarmonizeSemantics */,
+				83D15C912FAF53780037BA48 /* HarmonizeUtils */,
+			);
+			productName = "Coffee LoverTests";
+			productReference = 83D15C7F2FAF526B0037BA48 /* Coffee LoverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8E2C69622CC4F86C004B334D /* Coffee Lover */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E2C69872CC4F86F004B334D /* Build configuration list for PBXNativeTarget "Coffee Lover" */;
@@ -169,6 +186,7 @@
 				8E2C695F2CC4F86C004B334D /* Sources */,
 				8E2C69602CC4F86C004B334D /* Frameworks */,
 				8E2C69612CC4F86C004B334D /* Resources */,
+				83D15C792FAE70E50037BA48 /* Embed Frameworks */,
 			);
 			buildRules = (
 				8EBBEA512D3D5749001C5637 /* PBXBuildRule */,
@@ -178,39 +196,18 @@
 			fileSystemSynchronizedGroups = (
 				8E2C69652CC4F86C004B334D /* Coffee Lover */,
 				8E43F2782D8755C60051D32B /* Preview */,
-				8EF8409A2DC15EC200ED729B /* Coffee LoverTests */,
 			);
 			name = "Coffee Lover";
 			packageProductDependencies = (
-				8E8659142EE603BF0048A07A /* Coffee-Kit */,
-				83505F792F8420F100C67F3F /* Authentication-Kit */,
+				839B8A162FABA2B700983A02 /* AuthenticationKit */,
+				839B8A182FABA2B700983A02 /* FoundationKit */,
+				839B8A1A2FABA2B700983A02 /* ImageKit */,
+				839B8A1C2FABA2B700983A02 /* OrderKit */,
+				839B8A1E2FABA2B700983A02 /* ProductKit */,
 			);
 			productName = "Coffee Lover";
 			productReference = 8E2C69632CC4F86C004B334D /* Coffee Lover.app */;
 			productType = "com.apple.product-type.application";
-		};
-		8E2C69722CC4F86F004B334D /* Coffee LoverTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8E2C698A2CC4F86F004B334D /* Build configuration list for PBXNativeTarget "Coffee LoverTests" */;
-			buildPhases = (
-				8E2C696F2CC4F86F004B334D /* Sources */,
-				8E2C69702CC4F86F004B334D /* Frameworks */,
-				8E2C69712CC4F86F004B334D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8E2C69752CC4F86F004B334D /* PBXTargetDependency */,
-			);
-			name = "Coffee LoverTests";
-			packageProductDependencies = (
-				8EF840942DC15DC900ED729B /* Harmonize */,
-				8EF840962DC15DC900ED729B /* HarmonizeSemantics */,
-				8EF840982DC15DC900ED729B /* HarmonizeUtils */,
-			);
-			productName = "Coffee LoverTests";
-			productReference = 8E2C69732CC4F86F004B334D /* Coffee LoverTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		8E2C697C2CC4F86F004B334D /* Coffee LoverUITests */ = {
 			isa = PBXNativeTarget;
@@ -242,15 +239,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1600;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
+					83D15C7E2FAF526B0037BA48 = {
+						CreatedOnToolsVersion = 26.4.1;
+						TestTargetID = 8E2C69622CC4F86C004B334D;
+					};
 					8E2C69622CC4F86C004B334D = {
 						CreatedOnToolsVersion = 16.0;
-					};
-					8E2C69722CC4F86F004B334D = {
-						CreatedOnToolsVersion = 16.0;
-						TestTargetID = 8E2C69622CC4F86C004B334D;
 					};
 					8E2C697C2CC4F86F004B334D = {
 						CreatedOnToolsVersion = 16.0;
@@ -268,8 +265,8 @@
 			mainGroup = 8E2C695A2CC4F86B004B334D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8E9F17CF2DBCF88E00FB1CE1 /* XCLocalSwiftPackageReference "../../Coffee-Kit" */,
-				8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */,
+				839B8A152FABA2B700983A02 /* XCRemoteSwiftPackageReference "coffee-kit" */,
+				83D15C8C2FAF53780037BA48 /* XCRemoteSwiftPackageReference "Harmonize" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8E2C69642CC4F86C004B334D /* Products */;
@@ -277,25 +274,26 @@
 			projectRoot = "";
 			targets = (
 				8E2C69622CC4F86C004B334D /* Coffee Lover */,
-				8E2C69722CC4F86F004B334D /* Coffee LoverTests */,
 				8E2C697C2CC4F86F004B334D /* Coffee LoverUITests */,
+				83D15C7E2FAF526B0037BA48 /* Coffee LoverTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		83D15C7D2FAF526B0037BA48 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E2C69612CC4F86C004B334D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83D15C7A2FAF4F720037BA48 /* .harmonize.yaml in Resources */,
 				8E43F27C2D8756AD0051D32B /* ReadMe.md in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8E2C69712CC4F86F004B334D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,14 +307,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8E2C695F2CC4F86C004B334D /* Sources */ = {
+		83D15C7B2FAF526B0037BA48 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8E2C696F2CC4F86F004B334D /* Sources */ = {
+		8E2C695F2CC4F86C004B334D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -333,10 +331,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8E2C69752CC4F86F004B334D /* PBXTargetDependency */ = {
+		83D15C842FAF526B0037BA48 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8E2C69622CC4F86C004B334D /* Coffee Lover */;
-			targetProxy = 8E2C69742CC4F86F004B334D /* PBXContainerItemProxy */;
+			targetProxy = 83D15C832FAF526B0037BA48 /* PBXContainerItemProxy */;
 		};
 		8E2C697F2CC4F86F004B334D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -346,6 +344,50 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		83D15C862FAF526B0037BA48 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5JFNMP7X7J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.CodeByCR.github.Coffee-LoverTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coffee Lover.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Coffee Lover";
+			};
+			name = Debug;
+		};
+		83D15C872FAF526B0037BA48 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5JFNMP7X7J;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.CodeByCR.github.Coffee-LoverTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coffee Lover.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Coffee Lover";
+			};
+			name = Release;
+		};
 		8E2C69852CC4F86F004B334D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -477,6 +519,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Coffee Lover/Preview Content\"";
 				DEVELOPMENT_TEAM = 5JFNMP7X7J;
 				ENABLE_PREVIEWS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Coffee-Lover-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Coffee Lover";
@@ -496,6 +540,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_SUPPRESS_WARNINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -511,6 +556,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Coffee Lover/Preview Content\"";
 				DEVELOPMENT_TEAM = 5JFNMP7X7J;
 				ENABLE_PREVIEWS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Coffee-Lover-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Coffee Lover";
@@ -530,46 +577,9 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_SUPPRESS_WARNINGS = NO;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		8E2C698B2CC4F86F004B334D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GP8J64YJ37;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.CodebyCR.Coffee-LoverTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coffee Lover.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Coffee Lover";
-			};
-			name = Debug;
-		};
-		8E2C698C2CC4F86F004B334D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = GP8J64YJ37;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.CodebyCR.Coffee-LoverTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coffee Lover.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Coffee Lover";
 			};
 			name = Release;
 		};
@@ -610,6 +620,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		83D15C852FAF526B0037BA48 /* Build configuration list for PBXNativeTarget "Coffee LoverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83D15C862FAF526B0037BA48 /* Debug */,
+				83D15C872FAF526B0037BA48 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8E2C695E2CC4F86B004B334D /* Build configuration list for PBXProject "Coffee Lover" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -628,15 +647,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8E2C698A2CC4F86F004B334D /* Build configuration list for PBXNativeTarget "Coffee LoverTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8E2C698B2CC4F86F004B334D /* Debug */,
-				8E2C698C2CC4F86F004B334D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		8E2C698D2CC4F86F004B334D /* Build configuration list for PBXNativeTarget "Coffee LoverUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -648,47 +658,64 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		8E9F17CF2DBCF88E00FB1CE1 /* XCLocalSwiftPackageReference "../../Coffee-Kit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../Coffee-Kit";
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
-		8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */ = {
+		839B8A152FABA2B700983A02 /* XCRemoteSwiftPackageReference "coffee-kit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CodebyCR/coffee-kit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		83D15C8C2FAF53780037BA48 /* XCRemoteSwiftPackageReference "Harmonize" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/perrystreetsoftware/Harmonize";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		83505F792F8420F100C67F3F /* Authentication-Kit */ = {
+		839B8A162FABA2B700983A02 /* AuthenticationKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8E9F17CF2DBCF88E00FB1CE1 /* XCLocalSwiftPackageReference "../../Coffee-Kit" */;
-			productName = "Authentication-Kit";
+			package = 839B8A152FABA2B700983A02 /* XCRemoteSwiftPackageReference "coffee-kit" */;
+			productName = AuthenticationKit;
 		};
-		8E8659142EE603BF0048A07A /* Coffee-Kit */ = {
+		839B8A182FABA2B700983A02 /* FoundationKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = "Coffee-Kit";
+			package = 839B8A152FABA2B700983A02 /* XCRemoteSwiftPackageReference "coffee-kit" */;
+			productName = FoundationKit;
 		};
-		8EF840942DC15DC900ED729B /* Harmonize */ = {
+		839B8A1A2FABA2B700983A02 /* ImageKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */;
+			package = 839B8A152FABA2B700983A02 /* XCRemoteSwiftPackageReference "coffee-kit" */;
+			productName = ImageKit;
+		};
+		839B8A1C2FABA2B700983A02 /* OrderKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 839B8A152FABA2B700983A02 /* XCRemoteSwiftPackageReference "coffee-kit" */;
+			productName = OrderKit;
+		};
+		839B8A1E2FABA2B700983A02 /* ProductKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 839B8A152FABA2B700983A02 /* XCRemoteSwiftPackageReference "coffee-kit" */;
+			productName = ProductKit;
+		};
+		83D15C8D2FAF53780037BA48 /* Harmonize */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83D15C8C2FAF53780037BA48 /* XCRemoteSwiftPackageReference "Harmonize" */;
 			productName = Harmonize;
 		};
-		8EF840962DC15DC900ED729B /* HarmonizeSemantics */ = {
+		83D15C8F2FAF53780037BA48 /* HarmonizeSemantics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */;
+			package = 83D15C8C2FAF53780037BA48 /* XCRemoteSwiftPackageReference "Harmonize" */;
 			productName = HarmonizeSemantics;
 		};
-		8EF840982DC15DC900ED729B /* HarmonizeUtils */ = {
+		83D15C912FAF53780037BA48 /* HarmonizeUtils */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8EF840932DC15DC900ED729B /* XCRemoteSwiftPackageReference "Harmonize" */;
+			package = 83D15C8C2FAF53780037BA48 /* XCRemoteSwiftPackageReference "Harmonize" */;
 			productName = HarmonizeUtils;
 		};
 /* End XCSwiftPackageProductDependency section */

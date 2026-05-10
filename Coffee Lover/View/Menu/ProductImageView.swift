@@ -1,7 +1,8 @@
 
-import Coffee_Kit
 import SwiftUI
 import UIKit
+import ImageKit
+import ProductKit
 
 struct ProductImageView: View {
     @Environment(ImageManager.self) private var imageManager

@@ -1,6 +1,8 @@
 
-import Coffee_Kit
+
 import SwiftUI
+import ProductKit
+import OrderKit
 
 struct ProductDetailView: View {
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder

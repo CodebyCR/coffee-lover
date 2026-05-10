@@ -1,1 +1,4 @@
-
+# Harmonize configuration file
+excludePaths:
+  - .build
+  - .swiftpm

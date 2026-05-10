@@ -1,6 +1,7 @@
 
-import Coffee_Kit
+
 import SwiftUI
+import OrderKit
 
 enum MainTab {
     case orders, menu, cart, search
@@ -92,8 +93,23 @@ struct ContentView: View {
     }
 }
 
+
+#if(true)
+
+import AuthenticationKit
+import ProductKit
+import OrderKit
+
 #Preview {
+    let keychain = DefaultKeychainManager()
+    let databaseAPI: DatabaseAPI = .dev
+    let baseURL = databaseAPI.baseURL.appendingPathComponent("authentication")
+    let authenticationManager = AutenticationManager(keychain: keychain, databaseAPI: databaseAPI)
+    let webserviceProvider = WebserviceProvider(inMode: databaseAPI, autheticationManager: authenticationManager)
+    
     ContentView()
-        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(MenuManager(from: webserviceProvider))
         .environment(OrderBuilder(for: UUID()))
 }
+
+#endif

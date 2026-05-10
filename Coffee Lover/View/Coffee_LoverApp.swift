@@ -1,13 +1,16 @@
 
-import Coffee_Kit
-import Authentication_Kit
+
 import SwiftUI
+import AuthenticationKit
+import ProductKit
+import ImageKit
+import OrderKit
 
 @main
 struct Coffee_LoverApp: App {
     private let keychain = DefaultKeychainManager()
     private let authManager: AutenticationManager
-    private let baseURL = URL(string: "http://cr-mac.local:8080/test/authentication")!
+    
     
     @State var authBuilder: AuthenticationBuilder
     @State var menuManager: MenuManager
@@ -17,13 +20,15 @@ struct Coffee_LoverApp: App {
     @State private var showSplashScreen = true
     
     init() {
-        let manager = AutenticationManager(keychain: keychain, baseURL: baseURL)
+        let databaseAPI: DatabaseAPI = .dev
+        let baseURL = databaseAPI.baseURL.appendingPathComponent("authentication")
+        let manager = AutenticationManager(keychain: keychain, databaseAPI: databaseAPI)
+        let webserviceProvider = WebserviceProvider(inMode: .dev, autheticationManager: manager)
         self.authManager = manager
-        let webserviceProvider = WebserviceProvider(inMode: .dev, authManager: manager)
         self.menuManager = MenuManager(from: webserviceProvider)
         self.orderManager = OrderManager(from: webserviceProvider)
         self.imageManager = ImageManager(from: webserviceProvider)
-        self.authBuilder = AuthenticationBuilder(authManager: manager, baseURL: baseURL)
+        self.authBuilder = AuthenticationBuilder(webserviceProvider: webserviceProvider)
     }
 
     var body: some Scene {

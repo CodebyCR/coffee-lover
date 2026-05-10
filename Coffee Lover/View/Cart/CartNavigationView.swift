@@ -1,5 +1,7 @@
 
-import Coffee_Kit
+import AuthenticationKit
+import ProductKit
+import OrderKit
 import SwiftUI
 
 struct CartNavigationView: View {
@@ -37,7 +39,13 @@ struct CartNavigationView: View {
 }
 
 #Preview {
+    let keychain = DefaultKeychainManager()
+    let databaseAPI: DatabaseAPI = .dev
+    let baseURL = databaseAPI.baseURL.appendingPathComponent("authentication")
+    let authenticationManager = AutenticationManager(keychain: keychain, databaseAPI: databaseAPI)
+    let webserviceProvider = WebserviceProvider(inMode: databaseAPI, autheticationManager: authenticationManager)
+    
     CartNavigationView()
-        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+        .environment(MenuManager(from: webserviceProvider))
         .environment(OrderBuilder(for: UUID(uuidString: "03F35975-AF57-4691-811F-4AB872FDB51B")!))
 }

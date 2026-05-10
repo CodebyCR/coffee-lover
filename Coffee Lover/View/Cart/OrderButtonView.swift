@@ -1,5 +1,7 @@
 
-import Coffee_Kit
+import AuthenticationKit
+import ProductKit
+import OrderKit
 import OSLog
 import SwiftUI
 
@@ -52,9 +54,15 @@ struct OrderButtonView: View {
 }
 
 #Preview("OrderButtonView (Darkmode)") {
-    return OrderButtonView()
-        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
-        .environment(OrderManager(from: WebserviceProvider(inMode: .dev)))
+    let keychain = DefaultKeychainManager()
+    let databaseAPI: DatabaseAPI = .dev
+    let baseURL = databaseAPI.baseURL.appendingPathComponent("authentication")
+    let authenticationManager = AutenticationManager(keychain: keychain, databaseAPI: databaseAPI)
+    let webserviceProvider = WebserviceProvider(inMode: databaseAPI, autheticationManager: authenticationManager)
+    
+    OrderButtonView()
+        .environment(MenuManager(from: webserviceProvider))
+        .environment(OrderManager(from: webserviceProvider))
         .preferredColorScheme(.dark)
 }
 

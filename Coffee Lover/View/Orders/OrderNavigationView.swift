@@ -1,6 +1,8 @@
 
-import Coffee_Kit
+
 import SwiftUI
+import AuthenticationKit
+import ProductKit
 
 struct OrderNavigationView: View {
     @Environment(NavigationManager.self) private var navigationManager
@@ -35,7 +37,7 @@ struct OrderNavigationView: View {
     }
 }
 
-#Preview {
-    OrderNavigationView()
-        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
-}
+//#Preview {
+//    OrderNavigationView()
+//        .environment(MenuManager(from: WebserviceProvider(inMode: .dev, autheticationManager: <#AutenticationManager#>)))
+//}

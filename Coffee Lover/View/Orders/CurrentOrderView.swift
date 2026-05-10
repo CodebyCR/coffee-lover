@@ -1,11 +1,9 @@
 
-import Coffee_Kit
-import SwiftUI
-
-
-
 
 import SwiftUI
+import OrderKit
+
+
 
 struct CurrentOrderView: View {
     @Environment(OrderManager.self) private var orderManager
@@ -34,7 +32,6 @@ struct CurrentOrderView: View {
                     .controlSize(.large)
                 
             case .loaded(let order):
-                // Ausgelagert in eine eigene View für bessere Lesbarkeit
                 OrderCardView(order: order)
                 
             case .error(let error):
@@ -45,7 +42,6 @@ struct CurrentOrderView: View {
                 )
             }
         }
-        // Der task-Modifier feuert, wenn die View erscheint UND jedes Mal, wenn sich `id` ändert.
         .task(id: orderManager.pendingOrderId) {
             await loadOrder()
         }
@@ -53,19 +49,15 @@ struct CurrentOrderView: View {
     
     // MARK: - Structured Concurrency
     private func loadOrder() async {
-        // 1. Wenn keine ID da ist, direkt abbrechen
         guard let orderId = orderManager.pendingOrderId else {
             viewState = .noOrderPending
             return
         }
-        
-        // 2. Lade-State setzen
+
         viewState = .loading
         
-        // 3. Asynchron Laden (Simuliert eine statische Methode auf Order)
         do {
             let fetchedOrder = try await orderManager.getOrder(by: orderId)
-            // Automatischer Wechsel auf den Main Actor in SwiftUI (Swift 6)
             viewState = .loaded(fetchedOrder)
         } catch {
             viewState = .error(error)
@@ -83,7 +75,7 @@ public enum OrderViewState {
 }
 
 struct OrderCardView: View {
-    let order: Order // Kein Optional und kein @State mehr! Die View existiert nur, wenn es eine Order gibt.
+    let order: Order
     @State private var isExpanded: Bool = false
 
     var body: some View {
@@ -95,7 +87,7 @@ struct OrderCardView: View {
                         .fontWeight(.semibold)
                     Text("Order #\(order.id)")
                         .font(.caption)
-                        .foregroundStyle(.secondary) // .foregroundColor ist deprecated
+                        .foregroundStyle(.secondary)
                 }
                 Spacer()
 
@@ -147,7 +139,7 @@ struct OrderCardView: View {
             }
         }
         .background(Color(uiColor: .systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 16)) // Modernes clipShape statt cornerRadius
+        .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
         .padding(.horizontal, 16)
         .contentShape(Rectangle())
@@ -169,7 +161,7 @@ struct OrderCardView: View {
 }
 
 struct StatusBadge: View {
-    let orderStatus: OrderStatus // WICHTIG: let statt @State!
+    let orderStatus: OrderStatus
 
     var body: some View {
         HStack(spacing: 4) {
@@ -184,7 +176,7 @@ struct StatusBadge: View {
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
         .background(statusColor.opacity(0.1))
-        .clipShape(Capsule()) // Capsule ist hier oft schöner als ein harter cornerRadius
+        .clipShape(Capsule())
     }
 
     private var statusColor: Color {

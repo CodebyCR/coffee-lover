@@ -1,5 +1,5 @@
 
-import Coffee_Kit
+import ProductKit
 import SwiftUI
 
 struct CategorieChooserView: View {

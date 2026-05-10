@@ -1,6 +1,6 @@
 
 import SwiftUI
-import Authentication_Kit
+import AuthenticationKit
 
  struct LoginView: View {
     @Environment(AuthenticationBuilder.self) private var authBuilder

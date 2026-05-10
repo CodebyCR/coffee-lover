@@ -1,7 +1,9 @@
 
 import Foundation
+import ProductKit
+import OrderKit
 import SwiftUI
-import Coffee_Kit
+
 public enum NavigationTarget: Hashable {
     case login
     case register

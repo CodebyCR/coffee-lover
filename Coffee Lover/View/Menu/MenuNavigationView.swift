@@ -1,6 +1,5 @@
 
-import Coffee_Kit
-import Authentication_Kit
+import AuthenticationKit
 import SwiftUI
 
 struct MenuNavigationView: View {
@@ -61,11 +60,11 @@ struct MenuNavigationView: View {
     }
 }
 
-#Preview {
-    MenuNavigationView()
-        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
-        .environment(AuthenticationBuilder(
-            authManager: AutenticationManager(keychain: DefaultKeychainManager(), baseURL: URL(string: "http://localhost")!),
-            baseURL: URL(string: "http://localhost")!
-        ))
-}
+//#Preview {
+//    MenuNavigationView()
+//        .environment(MenuManager(from: WebserviceProvider(inMode: .dev)))
+//        .environment(AuthenticationBuilder(
+//            authManager: AutenticationManager(keychain: DefaultKeychainManager(), baseURL: URL(string: "http://localhost")!),
+//            baseURL: URL(string: "http://localhost")!
+//        ))
+//}

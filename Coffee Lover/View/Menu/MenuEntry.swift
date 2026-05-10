@@ -1,6 +1,6 @@
 
-import Coffee_Kit
 import SwiftUI
+import ProductKit
 
 struct MenuEntry: View {
     @State

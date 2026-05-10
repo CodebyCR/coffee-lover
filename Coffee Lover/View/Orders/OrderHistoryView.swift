@@ -1,7 +1,8 @@
 
-import Coffee_Kit
+
 import SwiftUI
 import OSLog
+import OrderKit
 
 struct OrderHistoryView: View {
     private let log = Logger(subsystem: "com.codebycr.Coffee-Lover", category: "OrderHistoryView")
