@@ -92,14 +92,19 @@ struct MenuListView: View {
             return
         }
 
+        var loadedProducts: [Product] = []
         for await product in await menu.productService.loadAll() {
-                switch product {
-                case .failure(let error):
-                    log.warning("Failed to load product: \(error.localizedDescription)")
-                case .success(let product):
-                    log.info("Adding \(product.name)...")
-                    menu.items.append(product)
-                }
+            switch product {
+            case .failure(let error):
+                log.warning("Failed to load product: \(error.localizedDescription)")
+            case .success(let product):
+                log.info("Adding \(product.name)...")
+                loadedProducts.append(product)
+            }
+        }
+
+        withAnimation(.easeInOut) {
+            menu.items = loadedProducts
         }
     }
 }

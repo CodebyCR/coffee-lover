@@ -3,13 +3,12 @@ import SwiftUI
 import ProductKit
 
 struct MenuEntry: View {
-    @State
-    var product: Product
+    let product: Product
 
     var body: some View {
         HStack {
             HStack {
-                ProductImageView(product: $product, frameSize: 54)
+                ProductImageView(product: product, frameSize: 54)
                     .padding(.trailing, 8)
 
                 Text("\(product.categoryNumber)")

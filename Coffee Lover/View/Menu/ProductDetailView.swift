@@ -6,7 +6,7 @@ import OrderKit
 
 struct ProductDetailView: View {
     @Environment(OrderBuilder.self) var orderBuilder: OrderBuilder
-    @State public var product: Product
+    let product: Product
 
     var body: some View {
 
@@ -16,7 +16,7 @@ struct ProductDetailView: View {
                     ZStack {
                         Color.brown
 
-                        ProductImageView(product: $product, frameSize: 200)
+                        ProductImageView(product: product, frameSize: 200)
                             .padding(12)
                     }
 

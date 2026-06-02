@@ -14,6 +14,7 @@ public enum NavigationTarget: Hashable {
 }
 
 @Observable
+@MainActor
 public final class NavigationManager {
     public var menuPath = NavigationPath()
     public var ordersPath = NavigationPath()

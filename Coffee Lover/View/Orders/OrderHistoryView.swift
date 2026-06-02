@@ -15,12 +15,10 @@ struct OrderHistoryView: View {
     var body: some View {
         ForEach(orderManager.orderHistory) { order in
             OrderHistoryItem(order: order)
-                .onAppear {
+                .task(id: order.id) {
                     if order.id == orderManager.orderHistory.last?.id {
                         log.info("Reached end of list, fetching more orders before \(order.orderDate)")
-                        Task {
-                            await orderManager.loadOrderHistory(before: order.orderDate)
-                        }
+                        await orderManager.loadOrderHistory(before: order.orderDate)
                     }
                 }
         }

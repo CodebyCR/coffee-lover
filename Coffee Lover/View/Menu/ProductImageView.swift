@@ -6,7 +6,7 @@ import ProductKit
 
 struct ProductImageView: View {
     @Environment(ImageManager.self) private var imageManager
-    @Binding var product: Product
+    let product: Product
     @State private var imageData = Data()
     let frameSize: CGFloat
 

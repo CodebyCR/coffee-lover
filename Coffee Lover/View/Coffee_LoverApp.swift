@@ -71,16 +71,14 @@ struct Coffee_LoverApp: App {
             .task {
                 async let menuCache: () = menuManager.fillUpCache()
                 async let persistentLogin: () = authBuilder.checkPersistentLogin()
-                _ = await (menuCache, persistentLogin)
+                async let minDelay: () = {
+                    try? await Task.sleep(for: .seconds(2.0))
+                }()
                 
+                _ = await (menuCache, persistentLogin, minDelay)
                 
-                do {
-                    try await Task.sleep(for: .seconds(2.0))
-                    withAnimation(.easeInOut(duration: 0.8)) {
-                        showSplashScreen = false
-                    }
-                } catch {
-                    print("Splash screen task cancelled: \(error)")
+                withAnimation(.easeInOut(duration: 0.8)) {
+                    showSplashScreen = false
                 }
             }
             .onChange(of: authBuilder.status, initial: true) {
