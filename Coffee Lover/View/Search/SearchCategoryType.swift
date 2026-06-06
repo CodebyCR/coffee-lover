@@ -6,12 +6,12 @@ enum SearchCategoryType : String{
     case favorites = "Favorites"
     case drinks = "Drinks"
     case food   = "Food"
-    case vaggie = "Vaggie"
+    case vegan = "Vegan"
 }
 
 extension SearchCategoryType: Identifiable {
     var id: Self { self }
-}
+} 
 
 extension SearchCategoryType : Sendable {}
 
@@ -26,7 +26,7 @@ extension SearchCategoryType {
             return "cup.and.heat.waves.fill"
         case .food:
             return "fork.knife"
-        case .vaggie:
+        case .vegan:
             return "leaf.fill"
         }
     }
@@ -43,7 +43,7 @@ extension SearchCategoryType {
             return "brown"
         case .food:
             return "orange"
-        case .vaggie:
+        case .vegan:
             return "green"
         }
     }
@@ -53,7 +53,7 @@ extension SearchCategoryType {
 
 extension SearchCategoryType: CaseIterable {
     static var allCases: [SearchCategoryType] {
-        return [.latest, .favorites, .drinks, .food, .vaggie]
+        return [.latest, .favorites, .drinks, .food, .vegan]
     }
 }
 

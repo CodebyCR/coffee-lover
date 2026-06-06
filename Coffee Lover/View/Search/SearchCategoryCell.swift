@@ -42,6 +42,6 @@ struct SearchCategoryCell: View {
 }
 
 #Preview {
-    SearchCategoryCell(category: .vaggie)
+    SearchCategoryCell(category: .vegan)
         .frame(maxWidth: 200)
 }

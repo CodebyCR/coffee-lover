@@ -40,10 +40,10 @@ struct SearchCategoryGrid: View {
                 }
                 
                 GridRow {
-                    SearchCategoryCell(category: .vaggie,
-                                       color: getColorForCategory(.vaggie))
+                    SearchCategoryCell(category: .vegan,
+                                       color: getColorForCategory(.vegan))
                     .onTapGesture {
-                        setLookupValue(.vaggie)
+                        setLookupValue(.vegan)
                     }
                 }
 
@@ -71,7 +71,7 @@ struct SearchCategoryGrid: View {
             return .brown
         case .food:
             return .orange
-        case .vaggie:
+        case .vegan:
             return .green
         }
     }
