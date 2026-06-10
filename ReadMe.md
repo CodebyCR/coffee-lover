@@ -2,19 +2,19 @@
 
 ## Coffee Lover
 
- - An Application to Order fictional Coffees, Cake slices and more, powered by Coffee Kit.
+ - An application to order Coffees, Cake slices and more, powered by Coffee Kit.
 
 ## Dependencies
 
 ### Coffee API 
 
-- A Rest API which provides demo data of a fictional Coffee Shop, from a SQLite Database.
+- A Rest API which provides demo data of a Coffee Shop, from a SQLite database.
 - Written in Swift with the Vapor framework.
 
 ### Coffee Kit
 
-- The backend of the 'Coffee Lover' Application, fetches and published the demo data from and to the Coffee API.
-- Coffee Kit is an independent Swift Package Manager Modul.
+- The backend of the 'Coffee Lover' application, fetches and published the demo data from and to the Coffee API.
+- Coffee Kit is an independent Swift Package Manager Module.
   
 
 
