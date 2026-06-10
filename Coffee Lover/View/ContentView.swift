@@ -68,7 +68,7 @@ struct ContentView: View {
                         
                     }
                     else {
-                        MenuNavigationView(filteredOn: $lookupValue)
+                        MenuNavigationView(filteredOn: $lookupValue, embedInNavigationStack: false)
                     }
                 }
                 .navigationDestination(for: NavigationTarget.self) { target in

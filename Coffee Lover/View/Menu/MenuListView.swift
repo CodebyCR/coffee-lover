@@ -22,21 +22,22 @@ struct MenuListView: View {
         ScrollViewReader { proxy in
             List {
                 ForEach(menuCategories, id: \.id) { category in
-                    if !menu.items.isEmpty {
+                    let selection = menu.getSelection(for: category, with: lookupValue)
+                    if !selection.isEmpty {
                         CategoryTitle(categoryTitle: category.rawValue)
                             .id(category)
-                    }
 
-                    ForEach(menu.getSelection(for: category, with: lookupValue)) { entry in
-                        NavigationLink(value: NavigationTarget.productDetail(entry)) {
-                            MenuEntry(product: entry)
-                                .swipeActions {
-                                    Button("Add") {
-                                        print("Add \(entry.name) to cart ...")
-                                        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                                        orderBuilder.addProduct(entry)
+                        ForEach(selection) { entry in
+                            NavigationLink(value: NavigationTarget.productDetail(entry)) {
+                                MenuEntry(product: entry)
+                                    .swipeActions {
+                                        Button("Add") {
+                                            print("Add \(entry.name) to cart ...")
+                                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                            orderBuilder.addProduct(entry)
+                                        }
                                     }
-                                }
+                            }
                         }
                     }
                 }

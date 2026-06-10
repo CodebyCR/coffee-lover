@@ -6,57 +6,63 @@ struct MenuNavigationView: View {
     @Environment(AuthenticationBuilder.self) private var authBuilder
     @Environment(NavigationManager.self) private var navigationManager
     @Binding var lookupValue: String
+    var embedInNavigationStack: Bool
 
-    init(){
-        self._lookupValue = .constant("")
-    }
-
-    init(filteredOn lookupValue: Binding<String>) {
+    init(filteredOn lookupValue: Binding<String> = .constant(""), embedInNavigationStack: Bool = true) {
         self._lookupValue = lookupValue
+        self.embedInNavigationStack = embedInNavigationStack
     }
-
 
     var body: some View {
         @Bindable var navManager = navigationManager
 
-        NavigationStack(path: $navManager.menuPath) {
-            MenuListView(lookupValue: $lookupValue)
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbarBackground(.brown)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Menu {
-                                if case .loggedIn(let user) = authBuilder.status {
-                                    Section(user.name) {
-                                        Button(role: .destructive) {
-                                            Task {
-                                                await authBuilder.logout()
-                                            }
-                                        } label: {
-                                            Label("Abmelden", systemImage: "rectangle.portrait.and.arrow.right")
-                                        }
+        if embedInNavigationStack {
+            NavigationStack(path: $navManager.menuPath) {
+                content
+            }
+            .background(
+                Color
+                    .brown
+                    .gradient
+            )
+        } else {
+            content
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        MenuListView(lookupValue: $lookupValue)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.brown)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        if case .loggedIn(let user) = authBuilder.status {
+                            Section(user.name) {
+                                Button(role: .destructive) {
+                                    Task {
+                                        await authBuilder.logout()
                                     }
-                                } else {
-                                    Button("Anmelden") {
-                                        authBuilder.status = .loggedOut
-                                    }
+                                } label: {
+                                    Label("Abmelden", systemImage: "rectangle.portrait.and.arrow.right")
                                 }
-                            } label: {
-                                Image(systemName: "person.circle")
-                                    .foregroundStyle(.white)
+                            }
+                        } else {
+                            Button("Anmelden") {
+                                authBuilder.status = .loggedOut
                             }
                         }
+                    } label: {
+                        Image(systemName: "person.circle")
+                            .foregroundStyle(.white)
                     }
-                    .navigationDestination(for: NavigationTarget.self) { target in
-                        navigationManager.destinationView(for: target)
-                            .environment(navigationManager)
-                    }
-        }
-        .background(
-            Color
-                .brown
-                .gradient
-        )
+                }
+            }
+            .navigationDestination(for: NavigationTarget.self) { target in
+                navigationManager.destinationView(for: target)
+                    .environment(navigationManager)
+            }
     }
 }
 
